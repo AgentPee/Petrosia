@@ -1,0 +1,131 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+/* Header Styling */
+header {
+    display: flex;
+    align-items: center; /* Aligns logo and text in one line */
+    justify-content: start; /* Aligns them to the left */
+    padding: 20px;
+    gap: 15px; /* Space between logo and text */
+}
+
+/* Logo */
+header img {
+    height: 240px; /* Adjust the logo size */
+    width: auto; /* Keeps the aspect ratio */
+}
+
+/* Hotel Name */
+h1 {
+    margin-left: 630px;
+    font-size: 40px;
+    color: black;
+    text-align: center; /* Ensures alignment */
+}
+
+
+/* Container Styling */
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+th {
+    background-color: black;
+    color: white;
+}
+
+/* Buttons */
+.btn {
+    margin-top: px;
+    padding: 8px 12px;
+    background-color: #d1b88d;
+    border: none;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #b89b6f;
+}
+
+.btn-danger {
+    padding: 8px 12px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-danger:hover {
+    background-color: rgb(39, 39, 39);
+}
+
+/* Search Bar */
+.input-group {
+    margin: 20px 0;
+}
+
+#searchInput {
+    padding: 8px;
+    width: 50%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Availability Status */
+.status-Available {
+    background-color: green;
+    color: white;
+}
+
+.status-Used {
+    background-color: red;
+    color: white;
+}
+
+.status-Cleaning {
+    background-color: orange;
+    color: white;
+}
+.status-OnDuty{
+    background-color: green;
+    color: white;
+}
+
+.status-Absent{
+    background-color: red;
+    color: white;
+}
+.status-Excused{
+    background-color: orange;
+    color: white;
+}
+
