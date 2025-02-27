@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="shortcut icon" type="x-icon" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <!-- AOS Library CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+</head>
+<body>
+    <!-------Banner------->
+    <section class="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <span><i class="fa-solid fa-phone"></i> +(63) 09670935136</span>
+                    <span><i class="fa-solid fa-envelope"></i> info@petrosiahotel.com</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html"><img src="images/logo.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                    <li><a href="@Url.Action("About", "Home")">About</a></li>
+                    <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                    <li><a href="@Url.Action("Gallery", "Home")">GALLERY</a></li>
+                </ul>
+            </div>
+            <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+        </nav>
+
+        <div class="text-box">
+            <h1>Relax,Enjoy,Vibes</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis ullam cupiditate iure odio facilis distinctio error minima quos placeat, repellendus sed, <br>fugit quaerat recusandae! Natus aliquid voluptate provident alias consequatur.</p>
+            <a href="" class="hero-btn">BOOK NOW</a>
+        </div>
+    </section>
+    <!-------End of Banner------->
+    <!-------About------->
+    <section class="about">
+        <h2>WELCOME TO PETROSIA HOTEL</h2>
+        <p>At Petrosia Hotel, we are dedicated to providing an experience that leaves a lasting impression. Oursignature Petrosia Touch is more than just service—it is the warmth, care, and commitment we extend to every guest. The Petrosia Touch embodies our passion for hospitality, our dedication to ensuring your utmost satisfaction, and the unforgettable memories you take with you, no matter where life leads you. With modern elegance and warm hospitality, Petrosia Hotel offers a refined retreat in the heart of the city.<br> We welcome you to experience our thoughtfully designed accommodations, seamless business facilities, and inviting event spaces, perfect for corporate gatherings, milestone celebrations, and intimate weddings. At Petrosia Hotel, every stay is more than just a visit—it’s an experience crafted just</p>
+        <a href="" class="about-btn">Learn More</a>
+    </section>
+    <!-------End of About------->
+    <!-------Features------->
+    <section class="features">
+        <div class="feature" data-aos="fade-up">
+            <h3><span class="icons"><i class="fa-solid fa-wifi"></i></span>Free WiFi</h3>
+            <p>Businessmen and travelers can connect online with our complimentary internet access.</p>
+        </div>
+        <div class="feature" data-aos="fade-up" data-aos-delay="200">
+            <h3><span class="icons"><i class="fa-solid fa-hand-holding-hand"></i></span>Room Service</h3>
+            <p>A variety of delicious options are made available in the in-room menu. Have your food delivered right at your doorstep.</p>
+        </div>
+        <div class="feature" data-aos="fade-up" data-aos-delay="400">
+            <h3><span class="icons"><i class="fa-solid fa-square-parking"></i></span>Free Parking</h3>
+            <p>Guests have access to the hotel’s parking area for free.</p>
+        </div>
+        <div class="feature" data-aos="fade-up" data-aos-delay="600">
+            <h3><span class="icons"><i class="fa-solid fa-receipt"></i></span>Early Check-in</h3>
+            <p>Our guests’ comfort is our top priority.</p>
+        </div>
+    </section>
+    <!-------End of Features------->
+    <!-------Guest Rooms------->
+    <section class="guest-rooms" data-aos="fade-up">
+        <h2>COMFORTABLE GUEST ROOMS</h2>
+        <p class="description" data-aos="fade-up" data-aos-delay="100">
+            One Central Hotel has 157 elegantly-furnished and air-conditioned classic rooms,
+            which is a perfect pick for business and leisure travelers.
+        </p>
+
+        <div class="rooms-container">
+            <div class="room" data-aos="fade-up" data-aos-delay="200">
+                <img src="images/deluxe-single.jpg" alt="Deluxe Single">
+                <h3>Deluxe Single</h3>
+                <p><strong>√ MAX:</strong> 1 (adult)</p>
+                <p><strong>√ ROOM SIZE:</strong> 21 sqm.</p>
+                <p><strong>√ BED:</strong> 1 Single</p>
+                <a href="#">Check details</a> | <a href="#">BOOK NOW</a>
+            </div>
+
+            <div class="room" data-aos="fade-up" data-aos-delay="300">
+                <img src="images/deluxe-double.jpg" alt="Deluxe Double">
+                <h3>Deluxe Double</h3>
+                <p><strong>√ MAX:</strong> 2 (adults)</p>
+                <p><strong>√ ROOM SIZE:</strong> 22-28 sqm.</p>
+                <p><strong>√ BED:</strong> 1 Double</p>
+                <a href="#">Check details</a> | <a href="#">BOOK NOW</a>
+            </div>
+
+            <div class="room" data-aos="fade-up" data-aos-delay="400">
+                <img src="images/deluxe-twin.jpg" alt="Deluxe Twin">
+                <h3>Deluxe Twin</h3>
+                <p><strong>√ MAX:</strong> 2 (adults) + 2 (kids)</p>
+                <p><strong>√ ROOM SIZE:</strong> 22-29 sqm.</p>
+                <p><strong>√ BED:</strong> 1 Single & 1 Double</p>
+                <a href="#">Check details</a> | <a href="#">BOOK NOW</a>
+            </div>
+
+            <div class="room" data-aos="fade-up" data-aos-delay="500">
+                <img src="images/junior-suite.jpg" alt="Junior Suite">
+                <h3>Junior Suite</h3>
+                <p><strong>√ MAX:</strong> 2 (adults) + 2 (kids)</p>
+                <p><strong>√ ROOM SIZE:</strong> 70 sqm.</p>
+                <p><strong>√ BED:</strong> 1 King</p>
+                <a href="#">Check details</a> | <a href="#">BOOK NOW</a>
+            </div>
+
+            <div class="room" data-aos="fade-up" data-aos-delay="600">
+                <img src="images/executive-suite.jpg" alt="Executive Suite">
+                <h3>Executive Suite</h3>
+                <p><strong>√ MAX:</strong> 4 (adults) + 2 (kids)</p>
+                <p><strong>√ ROOM SIZE:</strong> 85 sqm.</p>
+                <p><strong>√ BED:</strong> 1 King & 1 Double</p>
+                <a href="#">Check details</a> | <a href="#">BOOK NOW</a>
+            </div>
+        </div>
+    </section>
+    <!-------End of Guest Rooms------->
+    <!-------Facilities------->
+    <section class="facilities" data-aos="fade-down">
+        <h2>EXPLORE OUR FACILITIES</h2>
+        <p class="description" data-aos="fade-up" data-aos-delay="100">
+            One Central Hotel balances business with pleasure. From hosting corporate conventions
+            to intimate gatherings of family and friends, we have an array of facilities to tailor fit your requirements.
+        </p>
+
+        <div class="facility-card" data-aos="fade-right" data-aos-delay="200">
+            <img src="images/ballroom.jpg" alt="Molave Grand Ballroom">
+            <div class="facility-info">
+                <h3>Molave Grand Ballroom</h3>
+                <p>
+                    A classy venue to hold your important meetings, corporate presentations, and social events.
+                    The Molave Grand Ballroom houses up to 300 seated dinner guests and up to 350 persons for cocktails.
+                </p>
+                <button>Learn more</button>
+            </div>
+        </div>
+
+        <div class="facility-card reverse" data-aos="fade-left" data-aos-delay="300">
+            <div class="facility-info">
+                <h3>Cafe Tartanilla</h3>
+                <p>
+                    Treat yourself at our all-day dining restaurant. Enjoy good food at our delectable buffet spreads
+                    and a la carte choices. We have the longest happy hour at our bar that starts from 4 pm to 10 pm.
+                </p>
+                <button>Learn more</button>
+            </div>
+            <img src="images/tartanilla.jpg" alt="Cafe Tartanilla">
+        </div>
+
+    </section>
+
+    <!-------End of Facilities------->
+    <!-----Gallery Section----->
+    <section class="facilities-container" data-aos="zoom-in">
+        <h2>GALLERY</h2>
+        <p data-aos="fade-up" data-aos-delay="100">
+            Step into a world of elegance and comfort—explore our gallery and experience the beauty of Petrosia Hotel, where every moment is a masterpiece.
+        </p>
+        <div class="slideshow-container">
+            <div class="slide fade" data-aos="fade" data-aos-delay="200">
+                <img src="images/ballroom.jpg" alt="Slide 1">
+            </div>
+            <div class="slide fade" data-aos="fade" data-aos-delay="300">
+                <img src="images/deluxe-double.jpg" alt="Slide 2">
+            </div>
+            <div class="slide fade" data-aos="fade" data-aos-delay="400">
+                <img src="images/deluxe-twin.jpg" alt="Slide 3">
+            </div>
+
+            <!-- Navigation Arrows -->
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+        </div>
+    </section>
+    <!-----End of Gallery Section----->
+    <!-----Footer Section----->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Find & Book</h4>
+                <ul>
+                    <li><a href="#">Our Destinations</a></li>
+                    <li><a href="#">Find a Reservation</a></li>
+                    <li><a href="#">Meetings & Events</a></li>
+                    <li><a href="#">Restaurant & Bars</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Petrosia Circle</h4>
+                <ul>
+                    <li><a href="#">Programme Overview</a></li>
+                    <li><a href="#">Join Petrosia Circle</a></li>
+                    <li><a href="#">Account Overview</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>About Petrosia</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Hotel Brands</a></li>
+                    <li><a href="#">Petrosia Centre</a></li>
+                    <li><a href="#">Residences</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>More</h4>
+                <ul>
+                    <li><a href="#">Investors</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Global Citizenship</a></li>
+                    <li><a href="#">News</a></li>
+                </ul>
+            </div>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="footer-bottom">
+        <p>Copyright © 2025 Petrosia Hotel. All rights reserved.</p>
+    </div>
+    <!-----End of Footer Section----->
+
+
+    <button id="scrollToTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
+
+
+
+    <script>
+        // JavaSCript for toggle menu
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu(){
+            navLinks.style.right = "0";
+        }
+        function hideMenu(){
+            navLinks.style.right = "-200px";
+        }
+        // end
+
+
+        // Slides gallery
+        let slideIndex = 0;
+        showSlides();
+
+        // Function to show slides
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1; }
+
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000); // Change slide every 3 seconds
+        }
+
+        // Manual navigation
+        function changeSlide(n) {
+            slideIndex += n;
+            let slides = document.getElementsByClassName("slide");
+
+            if (slideIndex > slides.length) { slideIndex = 1; }
+            if (slideIndex < 1) { slideIndex = slides.length; }
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            slides[slideIndex - 1].style.display = "block";
+        }
+
+        AOS.init({
+        duration: 1200,  // Adjust this based on the smoothness you want
+        delay: 150,      // Delay before animation starts
+        easing: "ease-in-out",
+        once: true       // Ensures animations trigger only once
+        });
+
+
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        window.addEventListener("scroll", function() {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add("show");
+                scrollToTopBtn.classList.remove("hidden");
+            } else {
+                scrollToTopBtn.classList.add("hidden");
+                scrollToTopBtn.classList.remove("show");
+            }
+        });
+
+        scrollToTopBtn.addEventListener("click", function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+
+    </script>
+
+
+</body>
+</html>

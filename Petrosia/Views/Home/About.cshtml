@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="shortcut icon" type="x-icon" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <!-- AOS Library CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+</head>
+<body>
+    <!-------Banner------->
+    <section class="sub-header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <span><i class="fa-solid fa-phone"></i> +(63) 09670935136</span>
+                    <span><i class="fa-solid fa-envelope"></i> info@petrosiahotel.com</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html"><img src="~/images/logo.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                    <li><a href="@Url.Action("About", "Home")">About</a></li>
+                    <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                    <li><a href="@Url.Action("Gallery", "Home")">GALLERY</a></li>
+                </ul>
+            </div>
+            <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </section>
+    <!-------End of Banner------->
+    <!-----About us Content ----->
+    <section class="about-us">
+        <div class="container">
+            <h1>ABOUT US</h1>
+            <p>
+                Nestled in the heart of Cebu, Petrosial Hotel is your gateway to luxury and convenience. Offering stylish accommodations and breathtaking city views, our hotel is perfectly situated for both business and leisure travelers. With easy access to key destinations, including transport hubs and commercial centers, we ensure a seamless stay for our guests.
+            </p>
+            <p>
+                Our hotel features well-appointed rooms with modern amenities, state-of-the-art meeting spaces, and a grand ballroom designed for memorable gatherings. Take a refreshing dip in our serene pool, maintain your fitness routine at our fully equipped gym, or indulge in an exquisite dining experience at our signature restaurant, serving a delightful array of international and local cuisine.
+            </p>
+            <p>
+                Built on a foundation of excellence, Petrosial Hotel stands as a landmark of comfort and sophistication, reflecting Cebu’s dynamic growth while preserving its rich heritage. Whether you're visiting for business or leisure, we invite you to experience a stay like no other.
+            </p>
+
+            <h2>GETTING HERE</h2>
+            <ul>
+                <li><strong>By Plane:</strong> <em>From Manila to Cebu</em> – Approximately 1 hour and 10 minutes</li>
+                <li><strong>By Vessel:</strong> <em>From Manila to Cebu</em> – Approximately 12-14 hours</li>
+                <li><strong>By Car:</strong> <em>From Mactan Cebu International Airport</em> – Approximately 30-45 minutes</li>
+            </ul>
+
+            <p><strong>Standard Check-In Time:</strong> 02:00 PM</p>
+            <p><strong>Standard Check-Out Time:</strong> 12:00 NN</p>
+        </div>
+    </section>
+    <!-----Footer Section----->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Find & Book</h4>
+                <ul>
+                    <li><a href="#">Our Destinations</a></li>
+                    <li><a href="#">Find a Reservation</a></li>
+                    <li><a href="#">Meetings & Events</a></li>
+                    <li><a href="#">Restaurant & Bars</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Petrosia Circle</h4>
+                <ul>
+                    <li><a href="#">Programme Overview</a></li>
+                    <li><a href="#">Join Petrosia Circle</a></li>
+                    <li><a href="#">Account Overview</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>About Petrosia</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Hotel Brands</a></li>
+                    <li><a href="#">Petrosia Centre</a></li>
+                    <li><a href="#">Residences</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>More</h4>
+                <ul>
+                    <li><a href="#">Investors</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Global Citizenship</a></li>
+                    <li><a href="#">News</a></li>
+                </ul>
+            </div>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="footer-bottom">
+        <p>Copyright © 2025 Petrosia Hotel. All rights reserved.</p>
+    </div>
+    <!-----End of Footer Section----->
+
+    <button id="scrollToTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <script>
+        // JavaSCript for toggle menu
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu(){
+            navLinks.style.right = "0";
+        }
+        function hideMenu(){
+            navLinks.style.right = "-200px";
+        }
+        // end
+
+
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        window.addEventListener("scroll", function() {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add("show");
+                scrollToTopBtn.classList.remove("hidden");
+            } else {
+                scrollToTopBtn.classList.add("hidden");
+                scrollToTopBtn.classList.remove("show");
+            }
+        });
+
+        scrollToTopBtn.addEventListener("click", function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
+
+</body>
+</html>

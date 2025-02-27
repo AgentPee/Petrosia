@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="shortcut icon" type="x-icon" href="~/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <!-- AOS Library CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+</head>
+<body>
+    <!-------Banner------->
+    <section class="sub-header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <span><i class="fa-solid fa-phone"></i> +(63) 09670935136</span>
+                    <span><i class="fa-solid fa-envelope"></i> info@petrosiahotel.com</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html"><img src="~/images/logo.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                    <li><a href="@Url.Action("About", "Home")">About</a></li>
+                    <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                    <li><a href="@Url.Action("Gallery", "Home")">GALLERY</a></li>
+                </ul>
+            </div>
+            <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </section>
+    <!-------End of Banner------->
+
+    <section class="outskirts">
+        <h2>OUTSKIRTS OF CEBU</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="~/images/outskirt1.jpg">
+                <h3>Simala</h3>
+                <p class="photo-credit">Photo by <span>digipam</span></p>
+                <p>Located in Lindogon, Simala, the Simala Shrine houses the miraculous image of the Blessed Virgin Mary. Before it was built in 1998 by Marian Monks, the area was a farm where the monks planted vegetables and grew animals. When an epidemic hit the area, the monks prayed from the Blessed Virgin Mary for the people to be saved from the epidemic. To honor this miracle, the monks started to build a church, which now resembles a castle where thousands of devotees visit.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/outskirt2.jpg">
+                <h3>Whale Shark Watching</h3>
+                <p class="photo-credit">Photo by <span>Jayvee Fernandez</span></p>
+                <p>The encounter with the gentle giants started in 2011 in a town 10 kilometers away from the center of Oslob. Visitors come to feed the whale sharks and swim with them.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/outskirt3.jpg">
+                <h3>Kawasan Falls</h3>
+                <p class="photo-credit">Photo by <span>Marion Paul Baylado</span></p>
+                <p>This three-tiered falls in Badian is one of the favorite destinations of tourists when travelling southern Cebu. A 30-minute trek will lead you to the third falls, a petite, picturesque scenery. A few minutes more and you can reach the second and first falls, which have deeper waters.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/outskirt4.jpg">
+                <h3>Osmeña Peak</h3>
+                <p class="photo-credit">Photo by <span>John Doe</span></p>
+                <p>Distinguished by its jagged, sharp peaks, Osmeña Peak is a must-go trail for aspiring trekkers as it is said to have one of the easiest terrains. It also bears a resemblance to Bohol’s famed Chocolate Hills. With a peak at 1,013 MASL, Osmeña Peak overlooks the shorelines of Dalaguete and Badian.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/outskirt5.jpg" alt="Osmeña Peak">
+                <h3>Sumilon Island</h3>
+                <p class="photo-credit">Photo by <span>Jane Smith</span></p>
+                <p>Sumilon Island’s main attraction is its shifting sandbar that depends on the tide. Sumilon Island is a 24-hectare coral island that has its own lagoon, 19th century historical baluarte (watch tower) and has one of the most attractive diving spots popular among divers and enthusiasts.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/outskirt6.jpg" alt="Bantayan Island">
+                <h3>Badian Canyoneering</h3>
+                <p class="photo-credit">Photo by <span>Mark Lopez</span></p>
+                <p>A high-intensity outdoor activity, canyoneering at Badian is an exciting experience following the trails to Kawasan Falls. This six-hour activity involves walking, jumping, and climbing steep terrains.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="outskirts">
+        <h2>ATTRACTIONS</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="~/images/attraction1.jpg">
+                <h3>Temple of Leah</h3>
+                <p>
+                    This Greek-inspired building was built in 2012 as a symbol of Teodorico S. Adarna’s undying love and ceaseless devotion to his wife, Leah Villa Albino-Adarna.<br>
+                    <br>The temple has an art gallery, museum, and a library where all of the favorite things her wife owned are placed. At the top, there’s a spectacular view of the city and more exceptional scenery as you walk through the temple. In this Greek mythology-inspired 7-story mansion, there are gigantic lions lying on each side of the stairs that will guide you to the doorstep of another jaw-dropping view. You can see a grand staircase with angels made up of brass and the Queen of the Temple in a 10-ft statue with crown and flower.
+                </p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/attraction2.jpg">
+                <h3>Sirao Flower Farm</h3>
+                <p>Famous for its vibrant colors of red and yellow celosias that earned the moniker as the “Little Amsterdam of Cebu”. Sirao Flower Farm has attracted a lot of visitors from around the Philippines. With the cold weather in the area; plants like celosia, chrysanthemum, aster, sunflower, and daisy are grown in the farm; making the scenery picture perfect.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/attraction3.jpg">
+                <h3>Taoist Temple</h3>
+                <p>Approximately six kilometers from the city center in Lahug district lies Beverly Hills, the millionaire quarter of Cebu City. From Cebu City you can get fairly close to the temple by any Lahug jeepney. Atop Beverly Hills is the highly photogenic Taoist Temple of Cebu which was built in the second half of the 1900s.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/attraction4.jpg">
+                <h3>Fuente Osmeña Circle</h3>
+                <p>
+                    In the heart of uptown Cebu City is a rotunda park with a picturesque fountain in the center. This is the famous Fuente Osmeña Circle, an local landmark for the Queen City of the South.<br>
+                    <br>Fuente Osmeña, or literally “Osmeña Fountain,” was named after Pres. Sergio Osmeña. The patriarch of one of Cebu’s most prominent political families served as the fourth president of the Philippines. Considering his contributions to society, he is considered a favorite son of the province.
+                </p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/attraction5.jpg" alt="Osmeña Peak">
+                <h3>Tops</h3>
+                <p>A top Nivel Hills overlooking Cebu City is Tops Lookout, offering a beautiful panoramic view of Cebu City and the surrounding islands (Mactan Island and Olango). At a height of 610 meters, it’s a great place to visit at sunset and watch Cebu City lights come alive. Not only that, it offers an escape from the city noise, pollution, and heat.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/attraction6.jpg" alt="Bantayan Island">
+                <h3>Heritage of Cebu Monument</h3>
+                <p>The Heritage of Cebu Monument is a tableau of sculptures made of concrete, bronze, brass, and steel showing scenes about events and structures related to the history of Cebu. The construction of the monument began in July 1997 and was finished in December 2000.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-----Footer Section----->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Find & Book</h4>
+                <ul>
+                    <li><a href="#">Our Destinations</a></li>
+                    <li><a href="#">Find a Reservation</a></li>
+                    <li><a href="#">Meetings & Events</a></li>
+                    <li><a href="#">Restaurant & Bars</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Petrosia Circle</h4>
+                <ul>
+                    <li><a href="#">Programme Overview</a></li>
+                    <li><a href="#">Join Petrosia Circle</a></li>
+                    <li><a href="#">Account Overview</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>About Petrosia</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Hotel Brands</a></li>
+                    <li><a href="#">Petrosia Centre</a></li>
+                    <li><a href="#">Residences</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>More</h4>
+                <ul>
+                    <li><a href="#">Investors</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Global Citizenship</a></li>
+                    <li><a href="#">News</a></li>
+                </ul>
+            </div>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="footer-bottom">
+        <p>Copyright © 2025 Petrosia Hotel. All rights reserved.</p>
+    </div>
+    <!-----End of Footer Section----->
+
+    <button id="scrollToTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <script>
+        // JavaSCript for toggle menu
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu(){
+            navLinks.style.right = "0";
+        }
+        function hideMenu(){
+            navLinks.style.right = "-200px";
+        }
+        // end
+
+
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        window.addEventListener("scroll", function() {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add("show");
+                scrollToTopBtn.classList.remove("hidden");
+            } else {
+                scrollToTopBtn.classList.add("hidden");
+                scrollToTopBtn.classList.remove("show");
+            }
+        });
+
+        scrollToTopBtn.addEventListener("click", function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
+
+</body>
+</html>
