@@ -6,7 +6,12 @@ namespace Petrosia.Controllers;
 
 public class HomeController : Controller
 {
-    
+    private readonly UserManagement1Context _context;
+
+    public HomeController(UserManagement1Context context)
+    {
+        _context = context;
+    }
     public IActionResult Index()
     {
         return View();
@@ -29,7 +34,10 @@ public class HomeController : Controller
 
     public IActionResult Admin() 
     {
-        return View();
+        var allAdmins = _context.Admins.ToList();
+        return View(allAdmins);
     }
+
+   
 }
 

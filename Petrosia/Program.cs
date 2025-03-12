@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using Petrosia.Models;
+using System.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<UserManagement1Context>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 21))
+    ));
 
 var app = builder.Build();
 

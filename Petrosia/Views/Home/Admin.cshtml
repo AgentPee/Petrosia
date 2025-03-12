@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Petrosia.Models
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,195 +17,47 @@
     </header>
 
     <section class="container">
-        <h2 id="recordTitle">Guest Records</h2>
+        <h2 id="recordTitle">Employee Records</h2>
 
-        <div class="input-group">
-            <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
-            <button class="btn">Search</button>
-        </div>
+        
 
-        <!-- Guest Records Table -->
-        <table id="guestTable">
-            <thead>
-                <tr>
-                    <th>Last Name</th>
-                    <th>First Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Address</th>
-                    <th>ID Type</th>
-                    <th>Guest No</th>
-                    <th>Check-in Date</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Cruz</td>
-                    <td>Nathan</td>
-                    <td>nathancruz@gmail.com</td>
-                    <td>09123456781</td>
-                    <td>Banilad, Cebu City</td>
-                    <td>National ID</td>
-                    <td>1</td>
-                    <td>03/01/25</td>
-                    <td>
-                        <button class="btn" onclick="editRecord(this)">Edit</button>
-                        <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>Reyes</td>
-                    <td>Isabella</td>
-                    <td>isareyes@gmail.com</td>
-                    <td>09123456782</td>
-                    <td>Lahug, Cebu City</td>
-                    <td>Passport</td>
-                    <td>2</td>
-                    <td>03/10/25</td>
-                    <td>
-                        <button class="btn" onclick="editRecord(this)">Edit</button>
-                        <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>Mendoza</td>
-                    <td>Lucas</td>
-                    <td>lucasmendoza@gmail.com</td>
-                    <td>09123456783</td>
-                    <td>Talamban, Cebu City</td>
-                    <td>License</td>
-                    <td>3</td>
-                    <td>03/31/25</td>
-                    <td>
-                        <button class="btn" onclick="editRecord(this)">Edit</button>
-                        <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>Dela Torre</td>
-                    <td>Sophia</td>
-                    <td>sophiadt@gmail.com</td>
-                    <td>09123456784</td>
-                    <td>Guadalupe, Cebu City</td>
-                    <td>License</td>
-                    <td>4</td>
-                    <td>04/05/25</td>
-                    <td>
-                        <button class="btn" onclick="editRecord(this)">Edit</button>
-                        <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>Villanueva</td>
-                    <td>Jacob</td>
-                    <td>jacobvill@gmail.com</td>
-                    <td>09123456785</td>
-                    <td>Banawa, Cebu City</td>
-                    <td>National ID</td>
-                    <td>5</td>
-                    <td>04/15/25</td>
-                    <td>
-                        <button class="btn" onclick="editRecord(this)">Edit</button>
-                        <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+     
+        
 
         <!-- Room Service Table (Initially Hidden) -->
-        <table id="roomServiceTable" style="display: none;">
+        <table id="roomServiceTable" >
 
             <thead>
                 <tr>
-                    <th>Employee ID</th>
-                    <th>Room Number</th>
-                    <th>Last Name</th>
+                    <th>Admin ID</th>
                     <th>First Name</th>
-                    <th>Time In</th>
-                    <th>Time Out</th>
-                    <th>Date</th>
-                    <th>Status</th>
+                    <th>Last Name</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                   
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             <tbody>
-                <tr>
-                    <td>EMP001</td>
-                    <td>1</td>
-                    <td>Mendoza</td>
-                    <td>Lucas</td>
-                    <td>7:58AM</td>
-                    <td>5:00PM</td>
-                    <td>02/27/25</td>
-                    <td class="status-Excused">Excused</td>
-                    <td>
-                        <button class="btn" onclick="editRecord(this)">Edit</button>
-                        <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>EMP002</td>
-                    <td>2</td>
-                    <td>Reyes</td>
-                    <td>Ryan</td>
-                    <td>7:58AM</td>
-                    <td>5:00PM</td>
-                    <td>02/27/25</td>
-                    <td class="status-OnDuty">On Duty</td>
-                    <td>
-                        <button class="btn" onclick="editRecord(this)">Edit</button>
-                        <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>EMP003</td>
-                    <td>3</td>
-                    <td>Torres</td>
-                    <td>Gabriel</td>
-                    <td>8:01AM</td>
-                    <td>5:00PM</td>
-                    <td>02/27/25</td>
-                    <td class="status-Absent">Absent</td>
-                    <td>
-                        <button class="btn" onclick="editRecord(this)">Edit</button>
-                        <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>EMP004</td>
-                    <td>4</td>
-                    <td>Fernandez</td>
-                    <td>Elijah</td>
-                    <td>7:58AM</td>
-                    <td>5:00PM</td>
-                    <td>02/27/25</td>
-                    <td class="status-Absent">Absent</td>
-                    <td>
-                        <button class="btn" onclick="editRecord(this)">Edit</button>
-                        <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
+                    @foreach (var admin in Model)
+                    {
+                    <tr>
+                        <td>@admin.AdminId</td>
+                        <td>@admin.FirstName</td>
+                        <td>@admin.LastName</td>
+                        <td>@admin.Role</td>
+                        <td>@admin.Email</td>
+                        <td>@admin.PhoneNumber</td>
 
-
-
-
+                        <td>
+                            <button class="btn" onclick="editRecord(this)">Edit</button>
+                            <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
+                        </td>
+                    </tr>
+                    }
+            </tbody>
         </table>
 
         <!-- Rooms Table (Initially Hidden) -->
@@ -233,147 +87,7 @@
                     <td>₱1,500</td>
                     <td class="status-Available">Available</td>
                 </tr>
-                <tr>
-                    <td>S02</td>
-                    <td>2</td>
-                    <td>Standard</td>
-                    <td>2</td>
-                    <td>₱1,500</td>
-                    <td class="status-Used">Used</td>
-                </tr>
-                <tr>
-                    <td>S03</td>
-                    <td>3</td>
-                    <td>Standard</td>
-                    <td>2</td>
-                    <td>₱1,500</td>
-                    <td class="status-Cleaning">Cleaning</td>
-                </tr>
-                <tr>
-                    <td>S04</td>
-                    <td>4</td>
-                    <td>Standard</td>
-                    <td>3</td>
-                    <td>₱1,500</td>
-                    <td class="status-Available">Available</td>
-                </tr>
-                <tr>
-                    <td>S05</td>
-                    <td>5</td>
-                    <td>Standard</td>
-                    <td>3</td>
-                    <td>₱1,500</td>
-                    <td class="status-Used">Used</td>
-                </tr>
-                <tr>
-                    <td>S06</td>
-                    <td>6</td>
-                    <td>Standard</td>
-                    <td>2</td>
-                    <td>₱1,500</td>
-                    <td class="status-Available">Available</td>
-                </tr>
-                <tr>
-                    <td>S07</td>
-                    <td>7</td>
-                    <td>Standard</td>
-                    <td>2</td>
-                    <td>₱1,500</td>
-                    <td class="status-Cleaning">Cleaning</td>
-                </tr>
-                <tr>
-                    <td>S08</td>
-                    <td>8</td>
-                    <td>Standard</td>
-                    <td>3</td>
-                    <td>₱1,500</td>
-                    <td class="status-Available">Available</td>
-                </tr>
-                <tr>
-                    <td>S09</td>
-                    <td>9</td>
-                    <td>Standard</td>
-                    <td>2</td>
-                    <td>₱1,500</td>
-                    <td class="status-Used">Used</td>
-                </tr>
-                <tr>
-                    <td>S10</td>
-                    <td>10</td>
-                    <td>Standard</td>
-                    <td>2</td>
-                    <td>₱1,500</td>
-                    <td class="status-Available">Available</td>
-                </tr>
-
-                <!-- Luxury Rooms (5) -->
-                <tr>
-                    <td>L01</td>
-                    <td>11</td>
-                    <td>Luxury</td>
-                    <td>4</td>
-                    <td>₱3,000</td>
-                    <td class="status-Available">Available</td>
-                </tr>
-                <tr>
-                    <td>L02</td>
-                    <td>12</td>
-                    <td>Luxury</td>
-                    <td>4</td>
-                    <td>₱3,000</td>
-                    <td class="status-Used">Used</td>
-                </tr>
-                <tr>
-                    <td>L03</td>
-                    <td>13</td>
-                    <td>Luxury</td>
-                    <td>4</td>
-                    <td>₱3,000</td>
-                    <td class="status-Cleaning">Cleaning</td>
-                </tr>
-                <tr>
-                    <td>L04</td>
-                    <td>14</td>
-                    <td>Luxury</td>
-                    <td>4</td>
-                    <td>₱3,000</td>
-                    <td class="status-Available">Available</td>
-                </tr>
-                <tr>
-                    <td>L05</td>
-                    <td>15</td>
-                    <td>Luxury</td>
-                    <td>4</td>
-                    <td>₱3,000</td>
-                    <td class="status-Used">Used</td>
-                </tr>
-
-                <!-- VIP Rooms (3) -->
-                <tr>
-                    <td>V01</td>
-                    <td>16</td>
-                    <td>VIP</td>
-                    <td>6</td>
-                    <td>₱5,000</td>
-                    <td class="status-Available">Available</td>
-                </tr>
-                <tr>
-                    <td>V02</td>
-                    <td>17</td>
-                    <td>VIP</td>
-                    <td>6</td>
-                    <td>₱5,000</td>
-                    <td class="status-Used">Used</td>
-                </tr>
-                <tr>
-                    <td>V03</td>
-                    <td>18</td>
-                    <td>VIP</td>
-                    <td>6</td>
-                    <td>₱5,000</td>
-                    <td class="status-Cleaning">Cleaning</td>
-                </tr>
-            </tbody>
+               
 
 
             <!-- Add More VIP Rooms Up to V003 -->
@@ -392,7 +106,7 @@
         © 2025 Petrosia Hotel - Privacy Policy
     </footer>
 
-    <script src="~/js/script.js"></script>
+    <script src="~/js/admin-script.js"></script>
 
 </body>
 </html>

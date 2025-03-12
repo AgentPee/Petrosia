@@ -36,14 +36,7 @@ function prevPage() {
 }
 
 
-function editRecord(button) {
-    let row = button.parentElement.parentElement;
-    let cells = row.querySelectorAll("td:not(:last-child)");
-    
-    let newValues = Array.from(cells).map(cell => prompt("Edit value:", cell.textContent));
-    if (newValues.some(val => val === null)) return;
 
-    cells.forEach((cell, index) => cell.textContent = newValues[index]);
 
     // Handle status updates for employees
     if (currentPage === 2) {
@@ -113,43 +106,7 @@ function searchTable() {
         }
     });
 }
-function toggleWebTeam() {
-    var table = document.getElementById("webTeamTable");
-    table.style.display = (table.style.display === "none") ? "table" : "none";
- }
- document.addEventListener("DOMContentLoaded", function () {
-    // Select all rows in the table
-    let rows = document.querySelectorAll("#roomServiceTable tbody tr");
 
-    rows.forEach(row => {
-        let timeInCell = row.cells[4]; // The "Time In" column (index 4)
-        let statusCell = row.cells[4]; // The "Status" column (index 7)
-
-        let timeInText = timeInCell.textContent.trim(); // Get time value
-        let timeIn = convertTo24Hour(timeInText); // Convert to 24-hour format
-
-        if (timeIn > "08:05") { 
-            statusCell.textContent = "Late"; // Update status text
-            statusCell.style.color = "red"; // Make text red
-            statusCell.style.fontWeight = "bold"; // Make text bold
-        }
-    });
-});
 
 // Function to convert AM/PM time to 24-hour format (HH:MM)
-function convertTo24Hour(time) {
-    let match = time.match(/(\d+):(\d+)(AM|PM)/);
-    if (!match) return time;
 
-    let hours = parseInt(match[1]);
-    let minutes = match[2];
-    let period = match[3];
-
-    if (period === "PM" && hours !== 12) {
-        hours += 12;
-    } else if (period === "AM" && hours === 12) {
-        hours = 0;
-    }
-
-    return hours.toString().padStart(2, '0') + ":" + minutes;
-}
