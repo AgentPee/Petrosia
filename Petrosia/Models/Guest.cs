@@ -17,9 +17,7 @@ public partial class Guest
 
     public string Address { get; set; } = null!;
 
-    public string IdType { get; set; } = null!;
-
-    public string IdNumber { get; set; } = null!;
+    public string Password { get; set; } = null!;
 
     public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
 }

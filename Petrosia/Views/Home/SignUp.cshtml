@@ -11,59 +11,149 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
+            background: url('banner.jpg') no-repeat center center/cover;
+            margin: 0;
         }
 
         .container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+            width: 380px;
+            text-align: center;
+            height: auto;
         }
 
-        input {
+        h2 {
+            font-size: 30px;
+            color: white;
+            margin: 0 0 35px 0;            
+            font-style: oblique;
+            font-family: 'poppins', sans-serif;
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
+            display: flex;
+        justify-content: center;
+        margin-top: 10px;
             width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 10px 10px;
+            border: 2px solid gray;
+            border-radius: 5px;
+            background: transparent;
+            font-size: 16px;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s, padding-top 0.3s;
+        }
+
+        .input-container label {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            font-size: small;
+            color: white;
+            background: transparent;
+            padding: 0 5px;
+            transition: all 0.3s ease-in-out;
+            pointer-events: none;
+        }
+
+        /* Effect when user focuses or types */
+        .input-container input:focus,
+        .input-container input:not(:placeholder-shown) {
+            border-color: #1E90FF;
+            padding-top: 18px; /* Adjust padding to keep text aligned */
+        }
+
+        .input-container input:focus ~ label,
+        .input-container input:not(:placeholder-shown) ~ label {
+            top: 0px;
+            left: 8px;
+            font-size: 12px;
+            color: #1E90FF;
+            background: black; /* Matches form background */
+            padding: 0 4px;
+        }
+
+        /* This creates the "border break" effect */
+        .input-container input:focus ~ label::before,
+        .input-container input:not(:placeholder-shown) ~ label::before {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 2px;
+            background: black;
+            top: 50%;
+            left: -5px;
+        }
+
+        .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
         }
 
         button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    width: 100%; /* Adjust width as needed */
+    padding: 12px;
+    background: #EFDCAB;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    font-size: medium;
+    font-family: 'Poppins', sans-serif;  
+}
 
-            button:hover {
-                background-color: #218838;
-            }
+button:hover {
+    background-color: #404040;
+    color: white;
+}
+
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Signup</h2>
+        <h2>Sign Up</h2>
         <form>
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstname" required>
+            <div class="input-container">
+                <input type="text" id="firstname" name="firstname" placeholder=" " required>
+                <label for="firstname">First Name</label>
+            </div>
+            <div class="input-container">
+                <input type="text" id="lastname" name="lastname" placeholder=" " required>
+                <label for="lastname">Last Name</label>
+            </div>
+            <div class="input-container">
+                <input type="text" id="address" name="address" placeholder=" " required>
+                <label for="address">Address</label>
+            </div>
+            <div class="input-container">
+                <input type="email" id="email" name="email" placeholder=" " required>
+                <label for="email">Email</label>
+            </div>
+            <div class="input-container">
+                <input type="password" id="password" name="password" placeholder=" " required>
+                <label for="password">Password</label>
+            </div>
+            <div class="button-container">
+                <button type="submit">Sign Up</button>
+            </div>
+            <p style="color: white; margin-top: 15px; font-size: 14px;">
+                Already have an account? <a href="signin.html" style="color: #1E90FF; text-decoration: none;">Sign In</a>
+            </p>
 
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="lastname" required>
-
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-
-            <button type="submit">Sign Up</button>
         </form>
     </div>
 </body>

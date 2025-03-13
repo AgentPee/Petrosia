@@ -68,12 +68,9 @@ public partial class UserManagement1Context : DbContext
             entity.Property(e => e.FirstName)
                 .HasMaxLength(100)
                 .HasColumnName("First_Name");
-            entity.Property(e => e.IdNumber)
-                .HasMaxLength(50)
-                .HasColumnName("ID_Number");
-            entity.Property(e => e.IdType)
+            entity.Property(e => e.Password)
                 .HasMaxLength(20)
-                .HasColumnName("ID_Type");
+                .HasColumnName("Password");
             entity.Property(e => e.LastName)
                 .HasMaxLength(100)
                 .HasColumnName("Last_Name");

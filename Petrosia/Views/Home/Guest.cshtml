@@ -1,0 +1,110 @@
+﻿@using Petrosia.Models
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel - Records</title>
+    <link rel="stylesheet" href="~/css/admin-styles.css" asp-append-version="true" />
+
+</head>
+<body>
+
+    <header>
+        <img src="~/images/logo.png" alt="Hotel Logo"> <!-- Replace with actual logo file -->
+        <h1>Petrosia Hotel</h1>
+    </header>
+
+    <section class="container">
+        <h2 id="recordTitle">Guest Records</h2>
+
+
+
+
+
+
+        <!-- Room Service Table (Initially Hidden) -->
+        <table id="roomServiceTable">
+
+            <thead>
+                <tr>
+
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tbody>
+                    @foreach (var guest in Model)
+                    {
+                    <tr>
+                        
+                        <td>@guest.FirstName</td>
+                        <td>@guest.LastName</td>
+                        <td>@guest.Email</td>
+                        <td>@guest.PhoneNumber</td>
+
+                        <td>
+                            <button class="btn" onclick="editRecord(this)">Edit</button>
+                            <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
+                        </td>
+                    </tr>
+                    }
+            </tbody>
+        </table>
+
+        <!-- Rooms Table (Initially Hidden) -->
+        <table id="roomsTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Room ID</th>
+                    <th>Room Number</th>
+                    <th>Room Type</th>
+                    <th>Capacity</th>
+                    <th>Price</th>
+                    <th>Availability</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Standard Rooms (10 rooms) -->
+
+
+            <tbody>
+                <!-- Standard Rooms (10) -->
+                <tr>
+                    <td>S01</td>
+                    <td>1</td>
+                    <td>Standard</td>
+                    <td>2</td>
+                    <td>₱1,500</td>
+                    <td class="status-Available">Available</td>
+                </tr>
+
+
+
+                <!-- Add More VIP Rooms Up to V003 -->
+
+        </table>
+
+
+
+
+        <button class="btn" onclick="prevPage()">◄ Previous</button>
+        <button class="btn" onclick="nextPage()">Next ►</button>
+
+    </section>
+
+    <footer>
+        © 2025 Petrosia Hotel - Privacy Policy
+    </footer>
+
+    <script src="~/js/admin-script.js"></script>
+
+</body>
+</html>
