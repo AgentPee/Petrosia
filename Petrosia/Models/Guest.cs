@@ -3,25 +3,37 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Petrosia.Models;
-
-public partial class Guest
+namespace Petrosia.Models
 {
-    [Key]
-    public int GuestId { get; set; }
+    public partial class Guest
+    {
+        [Key]
+        public int GuestId { get; set; }
 
-    
-    public string LastName { get; set; } = null!;
+        [Required(ErrorMessage = "Last name is required")]
+        
+        public string LastName { get; set; } = string.Empty;
 
-    public string FirstName { get; set; } = null!;
+        [Required(ErrorMessage = "First name is required")]
+        
+        public string FirstName { get; set; } = string.Empty;
 
-    public string Email { get; set; } = null!;
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
+        public string Email { get; set; } = string.Empty;
 
-    public string PhoneNumber { get; set; } = null!;
+        [Required(ErrorMessage = "Phone number is required")]
+        [Phone(ErrorMessage = "Invalid phone number format")]
+        public string PhoneNumber { get; set; } = string.Empty;
 
-    public string Address { get; set; } = null!;
+        [Required(ErrorMessage = "Address is required")]
+        [EmailAddress(ErrorMessage = "Need address")]
+        public string Address { get; set; } = string.Empty;
 
-    public string Password { get; set; } = null!;
+        [Required(ErrorMessage = "Password is required")]
+        [MinLength(6, ErrorMessage = "Password must be at least 6 characters long")]
+        public string Password { get; set; } = string.Empty;
 
-    public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
+        public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
+    }
 }

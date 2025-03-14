@@ -38,15 +38,8 @@ public class HomeController : Controller
         return View(allAdmins);
     }
 
-    public IActionResult SignUp() 
-    {
-        return View();
-    }
-
-    public IActionResult SignIn() 
-    {
-        return View();
-    }
+    
+    
 
     public IActionResult Guest()
     {

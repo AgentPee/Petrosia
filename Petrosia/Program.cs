@@ -2,16 +2,19 @@ using Microsoft.EntityFrameworkCore;
 using Petrosia.Models;
 using System.Configuration;
 using Microsoft.Extensions.Logging;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<UserManagement1Context>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 21))
-    ));
+        new MySqlServerVersion(new Version(8, 0, 21)),
+        mysqlOptions => mysqlOptions.EnableRetryOnFailure()
+        ));
 
 
 
@@ -25,7 +28,7 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<UserManagement1Context>();
     try
     {
-        dbContext.Database.EnsureCreated();
+        dbContext.Database.Migrate();
         Console.WriteLine("Database connection successful!");
     }
     catch (Exception ex)

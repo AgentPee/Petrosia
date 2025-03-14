@@ -13,7 +13,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url('banner.jpg') no-repeat center center/cover;
+            background: url("../images/banner.jpg") no-repeat center center/cover;
             margin: 0;
         }
 
@@ -56,47 +56,7 @@
             transition: border-color 0.3s, padding-top 0.3s;
         }
 
-        .input-container label {
-            position: absolute;
-            top: 50%;
-            left: 12px;
-            transform: translateY(-50%);
-            font-size: small;
-            color: white;
-            background: transparent;
-            padding: 0 5px;
-            transition: all 0.3s ease-in-out;
-            pointer-events: none;
-        }
-
-        /* Effect when user focuses or types */
-        .input-container input:focus,
-        .input-container input:not(:placeholder-shown) {
-            border-color: #1E90FF;
-            padding-top: 18px; /* Adjust padding to keep text aligned */
-        }
-
-        .input-container input:focus ~ label,
-        .input-container input:not(:placeholder-shown) ~ label {
-            top: 0px;
-            left: 8px;
-            font-size: 12px;
-            color: #1E90FF;
-            background: black; /* Matches form background */
-            padding: 0 4px;
-        }
-
-        /* This creates the "border break" effect */
-        .input-container input:focus ~ label::before,
-        .input-container input:not(:placeholder-shown) ~ label::before {
-            content: '';
-            position: absolute;
-            width: 5px;
-            height: 2px;
-            background: black;
-            top: 50%;
-            left: -5px;
-        }
+           
 
         .button-container {
         display: flex;
@@ -123,6 +83,11 @@ button:hover {
     color: white;
 }
 
+.link-signIn {
+    color: #1E90FF;
+    text-decoration: none;
+}
+
     </style>
 </head>
 <body>
@@ -132,58 +97,57 @@ button:hover {
 
         <h2>Sign Up</h2>
         <form asp-action="SignUp" asp-controller="Auth" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="input-container">
-
-                <label>First Name</label>
-                <input asp-for="FirstName" />
-                <span asp-validation-for="FirstName"></span>
-
-            </div>
-            <div class="input-container">
-
-                <label>Last Name</label>
-                <input asp-for="LastName" />
-                <span asp-validation-for="LastName"></span>
-
-            </div>
-            <div class="input-container">
-
-                <label>Email</label>
-                <input asp-for="Email" type="email" />
-                <span asp-validation-for="Email"></span>
-
+                
+                <input asp-for="FirstName" placeholder="Enter your first name" name="FirstName">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
 
             <div class="input-container">
-
-                <label>Phone Number</label>
-                <input asp-for="PhoneNumber" />
-                <span asp-validation-for="PhoneNumber"></span>
-
-            </div>
-            <div class="input-container">
-
-                <label>Address</label>
-                <input asp-for="Address" />
-                <span asp-validation-for="Address"></span>
-
+                
+                <input asp-for="LastName" placeholder="Enter your last name" name="LastName">
+                <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
 
             <div class="input-container">
-
-                <label>Password</label>
-                <input asp-for="Password" type="password" />
-                <span asp-validation-for="Password"></span>
-
+                
+                <input asp-for="Email" type="email" placeholder="Enter your email" name="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+
+            <div class="input-container">
+                
+                <input asp-for="PhoneNumber" placeholder="Enter your phone number" name="PhoneNumber">
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="input-container">
+                
+                <input asp-for="Address" placeholder="Enter Address" name="Address">
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="input-container">
+                
+                <input asp-for="Password" type="password" placeholder="Enter your password" name="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
             <div class="button-container">
                 <button type="submit">Sign Up</button>
             </div>
-            <p style="color: white; margin-top: 15px; font-size: 14px;">
-                Already have an account? <a href="signin.html" style="color: #1E90FF; text-decoration: none;">Sign In</a>
-            </p>
 
+            <p style="color: white; margin-top: 15px; font-size: 14px;">
+                Already have an account? <a class="link-signIn" href="@Url.Action("SignIn", "Auth")">Sign In</a>
+            </p>
         </form>
+
+        @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+        }
     </div>
+    
 </body>
 </html>
