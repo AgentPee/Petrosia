@@ -77,11 +77,11 @@ namespace Petrosia.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                Console.WriteLine("🎉 User added successfully: " + newGuest.Email);
+                Console.WriteLine(" User added successfully: " + newGuest.Email);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("❌ Error saving user: " + ex.Message);
+                Console.WriteLine(" Error saving user: " + ex.Message);
             }
 
             return RedirectToAction("SignIn");
