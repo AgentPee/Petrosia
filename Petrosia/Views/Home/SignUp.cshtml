@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model Petrosia.Models.Guest
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -125,27 +127,54 @@ button:hover {
 </head>
 <body>
     <div class="container">
+
+        
+
         <h2>Sign Up</h2>
-        <form>
+        <form asp-action="SignUp" asp-controller="Auth" method="post">
             <div class="input-container">
-                <input type="text" id="firstname" name="firstname" placeholder=" " required>
-                <label for="firstname">First Name</label>
+
+                <label>First Name</label>
+                <input asp-for="FirstName" />
+                <span asp-validation-for="FirstName"></span>
+
             </div>
             <div class="input-container">
-                <input type="text" id="lastname" name="lastname" placeholder=" " required>
-                <label for="lastname">Last Name</label>
+
+                <label>Last Name</label>
+                <input asp-for="LastName" />
+                <span asp-validation-for="LastName"></span>
+
             </div>
             <div class="input-container">
-                <input type="text" id="address" name="address" placeholder=" " required>
-                <label for="address">Address</label>
+
+                <label>Email</label>
+                <input asp-for="Email" type="email" />
+                <span asp-validation-for="Email"></span>
+
+            </div>
+
+            <div class="input-container">
+
+                <label>Phone Number</label>
+                <input asp-for="PhoneNumber" />
+                <span asp-validation-for="PhoneNumber"></span>
+
             </div>
             <div class="input-container">
-                <input type="email" id="email" name="email" placeholder=" " required>
-                <label for="email">Email</label>
+
+                <label>Address</label>
+                <input asp-for="Address" />
+                <span asp-validation-for="Address"></span>
+
             </div>
+
             <div class="input-container">
-                <input type="password" id="password" name="password" placeholder=" " required>
-                <label for="password">Password</label>
+
+                <label>Password</label>
+                <input asp-for="Password" type="password" />
+                <span asp-validation-for="Password"></span>
+
             </div>
             <div class="button-container">
                 <button type="submit">Sign Up</button>
