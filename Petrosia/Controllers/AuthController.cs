@@ -58,18 +58,18 @@ namespace Petrosia.Controllers
 
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("❌ ModelState is INVALID. Errors:");
+                Console.WriteLine(" ModelState is INVALID. Errors:");
                 foreach (var state in ModelState)
                 {
                     foreach (var error in state.Value.Errors)
                     {
-                        Console.WriteLine($"⚠️ Field: {state.Key}, Error: {error.ErrorMessage}");
+                        Console.WriteLine($" Field: {state.Key}, Error: {error.ErrorMessage}");
                     }
                 }
                 return View(newGuest);
             }
 
-            Console.WriteLine("✅ Model validation passed!");
+            Console.WriteLine(" Model validation passed!");
 
             newGuest.Password = HashPassword(newGuest.Password);
             _context.Guests.Add(newGuest);
@@ -87,7 +87,7 @@ namespace Petrosia.Controllers
             return RedirectToAction("SignIn");
         }
 
-        // ✅ Fix: Define HashPassword method here
+        
         private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
