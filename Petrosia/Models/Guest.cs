@@ -27,12 +27,14 @@ namespace Petrosia.Models
         public string PhoneNumber { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Address is required")]
-        [EmailAddress(ErrorMessage = "Need address")]
         public string Address { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Password is required")]
         [MinLength(6, ErrorMessage = "Password must be at least 6 characters long")]
         public string Password { get; set; } = string.Empty;
+
+        [Required]
+        public string Role { get; set; } = "Guest";
 
         public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
     }

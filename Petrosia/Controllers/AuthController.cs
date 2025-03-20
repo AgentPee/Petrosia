@@ -71,7 +71,8 @@ namespace Petrosia.Controllers
 
             Console.WriteLine(" Model validation passed!");
 
-            newGuest.Password = HashPassword(newGuest.Password);
+            newGuest.Password = _passwordHasher.HashPassword(newGuest, newGuest.Password);
+            Console.WriteLine($"🔑 Hashed Password: {newGuest.Password}");
             _context.Guests.Add(newGuest);
 
             try
@@ -88,19 +89,52 @@ namespace Petrosia.Controllers
         }
 
         
-        private string HashPassword(string password)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
-            }
-        }
+        
 
         [HttpGet("SignIn")]
         public IActionResult SignIn()
         {
             return View();
         }
+
+        [HttpPost("SignIn")]
+        public async Task<IActionResult> SignIn(string email, string password)
+        {
+            Console.WriteLine($"🔍 Login Attempt: Email={email}");
+
+            var guest = _context.Guests.FirstOrDefault(u => u.Email == email);
+            if (guest == null)
+            {
+                Console.WriteLine("❌ User not found.");
+                ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                return View();
+            }
+
+            // Log the stored hashed password
+            Console.WriteLine($"🔑 Stored Hashed Password: {guest.Password}");
+
+            // Log the entered password before hashing
+            Console.WriteLine($"🔑 Entered Password: {password}");
+
+
+            var result = _passwordHasher.VerifyHashedPassword(guest, guest.Password, password);
+
+            Console.WriteLine($"🔍 Password Verification Result: {result}");
+
+            if (result == PasswordVerificationResult.Failed)
+            {
+                Console.WriteLine("❌ Incorrect password.");
+                ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                return View();
+            }
+
+            Console.WriteLine("✅ Login successful!");
+            HttpContext.Session.SetString("UserEmail", guest.Email);
+            HttpContext.Session.SetInt32("UserId", guest.GuestId);
+
+            return RedirectToAction("Dashboard");
+        }
+
+
     }
 }

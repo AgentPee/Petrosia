@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model Petrosia.Models.Guest
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -83,6 +85,11 @@
                     background: black;
                     padding: 0 4px;
                 }
+                
+                .link-signUp {
+                    color: #1E90FF;
+                    text-decoration: none;
+                }
 
         .button-container {
             display: flex;
@@ -114,22 +121,29 @@
 <body>
     <div class="container">
         <h2>Sign In</h2>
-        <form>
+        <form asp-action="SignIn" asp-controller="Auth" method="post">
             <div class="input-container">
-                <input type="email" id="email" name="email" placeholder=" " required>
-                <label for="email">Email</label>
+                <label>Email</label>
+                <input type="email" name="email" required>
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="input-container">
-                <input type="password" id="password" name="password" placeholder=" " required>
-                <label for="password">Password</label>
+                <label>Password</label>
+                <input type="password" name="password" required>
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="button-container">
                 <button type="submit">Sign In</button>
             </div>
             <p style="color: white; margin-top: 15px; font-size: 14px;">
-                Doesn't have an account? <a href="@Url.Action("SignUp", "Auth"), style="color: #1E90FF; text-decoration: none;">Sign Up</a>
+                Doesn't have an account? <a class="link-signUp" href="@Url.Action("SignUp", "Auth")">Sign Up</a>
             </p>
+            <div asp-validation-summary="All" class="text-danger"></div>
         </form>
+        @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+        }
+
     </div>
 </body>
 </html>
