@@ -29,14 +29,25 @@
             <div class="nav-links" id="navLinks">
                 <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
                 <ul>
-                    <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
-                    <li><a href="@Url.Action("About", "Home")">About</a></li>
-                    <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
-                    <li><a href="@Url.Action("Gallery", "Home")">GALLERY</a></li>
-                    <li><a href="@Url.Action("Admin", "Home")">ADMIN</a></li>
-                    <li><a href="@Url.Action("Guest", "Home")">GUEST</a></li>
-                    <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
-                    <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                        <li><a href="@Url.Action("About", "Home")">About</a></li>
+                        <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                        <li><a href="@Url.Action("Gallery", "Home")">GALLERY</a></li>
+                        <li><a href="@Url.Action("Admin", "Home")">ADMIN</a></li>
+                        <li><a href="@Url.Action("Guest", "Home")">GUEST</a></li>
+                        <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                        <li><a href="@Url.Action("About", "Home")">About</a></li>
+                        <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                        <li><a href="@Url.Action("Gallery", "Home")">GALLERY</a></li>
+                        <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
+                        <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
+                    }
                 </ul>
             </div>
             <i class="fa-solid fa-bars" onclick="showMenu()"></i>

@@ -172,7 +172,7 @@ namespace Petrosia.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                return RedirectToAction("Dashboard", "Home"); // Redirect to guest homepage
+                return RedirectToAction("Index", "Home"); // Redirect to guest homepage
             }
             else if (admin != null)
             {
@@ -205,8 +205,8 @@ namespace Petrosia.Controllers
         [HttpGet("Logout")]
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear();
-            return RedirectToAction("SignIn");
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet("AccessDenied")]

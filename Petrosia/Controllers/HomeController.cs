@@ -50,11 +50,6 @@ public class HomeController : Controller
         return View(allGuests);
     }
 
-    
-    public IActionResult Dashboard() 
-    {
-        return View();
-    }
 
 }
 
