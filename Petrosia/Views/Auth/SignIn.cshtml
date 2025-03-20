@@ -1,5 +1,6 @@
 ﻿@model Petrosia.Models.Guest
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,13 +124,13 @@
         <h2>Sign In</h2>
         <form asp-action="SignIn" asp-controller="Auth" method="post">
             <div class="input-container">
-                <label>Email</label>
-                <input type="email" name="email" required>
+                
+                <input type="email" name="email" placeholder="enter email" required>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="input-container">
-                <label>Password</label>
-                <input type="password" name="password" required>
+               
+                <input type="password" name="password" placeholder="enter password" required>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="button-container">

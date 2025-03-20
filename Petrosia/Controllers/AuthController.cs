@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 namespace Petrosia.Controllers
 {
@@ -103,7 +107,9 @@ namespace Petrosia.Controllers
             Console.WriteLine($"🔍 Login Attempt: Email={email}");
 
             var guest = _context.Guests.FirstOrDefault(u => u.Email == email);
-            if (guest == null)
+            var admin = _context.Admins.FirstOrDefault(a => a.Email == email);
+
+            if (guest == null && admin == null)
             {
                 Console.WriteLine("❌ User not found.");
                 ModelState.AddModelError(string.Empty, "Invalid email or password.");
@@ -111,14 +117,27 @@ namespace Petrosia.Controllers
             }
 
             // Log the stored hashed password
-            Console.WriteLine($"🔑 Stored Hashed Password: {guest.Password}");
+            var passwordHasher = new PasswordHasher<object>(); // Generic type to handle both Admin and Guest
+            PasswordVerificationResult result;
 
-            // Log the entered password before hashing
+            string storedPassword;
+            string userRole;
+
+            if (guest != null)
+            {
+                storedPassword = guest.Password;
+                result = passwordHasher.VerifyHashedPassword(guest, storedPassword, password);
+                userRole = "Guest";
+            }
+            else
+            {
+                storedPassword = admin.Password;
+                result = passwordHasher.VerifyHashedPassword(admin, storedPassword, password);
+                userRole = "Admin";
+            }
+
+            Console.WriteLine($"🔑 Stored Hashed Password: {storedPassword}");
             Console.WriteLine($"🔑 Entered Password: {password}");
-
-
-            var result = _passwordHasher.VerifyHashedPassword(guest, guest.Password, password);
-
             Console.WriteLine($"🔍 Password Verification Result: {result}");
 
             if (result == PasswordVerificationResult.Failed)
@@ -129,10 +148,71 @@ namespace Petrosia.Controllers
             }
 
             Console.WriteLine("✅ Login successful!");
-            HttpContext.Session.SetString("UserEmail", guest.Email);
-            HttpContext.Session.SetInt32("UserId", guest.GuestId);
 
-            return RedirectToAction("Dashboard");
+            HttpContext.Session.SetString("UserEmail", email);
+            HttpContext.Session.SetString("UserRole", userRole);
+            HttpContext.Session.SetInt32("UserId", guest != null ? guest.GuestId : admin.AdminId);
+
+            //admin token
+            //var guest = _context.Guests.FirstOrDefault(g => g.Email == login.Email);
+            //var admin = _context.Admins.FirstOrDefault(a => a.Email == login.Email);
+
+            if (guest != null)
+            {
+                var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, guest.Email),
+        new Claim(ClaimTypes.Role, "Guest") // Assign "Guest" role
+    };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProperties = new AuthenticationProperties();
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
+
+                return RedirectToAction("Dashboard", "Home"); // Redirect to guest homepage
+            }
+            else if (admin != null)
+            {
+                var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, admin.Email),
+        new Claim(ClaimTypes.Role, "Admin") // Assign "Admin" role
+    };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProperties = new AuthenticationProperties();
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
+
+                return RedirectToAction("Admin", "Home"); // Redirect to admin panel
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                return View();
+            }
+
+
+
+            //return userRole == "Admin" ? RedirectToAction("Admin", "Home") : RedirectToAction("Dashboard", "Home");
+        }
+
+        [HttpGet("Logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("SignIn");
+        }
+
+        [HttpGet("AccessDenied")]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
 

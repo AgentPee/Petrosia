@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Petrosia.Models;
 
@@ -32,19 +33,28 @@ public class HomeController : Controller
         return View();
     }
 
+    [Authorize(Roles = "Admin")]
     public IActionResult Admin() 
     {
         var allAdmins = _context.Admins.ToList();
         return View(allAdmins);
     }
 
-    
-    
 
+
+
+    [Authorize(Roles = "Admin")]
     public IActionResult Guest()
     {
         var allGuests = _context.Guests.ToList();
         return View(allGuests);
     }
+
+    
+    public IActionResult Dashboard() 
+    {
+        return View();
+    }
+
 }
 
