@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petrosia Hotel - Records</title>
     <link rel="stylesheet" href="~/css/admin-styles.css" asp-append-version="true" />
+    
+
+    
 
 </head>
 <body>
@@ -25,16 +28,16 @@
 
 
         <!-- Room Service Table (Initially Hidden) -->
-        <table id="roomServiceTable">
+        <table class="table table-bordered table-striped">
 
             <thead>
-                <tr>
+                <tr class="text-center">
 
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Phone Number</th>
-
+                    <th>Address</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -48,63 +51,39 @@
                         <td>@guest.LastName</td>
                         <td>@guest.Email</td>
                         <td>@guest.PhoneNumber</td>
-
+                        <td>@guest.Address</td>
                         <td>
-                            <button class="btn" onclick="editRecord(this)">Edit</button>
-                            <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
+
+                            <form style="display:inline;" action="@Url.Action("EditGuest", "Home")" method="get">
+                                <input type="hidden" name="id" value="@guest.GuestId" />
+                                <button type="submit" class="btn btn-warning">Edit</button>
+                            </form>
+
+                            
+                            <form style="display:inline;" action="@Url.Action("DeleteGuest", "Home")" method="post">
+                                <input type="hidden" name="id" value="@guest.GuestId" />
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     }
             </tbody>
         </table>
 
-        <!-- Rooms Table (Initially Hidden) -->
-        <table id="roomsTable" style="display: none;">
-            <thead>
-                <tr>
-                    <th>Room ID</th>
-                    <th>Room Number</th>
-                    <th>Room Type</th>
-                    <th>Capacity</th>
-                    <th>Price</th>
-                    <th>Availability</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Standard Rooms (10 rooms) -->
-
-
-            <tbody>
-                <!-- Standard Rooms (10) -->
-                <tr>
-                    <td>S01</td>
-                    <td>1</td>
-                    <td>Standard</td>
-                    <td>2</td>
-                    <td>₱1,500</td>
-                    <td class="status-Available">Available</td>
-                </tr>
-
-
-
-                <!-- Add More VIP Rooms Up to V003 -->
-
-        </table>
-
-
-
-
-        <button class="btn" onclick="prevPage()">◄ Previous</button>
+        <form class="page-control" style="display:inline;" action="@Url.Action("Admin", "Home")">
+            <button class="btn" onclick="prevPage()">◄ Previous</button>
+        </form>
+        <form class="page-control" style="display:inline;" action="@Url.Action("Admin", "Home")">
         <button class="btn" onclick="nextPage()">Next ►</button>
+        </form>
 
     </section>
 
-    <footer>
+    <footer class="text-center mt-5">
         © 2025 Petrosia Hotel - Privacy Policy
     </footer>
 
-    <script src="~/js/admin-script.js"></script>
-
+    
+    
 </body>
 </html>

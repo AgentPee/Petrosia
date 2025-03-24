@@ -45,7 +45,7 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    
 }
 
 th, td {
@@ -59,8 +59,13 @@ th {
     color: white;
 }
 
+.footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
 /* Buttons */
-.btn {
+button {
     margin-top: px;
     padding: 8px 12px;
     background-color: #d1b88d;
@@ -71,7 +76,9 @@ th {
     border-radius: 5px;
 }
 
-.btn:hover {
+
+
+/*.btn:hover {
     background-color: #b89b6f;
 }
 
@@ -86,7 +93,7 @@ th {
 
 .btn-danger:hover {
     background-color: rgb(39, 39, 39);
-}
+}*/
 
 /* Search Bar */
 .input-group {

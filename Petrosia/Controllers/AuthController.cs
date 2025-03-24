@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Petrosia.Models; // Adjust namespace if needed
+using Petrosia.Models; 
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -76,7 +76,7 @@ namespace Petrosia.Controllers
             Console.WriteLine(" Model validation passed!");
 
             newGuest.Password = _passwordHasher.HashPassword(newGuest, newGuest.Password);
-            Console.WriteLine($"🔑 Hashed Password: {newGuest.Password}");
+            Console.WriteLine($" Hashed Password: {newGuest.Password}");
             _context.Guests.Add(newGuest);
 
             try
@@ -104,14 +104,14 @@ namespace Petrosia.Controllers
         [HttpPost("SignIn")]
         public async Task<IActionResult> SignIn(string email, string password)
         {
-            Console.WriteLine($"🔍 Login Attempt: Email={email}");
+            Console.WriteLine($" Login Attempt: Email={email}");
 
             var guest = _context.Guests.FirstOrDefault(u => u.Email == email);
             var admin = _context.Admins.FirstOrDefault(a => a.Email == email);
 
             if (guest == null && admin == null)
             {
-                Console.WriteLine("❌ User not found.");
+                Console.WriteLine(" User not found.");
                 ModelState.AddModelError(string.Empty, "Invalid email or password.");
                 return View();
             }
@@ -136,18 +136,18 @@ namespace Petrosia.Controllers
                 userRole = "Admin";
             }
 
-            Console.WriteLine($"🔑 Stored Hashed Password: {storedPassword}");
-            Console.WriteLine($"🔑 Entered Password: {password}");
-            Console.WriteLine($"🔍 Password Verification Result: {result}");
+            Console.WriteLine($" Stored Hashed Password: {storedPassword}");
+            Console.WriteLine($" Entered Password: {password}");
+            Console.WriteLine($" Password Verification Result: {result}");
 
             if (result == PasswordVerificationResult.Failed)
             {
-                Console.WriteLine("❌ Incorrect password.");
+                Console.WriteLine(" Incorrect password.");
                 ModelState.AddModelError(string.Empty, "Invalid email or password.");
                 return View();
             }
 
-            Console.WriteLine("✅ Login successful!");
+            Console.WriteLine(" Login successful!");
 
             HttpContext.Session.SetString("UserEmail", email);
             HttpContext.Session.SetString("UserRole", userRole);
@@ -172,7 +172,7 @@ namespace Petrosia.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                return RedirectToAction("Index", "Home"); // Redirect to guest homepage
+                return RedirectToAction("Index", "Home"); 
             }
             else if (admin != null)
             {
@@ -189,7 +189,7 @@ namespace Petrosia.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                return RedirectToAction("Admin", "Home"); // Redirect to admin panel
+                return RedirectToAction("Admin", "Home"); 
             }
             else
             {

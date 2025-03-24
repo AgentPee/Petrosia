@@ -24,8 +24,8 @@
      
         
 
-        <!-- Room Service Table (Initially Hidden) -->
-        <table id="roomServiceTable" >
+        
+        <table  >
 
             <thead>
                 <tr>
@@ -52,53 +52,32 @@
                         <td>@admin.PhoneNumber</td>
 
                         <td>
-                            <button class="btn" onclick="editRecord(this)">Edit</button>
-                            <button class="btn-danger" onclick="deleteRecord(this)">Delete</button>
+                            <form style="display:inline;" action="@Url.Action("EditAdmin", "Home")" method="get">
+                                <input type="hidden" name="id" value="@admin.AdminId" />
+                                <button type="submit" class="btn btn-warning">Edit</button>
+                            </form>
+
+                            <form style="display:inline;" action="@Url.Action("DeleteAdmin", "Home")" method="post">
+                                <input type="hidden" name="id" value="@admin.AdminId" />
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     }
             </tbody>
         </table>
 
-        <!-- Rooms Table (Initially Hidden) -->
-        <table id="roomsTable" style="display: none;">
-            <thead>
-                <tr>
-                    <th>Room ID</th>
-                    <th>Room Number</th>
-                    <th>Room Type</th>
-                    <th>Capacity</th>
-                    <th>Price</th>
-                    <th>Availability</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Standard Rooms (10 rooms) -->
-
-
-            <tbody>
-                <!-- Standard Rooms (10) -->
-                <tr>
-                    <td>S01</td>
-                    <td>1</td>
-                    <td>Standard</td>
-                    <td>2</td>
-                    <td>₱1,500</td>
-                    <td class="status-Available">Available</td>
-                </tr>
-               
-
-
-            <!-- Add More VIP Rooms Up to V003 -->
-            
-        </table>
+       
 
 
 
 
-        <button class="btn" onclick="prevPage()">◄ Previous</button>
-        <button class="btn" onclick="nextPage()">Next ►</button>
+        <form class="page-control" style="display:inline;" action="@Url.Action("Guest", "Home")">
+            <button class="btn" onclick="prevPage()">◄ Previous</button>
+        </form>
+        <form class="page-control" style="display:inline;" action="@Url.Action("Guest", "Home")">
+            <button class="btn" onclick="nextPage()">Next ►</button>
+        </form>
 
     </section>
 
@@ -106,7 +85,7 @@
         © 2025 Petrosia Hotel - Privacy Policy
     </footer>
 
-    <script src="~/js/admin-script.js"></script>
+    
 
 </body>
 </html>
