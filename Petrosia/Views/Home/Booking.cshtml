@@ -1,0 +1,195 @@
+﻿@{
+    ViewData["Title"] = "Book a Room";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel - Book a Room</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery for AJAX -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        html, body {
+            overflow-x: hidden;
+        }
+
+        .header {
+            min-height: 100vh;
+            background: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)), url("../images/banner.jpg") center/cover no-repeat;
+            position: relative;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            padding: 0 6%;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+        }
+
+            nav img {
+                width: 60px;
+                margin-top: 30px;
+            }
+
+        .nav-links ul {
+            text-align: right;
+        }
+
+            .nav-links ul li {
+                display: inline-block;
+                padding: 8px 12px;
+                list-style: none;
+            }
+
+                .nav-links ul li a {
+                    color: #333;
+                    text-decoration: none;
+                    font-size: 18px;
+                }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px);
+            padding: 2rem;
+        }
+
+        .booking-form {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+            .booking-form h2 {
+                text-align: center;
+                margin-bottom: 1.5rem;
+                color: #2c3e50;
+            }
+
+            .booking-form label {
+                font-weight: bold;
+                color: #2c3e50;
+            }
+
+            .booking-form input,
+            .booking-form select {
+                padding: 0.75rem;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 1rem;
+                width: 100%;
+            }
+
+            .booking-form button {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                padding: 0.75rem;
+                border-radius: 4px;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                margin-top: 1rem;
+            }
+
+                .booking-form button:hover {
+                    background-color: #2980b9;
+                }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="@Url.Action("Index", "Home")"><img src="images/logo.png"></a>
+        <div class="nav-links">
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                <li><a href="@Url.Action("Gallery", "Home")">Gallery</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
+                    <li><a href="@Url.Action("Guest", "Home")">Guest</a></li>
+                    <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
+                }
+                else
+                {
+                    <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
+                    <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
+                }
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="booking-form">
+            <h2>Book a Room</h2>
+            <form id="bookingForm">
+                @Html.AntiForgeryToken() <!-- CSRF protection -->
+
+                <label for="checkin">Check-in:</label>
+                <input type="date" id="checkin" name="CheckInDate" required>
+
+                <label for="checkout">Check-out:</label>
+                <input type="date" id="checkout" name="CheckOutDate" required>
+
+                <label for="room">Select a Room:</label>
+                <select id="room" name="RoomType" required>
+                    <option value="" disabled selected>-- Select --</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="VIP">VIP</option>
+                </select>
+
+                <label for="adults">Adults:</label>
+                <input type="number" id="adults" name="Adults" min="1" value="1" required>
+
+                <label for="children">Children:</label>
+                <input type="number" id="children" name="Children" min="0" value="0" required>
+
+                <button type="submit">Book Now</button>
+            </form>
+
+            <div id="confirmation" class="hidden"></div>
+        </div>
+    </main>
+
+    <script>
+               document.getElementById("bookNowButton").addEventListener("click", function (event) {
+            let checkIn = document.getElementById("checkIn").value;
+            let checkOut = document.getElementById("checkOut").value;
+            let roomType = document.getElementById("roomType").value;
+            let adults = document.getElementById("adults").value;
+
+            if (!checkIn || !checkOut || !roomType || adults <= 0) {
+                alert("Please fill all required fields correctly.");
+                event.preventDefault();
+            }
+        });
+
+    </script>
+
+
+</body>
+</html>

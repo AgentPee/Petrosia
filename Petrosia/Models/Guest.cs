@@ -37,5 +37,6 @@ namespace Petrosia.Models
         public string Role { get; set; } = "Guest";
 
         public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
+        public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }

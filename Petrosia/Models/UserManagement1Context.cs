@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
+using Petrosia.Models;  // Ensure this matches the actual namespace
 
 namespace Petrosia.Models;
 
@@ -17,14 +18,10 @@ public partial class UserManagement1Context : DbContext
     }
 
     public virtual DbSet<Admin> Admins { get; set; }
-
     public virtual DbSet<Guest> Guests { get; set; }
-
     public virtual DbSet<HouseKeeping> HouseKeepings { get; set; }
-
     public virtual DbSet<Room> Rooms { get; set; }
-
-    
+    public virtual DbSet<Booking> Bookings { get; set; } // Added Bookings DbSet
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -135,6 +132,45 @@ public partial class UserManagement1Context : DbContext
                 .HasForeignKey(d => d.GuestId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("guest_room");
+        });
+
+        modelBuilder.Entity<Booking>(entity =>
+        {
+            entity.HasKey(e => e.BookingId).HasName("PRIMARY");
+
+            entity.ToTable("booking");
+
+            entity.Property(e => e.BookingId)
+                .HasColumnType("int(11)")
+                .HasColumnName("Booking_ID");
+
+            entity.Property(e => e.GuestId)
+                .HasColumnType("int(11)")
+                .HasColumnName("Guest_ID");
+
+            entity.Property(e => e.RoomId)
+                .HasColumnType("int(11)")
+                .HasColumnName("Room_ID");
+
+            entity.Property(e => e.CheckInDate)
+                .HasColumnType("datetime")
+                .HasColumnName("Check_In_Date");
+
+            entity.Property(e => e.CheckOutDate)
+                .HasColumnType("datetime")
+                .HasColumnName("Check_Out_Date");
+
+            entity.HasOne(d => d.Guest)
+                .WithMany(p => p.Bookings)
+                .HasForeignKey(d => d.GuestId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_booking_guest");
+
+            entity.HasOne(d => d.Room)
+                .WithMany(p => p.Bookings)
+                .HasForeignKey(d => d.RoomId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_booking_room");
         });
 
         OnModelCreatingPartial(modelBuilder);

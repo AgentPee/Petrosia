@@ -1,25 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Petrosia.Models;
-
-public partial class Room
+namespace Petrosia.Models
 {
-    public int RoomId { get; set; }
+    public class Room
+    {
+        [Key]
+        public int RoomId { get; set; }
 
-    public int GuestId { get; set; }
+        // ✅ Add RoomNumber property
+        [Required]
+        public int RoomNumber { get; set; }
 
-    public string RoomNumber { get; set; } = null!;
+        [Required]
+        public string RoomType { get; set; } = string.Empty;
 
-    public string RoomType { get; set; } = null!;
+        [Required]
+        public int Capacity { get; set; }
 
-    public int Capacity { get; set; }
+        [Required]
+        public decimal Price { get; set; }
 
-    public string Status { get; set; } = null!;
+        public string Status { get; set; } = "Available";
 
-    public decimal Price { get; set; }
+        // ✅ Add GuestId (Nullable in case the room is unassigned)
+        public int? GuestId { get; set; }
 
-    public virtual Guest Guest { get; set; } = null!;
+        // ✅ Navigation property for Guest
+        public virtual Guest? Guest { get; set; }
 
-    public virtual ICollection<HouseKeeping> HouseKeepings { get; set; } = new List<HouseKeeping>();
+        // ✅ Navigation property for Bookings
+        public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
+        // ✅ Navigation property for HouseKeepings
+        public virtual ICollection<HouseKeeping> HouseKeepings { get; set; } = new List<HouseKeeping>();
+    }
 }
+
