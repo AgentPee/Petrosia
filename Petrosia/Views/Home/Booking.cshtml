@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Book a Room";
+    ViewData["Title"] = "Book Your Stay | Petrosia Hotel";
 }
 
 <!DOCTYPE html>
@@ -7,189 +7,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Petrosia Hotel - Book a Room</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery for AJAX -->
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-        }
-
-        html, body {
-            overflow-x: hidden;
-        }
-
-        .header {
-            min-height: 100vh;
-            background: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)), url("../images/banner.jpg") center/cover no-repeat;
-            position: relative;
-        }
-
-        /* Navigation */
-        nav {
-            display: flex;
-            padding: 0 6%;
-            justify-content: space-between;
-            align-items: center;
-            background: #fff;
-        }
-
-            nav img {
-                width: 60px;
-                margin-top: 30px;
-            }
-
-        .nav-links ul {
-            text-align: right;
-        }
-
-            .nav-links ul li {
-                display: inline-block;
-                padding: 8px 12px;
-                list-style: none;
-            }
-
-                .nav-links ul li a {
-                    color: #333;
-                    text-decoration: none;
-                    font-size: 18px;
-                }
-
-        main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: calc(100vh - 120px);
-            padding: 2rem;
-        }
-
-        .booking-form {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            width: 100%;
-            max-width: 500px;
-        }
-
-            .booking-form h2 {
-                text-align: center;
-                margin-bottom: 1.5rem;
-                color: #2c3e50;
-            }
-
-            .booking-form label {
-                font-weight: bold;
-                color: #2c3e50;
-            }
-
-            .booking-form input,
-            .booking-form select {
-                padding: 0.75rem;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                font-size: 1rem;
-                width: 100%;
-            }
-
-            .booking-form button {
-                background-color: #3498db;
-                color: white;
-                border: none;
-                padding: 0.75rem;
-                border-radius: 4px;
-                font-size: 1rem;
-                cursor: pointer;
-                transition: background-color 0.3s;
-                margin-top: 1rem;
-            }
-
-                .booking-form button:hover {
-                    background-color: #2980b9;
-                }
-
-        .hidden {
-            display: none;
-        }
-
-    </style>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
+    <link rel="shortcut icon" type="x-icon" href="~/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <!-- AOS Library CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 </head>
 <body>
-
-    <nav>
-        <a href="@Url.Action("Index", "Home")"><img src="images/logo.png"></a>
-        <div class="nav-links">
-            <ul>
-                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-                <li><a href="@Url.Action("About", "Home")">About</a></li>
-                <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
-                <li><a href="@Url.Action("Gallery", "Home")">Gallery</a></li>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
-                    <li><a href="@Url.Action("Guest", "Home")">Guest</a></li>
-                    <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
-                }
-                else
-                {
-                    <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
-                    <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
-                }
-            </ul>
+    <!-------Booking Hero Section------->
+    <section class="booking-hero" data-aos="fade">
+        <div>
+            <h1>Book Your Stay</h1>
+            <p>Experience luxury and comfort at Petrosia Hotel. Reserve your perfect room today.</p>
         </div>
-    </nav>
+    </section>
 
-    <main>
-        <div class="booking-form">
-            <h2>Book a Room</h2>
-            <form id="bookingForm">
-                @Html.AntiForgeryToken() <!-- CSRF protection -->
+    <!-------Booking Form------->
+    <div class="booking-container">
+        <form class="booking-form" data-aos="fade-up">
+            <div class="form-header">
+                <h2>Reservation Details</h2>
+                <p>Fill in your information to secure your booking</p>
+            </div>
 
-                <label for="checkin">Check-in:</label>
-                <input type="date" id="checkin" name="CheckInDate" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="check-in">Check-in Date</label>
+                    <input type="date" id="check-in" required>
+                </div>
 
-                <label for="checkout">Check-out:</label>
-                <input type="date" id="checkout" name="CheckOutDate" required>
+                <div class="form-group">
+                    <label for="check-out">Check-out Date</label>
+                    <input type="date" id="check-out" required>
+                </div>
+            </div>
 
-                <label for="room">Select a Room:</label>
-                <select id="room" name="RoomType" required>
-                    <option value="" disabled selected>-- Select --</option>
-                    <option value="Standard">Standard</option>
-                    <option value="Luxury">Luxury</option>
-                    <option value="VIP">VIP</option>
-                </select>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="adults">Adults</label>
+                    <select id="adults" required>
+                        <option value="1">1 Adult</option>
+                        <option value="2">2 Adults</option>
+                        <option value="3">3 Adults</option>
+                        <option value="4">4 Adults</option>
+                    </select>
+                </div>
 
-                <label for="adults">Adults:</label>
-                <input type="number" id="adults" name="Adults" min="1" value="1" required>
+                <div class="form-group">
+                    <label for="children">Children</label>
+                    <select id="children">
+                        <option value="0">No Children</option>
+                        <option value="1">1 Child</option>
+                        <option value="2">2 Children</option>
+                        <option value="3">3 Children</option>
+                    </select>
+                </div>
+            </div>
 
-                <label for="children">Children:</label>
-                <input type="number" id="children" name="Children" min="0" value="0" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" required>
+                </div>
 
-                <button type="submit">Book Now</button>
-            </form>
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" required>
+                </div>
+            </div>
 
-            <div id="confirmation" class="hidden"></div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+            </div>
+
+            <!-------Room Selection------->
+            <div class="room-selection">
+                <h2>Select Your Room</h2>
+                <p>Choose from our luxurious accommodations</p>
+
+                <div class="room-option" data-aos="fade-up">
+                    <div class="room-image">
+                        <img src="~/images/deluxe-single.jpg" alt="Deluxe Single Room">
+                    </div>
+                    <div class="room-details">
+                        <h3>Deluxe Single Room</h3>
+                        <p>Perfect for solo travelers, our Deluxe Single Room offers comfort and style with a single bed and modern amenities.</p>
+                        <div class="room-features">
+                            <div class="room-feature">
+                                <i class="fa-solid fa-user"></i>
+                                <span>1 Adult</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-ruler-combined"></i>
+                                <span>21 sqm</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-bed"></i>
+                                <span>1 Single Bed</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-wifi"></i>
+                                <span>Free WiFi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-price">
+                        <div class="price">₱2,500</div>
+                        <div class="per-night">per night</div>
+                        <button type="button">Select Room</button>
+                    </div>
+                </div>
+
+                <div class="room-option" data-aos="fade-up" data-aos-delay="100">
+                    <div class="room-image">
+                        <img src="~/images/deluxe-double.jpg" alt="Deluxe Double Room">
+                    </div>
+                    <div class="room-details">
+                        <h3>Deluxe Double Room</h3>
+                        <p>Ideal for couples, featuring a comfortable double bed and elegant decor with all modern conveniences.</p>
+                        <div class="room-features">
+                            <div class="room-feature">
+                                <i class="fa-solid fa-user"></i>
+                                <span>2 Adults</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-ruler-combined"></i>
+                                <span>22-28 sqm</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-bed"></i>
+                                <span>1 Double Bed</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-wifi"></i>
+                                <span>Free WiFi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-price">
+                        <div class="price">₱3,200</div>
+                        <div class="per-night">per night</div>
+                        <button type="button">Select Room</button>
+                    </div>
+                </div>
+
+                <div class="room-option" data-aos="fade-up" data-aos-delay="200">
+                    <div class="room-image">
+                        <img src="~/images/deluxe-twin.jpg" alt="Deluxe Twin Room">
+                    </div>
+                    <div class="room-details">
+                        <h3>Deluxe Twin Room</h3>
+                        <p>Perfect for friends or small families, with two comfortable beds and ample space for relaxation.</p>
+                        <div class="room-features">
+                            <div class="room-feature">
+                                <i class="fa-solid fa-user"></i>
+                                <span>2 Adults + 2 Kids</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-ruler-combined"></i>
+                                <span>22-29 sqm</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-bed"></i>
+                                <span>1 Single & 1 Double Bed</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-wifi"></i>
+                                <span>Free WiFi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-price">
+                        <div class="price">₱3,800</div>
+                        <div class="per-night">per night</div>
+                        <button type="button">Select Room</button>
+                    </div>
+                </div>
+
+                <div class="room-option" data-aos="fade-up" data-aos-delay="300">
+                    <div class="room-image">
+                        <img src="~/images/junior-suite.jpg" alt="Junior Suite">
+                    </div>
+                    <div class="room-details">
+                        <h3>Junior Suite</h3>
+                        <p>Spacious accommodation with separate living area, perfect for extended stays or special occasions.</p>
+                        <div class="room-features">
+                            <div class="room-feature">
+                                <i class="fa-solid fa-user"></i>
+                                <span>2 Adults + 2 Kids</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-ruler-combined"></i>
+                                <span>70 sqm</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-bed"></i>
+                                <span>1 King Bed</span>
+                            </div>
+                            <div class="room-feature">
+                                <i class="fa-solid fa-wifi"></i>
+                                <span>Free WiFi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-price">
+                        <div class="price">₱5,500</div>
+                        <div class="per-night">per night</div>
+                        <button type="button">Select Room</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="room-option" data-aos="fade-up" data-aos-delay="400">
+                <div class="room-image">
+                    <img src="~/images/executive-suite.jpg" alt="Executive Suite">
+                </div>
+                <div class="room-details">
+                    <h3>Executive Suite</h3>
+                    <p>Our most luxurious accommodation featuring a king bed, separate living room, and premium amenities.</p>
+                    <div class="room-features">
+                        <div class="room-feature">
+                            <i class="fa-solid fa-user"></i>
+                            <span>4 Adults + 2 Kids</span>
+                        </div>
+                        <div class="room-feature">
+                            <i class="fa-solid fa-ruler-combined"></i>
+                            <span>85 sqm</span>
+                        </div>
+                        <div class="room-feature">
+                            <i class="fa-solid fa-bed"></i>
+                            <span>1 King & 1 Double Bed</span>
+                        </div>
+                        <div class="room-feature">
+                            <i class="fa-solid fa-wifi"></i>
+                            <span>Free WiFi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-price">
+                    <div class="price">₱7,200</div>
+                    <div class="per-night">per night</div>
+                    <button type="button">Select Room</button>
+                </div>
+            </div>
+
+            <!-------Special Requests------->
+            <div class="special-requests" data-aos="fade-up">
+                <h3>Special Requests</h3>
+                <p>Let us know if you have any special requirements for your stay</p>
+                <textarea placeholder="E.g., Early check-in, dietary restrictions, room preferences..."></textarea>
+            </div>
+
+            <!-------Submit Button------->
+            <div class="submit-btn" data-aos="fade-up">
+                <button type="submit">Complete Reservation</button>
+            </div>
+        </form>
+    </div>
+
+    <!-------Footer Section----->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Find & Book</h4>
+                <ul>
+                    <li><a href="#">Our Destinations</a></li>
+                    <li><a href="#">Find a Reservation</a></li>
+                    <li><a href="#">Meetings & Events</a></li>
+                    <li><a href="#">Restaurant & Bars</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Petrosia Circle</h4>
+                <ul>
+                    <li><a href="#">Programme Overview</a></li>
+                    <li><a href="#">Join Petrosia Circle</a></li>
+                    <li><a href="#">Account Overview</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>About Petrosia</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Hotel Brands</a></li>
+                    <li><a href="#">Petrosia Centre</a></li>
+                    <li><a href="#">Residences</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>More</h4>
+                <ul>
+                    <li><a href="#">Investors</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Global Citizenship</a></li>
+                    <li><a href="#">News</a></li>
+                </ul>
+            </div>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </div>
         </div>
-    </main>
+    </footer>
 
-    <script>
-               document.getElementById("bookNowButton").addEventListener("click", function (event) {
-            let checkIn = document.getElementById("checkIn").value;
-            let checkOut = document.getElementById("checkOut").value;
-            let roomType = document.getElementById("roomType").value;
-            let adults = document.getElementById("adults").value;
+    <div class="footer-bottom">
+        <p>Copyright © 2025 Petrosia Hotel. All rights reserved.</p>
+    </div>
+    <!-----End of Footer Section----->
 
-            if (!checkIn || !checkOut || !roomType || adults <= 0) {
-                alert("Please fill all required fields correctly.");
-                event.preventDefault();
-            }
-        });
+    <button id="scrollToTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
 
-    </script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="~/js/booking.js" asp-append-version="true"></script>
 </body>
 </html>
