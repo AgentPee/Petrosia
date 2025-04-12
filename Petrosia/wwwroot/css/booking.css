@@ -117,6 +117,11 @@
     margin-bottom: var(--spacing-md);
 }
 
+    .form-group.full-width {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+
     .form-group label {
         display: block;
         margin-bottom: 0.8rem;
@@ -124,6 +129,10 @@
         color: var(--text-medium);
         font-size: 1rem;
     }
+
+        .form-group label .required {
+            color: #e74c3c;
+        }
 
     .form-group input,
     .form-group select {
@@ -355,6 +364,57 @@
             background: var(--white);
         }
 
+/* ======= Selected Room Summary ======= */
+.selected-room-summary {
+    margin: var(--spacing-xl) 0;
+    background: #f9f9f9;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+}
+
+    .selected-room-summary h3 {
+        font-size: 1.4rem;
+        color: var(--text-dark);
+        margin-bottom: var(--spacing-md);
+        font-weight: 600;
+    }
+
+.room-summary-content {
+    display: grid;
+    gap: var(--spacing-sm);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(239, 220, 171, 0.3);
+}
+
+    .summary-row span:first-child {
+        font-weight: 500;
+        color: var(--text-medium);
+    }
+
+    .summary-row span:last-child {
+        color: var(--text-dark);
+        font-weight: 500;
+    }
+
+    .summary-row.total {
+        border-top: 2px solid var(--primary-color);
+        border-bottom: none;
+        padding-top: var(--spacing-sm);
+        margin-top: var(--spacing-xs);
+    }
+
+        .summary-row.total span:last-child {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
 /* ======= Submit Button ======= */
 .submit-btn {
     text-align: center;
@@ -389,6 +449,335 @@
         .submit-btn button:hover i {
             transform: translateX(3px);
         }
+
+/* ======= Modal Styles ======= */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: 5vh auto;
+    max-width: 800px;
+    width: 90%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-body {
+    padding: var(--spacing-xl);
+}
+
+    .modal-body h2 {
+        color: var(--text-dark);
+        font-size: 1.8rem;
+        margin-bottom: var(--spacing-lg);
+        text-align: center;
+        font-weight: 600;
+        position: relative;
+        padding-bottom: var(--spacing-sm);
+    }
+
+        .modal-body h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+.close {
+    position: absolute;
+    right: var(--spacing-md);
+    top: var(--spacing-md);
+    font-size: 1.5rem;
+    color: var(--text-medium);
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+    .close:hover {
+        color: var(--text-dark);
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+/* ======= Checkout Section Styles ======= */
+.checkout-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+    .checkout-section h3 {
+        font-size: 1.3rem;
+        color: var(--text-dark);
+        margin-bottom: var(--spacing-md);
+        font-weight: 600;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+        .checkout-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+/* ======= Payment Options Styles ======= */
+.payment-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+    .payment-option input {
+        cursor: pointer;
+    }
+
+    .payment-option label {
+        cursor: pointer;
+        font-weight: 500;
+        color: var(--text-medium);
+    }
+
+.payment-details {
+    background: #f9f9f9;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    margin-top: var(--spacing-sm);
+}
+
+.card-input-wrapper {
+    position: relative;
+}
+
+.card-icons {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 0.5rem;
+}
+
+    .card-icons i {
+        font-size: 1.5rem;
+        color: var(--text-light);
+    }
+
+/* ======= Booking Policies Styles ======= */
+.booking-policies {
+    margin-top: var(--spacing-sm);
+}
+
+.policy-box {
+    background: #f9f9f9;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    border-left: 3px solid var(--primary-color);
+}
+
+    .policy-box h4 {
+        font-size: 1.1rem;
+        margin-bottom: var(--spacing-sm);
+        color: var(--text-dark);
+        font-weight: 600;
+    }
+
+.policy-item {
+    margin-bottom: var(--spacing-md);
+}
+
+    .policy-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .policy-item h5 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-medium);
+        font-weight: 500;
+    }
+
+    .policy-item p {
+        font-size: 0.95rem;
+        color: var(--text-medium);
+        margin-bottom: 0.5rem;
+    }
+
+        .policy-item p strong {
+            color: var(--text-dark);
+        }
+
+/* ======= Checkbox Group Styles ======= */
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+    .checkbox-group input[type="checkbox"] {
+        margin-top: 0.3rem;
+        cursor: pointer;
+    }
+
+    .checkbox-group label {
+        font-size: 0.95rem;
+        color: var(--text-medium);
+        line-height: 1.5;
+    }
+
+.policy-link {
+    color: var(--primary-color);
+    text-decoration: underline;
+    transition: var(--transition);
+}
+
+    .policy-link:hover {
+        color: var(--primary-hover);
+    }
+
+/* ======= Checkout Button Styles ======= */
+.checkout-btn {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+    .checkout-btn button {
+        background: var(--primary-color);
+        color: var(--text-dark);
+        border: none;
+        padding: 1rem 3rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        width: 100%;
+        justify-content: center;
+    }
+
+        .checkout-btn button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+/* ======= Confirmation Modal Styles ======= */
+.confirmation-modal {
+    max-width: 600px;
+}
+
+.confirmation-content {
+    padding: var(--spacing-xl);
+    text-align: center;
+}
+
+.confirmation-icon {
+    font-size: 4rem;
+    color: var(--success);
+    margin-bottom: var(--spacing-md);
+}
+
+.confirmation-content h2 {
+    color: var(--text-dark);
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+}
+
+.confirmation-content p {
+    color: var(--text-medium);
+    font-size: 1rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.confirmation-details {
+    background: #f9f9f9;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    text-align: left;
+    margin: var(--spacing-md) 0;
+}
+
+    .confirmation-details p {
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .confirmation-details p:last-child {
+            margin-bottom: 0;
+            padding-top: var(--spacing-xs);
+            border-top: 1px dashed var(--border-color);
+        }
+
+.confirmation-content button {
+    background: var(--primary-color);
+    color: var(--text-dark);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: var(--transition);
+    margin-top: var(--spacing-md);
+}
+
+    .confirmation-content button:hover {
+        background: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-sm);
+    }
 
 /* ======= Scroll to Top Button ======= */
 #scrollToTopBtn {
@@ -527,6 +916,10 @@
     .room-details {
         padding: 0 var(--spacing-sm);
     }
+
+    .modal-content {
+        width: 95%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -558,6 +951,11 @@
     .footer-column {
         min-width: 45%;
     }
+
+    .payment-options {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
 }
 
 @media (max-width: 576px) {
@@ -566,6 +964,10 @@
     }
 
     .booking-form {
+        padding: var(--spacing-md);
+    }
+
+    .modal-body {
         padding: var(--spacing-md);
     }
 
@@ -578,6 +980,13 @@
             left: 50%;
             transform: translateX(-50%);
         }
+
+    .card-icons {
+        position: static;
+        transform: none;
+        justify-content: flex-end;
+        margin-top: var(--spacing-xs);
+    }
 }
 
 /* Print styles */
@@ -594,6 +1003,20 @@
     }
 
     .submit-btn button {
+        display: none;
+    }
+
+    .modal {
+        position: static;
+        background: none;
+    }
+
+    .modal-content {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .close {
         display: none;
     }
 }
