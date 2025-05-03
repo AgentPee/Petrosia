@@ -1,0 +1,153 @@
+﻿@model Petrosia.Models.Guest
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url("../images/banner.jpg") no-repeat center center/cover;
+            margin: 0;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+            width: 380px;
+            text-align: center;
+            height: auto;
+        }
+
+        h2 {
+            font-size: 30px;
+            color: white;
+            margin: 0 0 35px 0;            
+            font-style: oblique;
+            font-family: 'poppins', sans-serif;
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
+            display: flex;
+        justify-content: center;
+        margin-top: 10px;
+            width: 100%;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 10px 10px;
+            border: 2px solid gray;
+            border-radius: 5px;
+            background: transparent;
+            font-size: 16px;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s, padding-top 0.3s;
+        }
+
+           
+
+        .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        }
+
+        button {
+    width: 100%; /* Adjust width as needed */
+    padding: 12px;
+    background: #EFDCAB;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    font-size: medium;
+    font-family: 'Poppins', sans-serif;  
+}
+
+button:hover {
+    background-color: #404040;
+    color: white;
+}
+
+.link-signIn {
+    color: #1E90FF;
+    text-decoration: none;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        
+
+        <h2>Sign Up</h2>
+        <form asp-action="SignUp" asp-controller="Auth" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="input-container">
+                
+                <input asp-for="FirstName" placeholder="Enter your first name" name="FirstName">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="input-container">
+                
+                <input asp-for="LastName" placeholder="Enter your last name" name="LastName">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="input-container">
+                
+                <input asp-for="Email" type="email" placeholder="Enter your email" name="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="input-container">
+                
+                <input asp-for="PhoneNumber" placeholder="Enter your phone number" name="PhoneNumber">
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="input-container">
+                
+                <input asp-for="Address" placeholder="Enter Address" name="Address">
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="input-container">
+                
+                <input asp-for="Password" type="password" placeholder="Enter your password" name="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="button-container">
+                <button type="submit">Sign Up</button>
+            </div>
+
+            <p style="color: white; margin-top: 15px; font-size: 14px;">
+                Already have an account? <a class="link-signIn" href="@Url.Action("SignIn", "Auth")">Sign In</a>
+            </p>
+        </form>
+
+        @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+        }
+    </div>
+    
+</body>
+</html>

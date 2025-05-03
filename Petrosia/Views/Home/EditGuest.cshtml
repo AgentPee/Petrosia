@@ -1,0 +1,69 @@
+﻿@model Petrosia.Models.Guest
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Guest</title>
+    <link rel="stylesheet" href="~/css/admin-styles.css" asp-append-version="true" />
+</head>
+<body>
+
+    <div class="container">
+        <h2>Edit Guest</h2>
+
+        <!-- Debugging: Print GuestId -->
+        <p><strong>Editing Guest ID:</strong> @Model.GuestId</p>
+
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(model => model.GuestId)
+
+            <div>
+                @Html.LabelFor(model => model.FirstName)
+                @Html.TextBoxFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.LastName)
+                @Html.TextBoxFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Email)
+                @Html.TextBoxFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.PhoneNumber)
+                @Html.TextBoxFor(model => model.PhoneNumber)
+                @Html.ValidationMessageFor(model => model.PhoneNumber)
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Address)
+                @Html.TextBoxFor(model => model.Address)
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+
+            <input type="submit" value="Save" />
+
+            <form action="@Url.Action("Guest", "Home")">
+                <input type="submit" value="Cancel" />
+            </form>
+        }
+
+            <div asp-validation-summary="All" class="text-danger mt-2"></div>
+        
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</body>
+</html>
