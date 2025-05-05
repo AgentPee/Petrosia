@@ -1,138 +1,359 @@
-/* General Styling */
+/* Petrosia Hotel Admin Styles */
+:root {
+    --primary-color: #c0a678; /* Gold/beige accent color from the screenshot */
+    --primary-light: #e8dfc8;
+    --primary-dark: #a38d60;
+    --text-color: #333;
+    --light-bg: #f9f7f2;
+    --border-color: #e0d5b8;
+    --error-color: #d32f2f;
+    --success-color: #388e3c;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f8f8;
-    text-align: center;
     margin: 0;
     padding: 0;
+    line-height: 1.6;
+    color: var(--text-color);
 }
+
 /* Header Styling */
 header {
     display: flex;
-    align-items: center; /* Aligns logo and text in one line */
-    justify-content: start; /* Aligns them to the left */
+    align-items: center;
+    justify-content: flex-start;
     padding: 20px;
-    gap: 15px; /* Space between logo and text */
+    gap: 15px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-/* Logo */
-header img {
-    height: 240px; /* Adjust the logo size */
-    width: auto; /* Keeps the aspect ratio */
-}
+    /* Logo with clickable functionality */
+    header img {
+        height: 120px;
+        width: auto;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
 
-/* Hotel Name */
+        header img:hover {
+            transform: scale(1.05);
+        }
+
+/* Hotel Name - Centered */
 h1 {
-    margin-left: 630px;
     font-size: 40px;
     color: black;
-    text-align: center; /* Ensures alignment */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-weight: 500;
 }
-
 
 /* Container Styling */
 .container {
     width: 80%;
-    margin: auto;
-    padding: 20px;
+    margin: 30px auto;
+    padding: 30px;
     background: white;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
     margin-bottom: 50px;
+}
+
+/* Section Headings */
+h2 {
+    color: var(--text-color);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-color);
+    text-align: center;
+    font-weight: 500;
 }
 
 /* Table Styling */
 table {
     width: 100%;
     border-collapse: collapse;
-    
+    margin-bottom: 25px;
 }
 
 th, td {
-    padding: 10px;
-    border: 1px solid black;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
     text-align: center;
 }
 
 th {
     background-color: black;
     color: white;
+    font-weight: 500;
 }
 
-.footer {
-    text-align: center;
-    margin-top: 20px;
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
-/* Buttons */
-button {
-    margin-top: px;
-    padding: 8px 12px;
-    background-color: #d1b88d;
-    border: none;
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Form Styling */
+form div {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="password"]:focus,
+    input[type="search"]:focus,
+    textarea:focus,
+    select:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(192, 166, 120, 0.2);
+    }
+
+/* Button Styling */
+button,
+input[type="submit"],
+.btn {
+    padding: 8px 16px;
+    background-color: var(--primary-color);
     color: black;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
+    border: none;
     border-radius: 5px;
-}
-
-
-
-/*.btn:hover {
-    background-color: #b89b6f;
-}
-
-.btn-danger {
-    padding: 8px 12px;
-    background-color: rgb(0, 0, 0);
-    color: rgb(255, 255, 255);
     cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s ease-in-out;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    margin: 3px;
 }
 
-.btn-danger:hover {
-    background-color: rgb(39, 39, 39);
-}*/
+    button:hover,
+    input[type="submit"]:hover,
+    .btn:hover {
+        background-color: var(--primary-dark);
+    }
+
+    .btn-warning,
+    button[type="submit"].btn-warning {
+        background-color: var(--primary-color);
+        color: black;
+    }
+
+    .btn-danger,
+    button[type="submit"].btn-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+        .btn-danger:hover {
+            background-color: #f1acb5;
+        }
+
+/* Page Navigation */
+.page-control {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+    .page-control .btn {
+        background-color: var(--primary-color);
+        color: black;
+        padding: 8px 16px;
+    }
+
+        .page-control .btn:hover {
+            background-color: var(--primary-dark);
+        }
 
 /* Search Bar */
 .input-group {
     margin: 20px 0;
+    text-align: center;
 }
 
 #searchInput {
-    padding: 8px;
+    padding: 10px;
     width: 50%;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 5px;
+    font-size: 16px;
 }
 
-/* Availability Status */
+/* Validation messages */
+.field-validation-error {
+    color: var(--error-color);
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
+.input-validation-error {
+    border-color: var(--error-color) !important;
+}
+
+.validation-summary-errors {
+    color: var(--error-color);
+    background-color: rgba(211, 47, 47, 0.1);
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+    .validation-summary-errors ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .validation-summary-errors li {
+        margin-bottom: 5px;
+    }
+
+.text-danger {
+    color: var(--error-color);
+}
+
+/* Status indicators */
 .status-Available {
-    background-color: green;
-    color: white;
+    background-color: #d4edda;
+    color: #155724;
+    padding: 4px 8px;
+    border-radius: 4px;
 }
 
 .status-Used {
-    background-color: red;
-    color: white;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 4px 8px;
+    border-radius: 4px;
 }
 
 .status-Cleaning {
-    background-color: orange;
-    color: white;
-}
-.status-OnDuty{
-    background-color: green;
-    color: white;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 4px 8px;
+    border-radius: 4px;
 }
 
-.status-Absent{
-    background-color: red;
-    color: white;
-}
-.status-Excused{
-    background-color: orange;
-    color: white;
+.status-OnDuty {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 4px 8px;
+    border-radius: 4px;
 }
 
+.status-Absent {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.status-Excused {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f1f1f1;
+    color: var(--text-color);
+    font-size: 14px;
+    margin-top: 30px;
+}
+
+/* Debugging info styling */
+p strong {
+    color: var(--primary-dark);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .container {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+        header img {
+            height: 100px;
+        }
+
+    h1 {
+        position: static;
+        transform: none;
+        margin-top: 10px;
+    }
+
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    input[type="submit"],
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #searchInput {
+        width: 100%;
+    }
+}
