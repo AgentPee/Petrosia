@@ -1,170 +1,131 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Petrosia.Models;
 using Petrosia.Models;
 
-namespace Petrosia.Controllers;
-
-public class HomeController : Controller
+namespace Petrosia.Controllers
 {
-    private readonly UserManagement1Context _context;
-
-    public HomeController(UserManagement1Context context)
+    public class HomeController : Controller
     {
-        _context = context;
-    }
-    public IActionResult Index()
-    {
-        return View();
-    }
+        private readonly UserManagement1Context _context;
 
-    public IActionResult About()
-    {
-        return View();
-    }
-
-    public IActionResult TouristSpot()
-    {
-        return View();
-    }
-
-    public IActionResult Gallery()
-    {
-        return View();
-    }
-
-    [Authorize(Roles = "Admin")]
-    public IActionResult Admin() 
-    {
-        var allAdmins = _context.Admins.ToList();
-        return View(allAdmins);
-    }
-
-
-
-
-    [Authorize(Roles = "Admin")]
-    public IActionResult Guest()
-    {
-        var allGuests = _context.Guests.ToList();
-        return View(allGuests);
-    }
-
-    //guest edit,create
-    [Authorize(Roles = "Admin")]
-    [HttpGet]
-    public IActionResult EditGuest(int id)
-    {
-        var guest = _context.Guests.FirstOrDefault(g => g.GuestId == id);
-        if (guest == null) return NotFound();
-
-        Console.WriteLine($"Selected GUestId: {guest.GuestId}");
-        return View(guest);
-    }
-    
-    [Authorize(Roles = "Admin")]
-    [HttpPost]
-    public IActionResult EditGuest(Guest model)
-    {
-        if (model == null || model.GuestId == 0)
+        public HomeController(UserManagement1Context context)
         {
-            return BadRequest("Invalid guest ID");
+            _context = context;
         }
 
-        var guest = _context.Guests.FirstOrDefault(g => g.GuestId == model.GuestId);
-        if (guest == null)
+        public IActionResult Index() => View();
+        public IActionResult Booking() => View();
+        public IActionResult About() => View();
+        public IActionResult TouristSpot() => View();
+        public IActionResult Gallery() => View();
+
+        // ========================== Admin Dashboard ========================== //
+        [Authorize(Roles = "Admin")]
+        public IActionResult Admin() => View(_context.Admins.ToList());
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Guest() => View(_context.Guests.ToList());
+
+        // ========================== Guest Management ========================== //
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult EditGuest(int id)
         {
-            return NotFound();
+            var guest = _context.Guests.Find(id);
+            return guest != null ? View(guest) : NotFound();
         }
 
-        // Update guest details
-        guest.FirstName = model.FirstName;
-        guest.LastName = model.LastName;
-        guest.Email = model.Email;
-        guest.PhoneNumber = model.PhoneNumber;
-        guest.Address = model.Address;
-
-        _context.SaveChanges();
-
-        return RedirectToAction("Guest");
-    }
-
-
-
-
-    [Authorize(Roles = "Admin")]
-    [HttpPost]
-    public IActionResult DeleteGuest(int id)
-    {
-        var guest = _context.Guests.Find(id);
-        if (guest == null)
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult EditGuest(Guest model)
         {
-            return NotFound();
+            if (model == null || model.GuestId == 0) return BadRequest("Invalid guest ID");
+
+            var guest = _context.Guests.Find(model.GuestId);
+            if (guest == null) return NotFound();
+
+            guest.FirstName = model.FirstName;
+            guest.LastName = model.LastName;
+            guest.Email = model.Email;
+            guest.PhoneNumber = model.PhoneNumber;
+            guest.Address = model.Address;
+
+            _context.SaveChanges();
+            TempData["SuccessMessage"] = "Guest details updated successfully.";
+            return RedirectToAction("Guest");
         }
 
-        _context.Guests.Remove(guest);
-        int rowsAffected = _context.SaveChanges();
-        Console.WriteLine($"Rows Affected: {rowsAffected}");
-        return RedirectToAction("Guest");
-    }
-
-
-    //admin edit, create
-    [Authorize(Roles = "Admin")]
-    [HttpGet]
-    public IActionResult EditAdmin(int id)
-    {
-        var admin = _context.Admins.FirstOrDefault(a => a.AdminId == id);
-        if (admin == null) return NotFound();
-
-        Console.WriteLine($"Selected AdminId: {admin.AdminId}");
-        return View(admin);
-    }
-
-    [Authorize(Roles = "Admin")]
-    [HttpPost]
-    public IActionResult EditAdmin(Admin model)
-    {
-        if (model == null || model.AdminId == 0)
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult DeleteGuest(int id)
         {
-            return BadRequest("Invalid admin ID");
+            var guest = _context.Guests.Find(id);
+            if (guest == null) return NotFound();
+
+            _context.Guests.Remove(guest);
+            _context.SaveChanges();
+            TempData["SuccessMessage"] = "Guest deleted successfully.";
+            return RedirectToAction("Guest");
         }
 
-        var admin = _context.Admins.FirstOrDefault(a => a.AdminId == model.AdminId);
-        if (admin == null)
+        // ========================== Admin Management ========================== //
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult EditAdmin(int id)
         {
-            return NotFound();
+            var admin = _context.Admins.Find(id);
+            return admin != null ? View(admin) : NotFound();
         }
 
-        // Update admin details
-        admin.FirstName = model.FirstName;
-        admin.LastName = model.LastName;
-        admin.Email = model.Email;
-        admin.PhoneNumber = model.PhoneNumber;
-        //admin.Role = model.Role;
-
-        _context.SaveChanges();
-
-        return RedirectToAction("Guest");
-    }
-
-    [Authorize(Roles = "Admin")]
-    [HttpPost]
-    public IActionResult DeleteAdmin(int id)
-    {
-        var admin = _context.Admins.Find(id);
-        if (admin == null)
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult EditAdmin(Admin model)
         {
-            return NotFound();
+            if (model == null || model.AdminId == 0) return BadRequest("Invalid admin ID");
+
+            var admin = _context.Admins.Find(model.AdminId);
+            if (admin == null) return NotFound();
+
+            admin.FirstName = model.FirstName;
+            admin.LastName = model.LastName;
+            admin.Email = model.Email;
+            admin.PhoneNumber = model.PhoneNumber;
+
+            _context.SaveChanges();
+            TempData["SuccessMessage"] = "Admin details updated successfully.";
+            return RedirectToAction("Admin");
         }
 
-        _context.Admins.Remove(admin);
-        int rowsAffected = _context.SaveChanges();
-        Console.WriteLine($"Rows Affected: {rowsAffected}");
-        return RedirectToAction("Guest");
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult DeleteAdmin(int id)
+        {
+            var admin = _context.Admins.Find(id);
+            if (admin == null) return NotFound();
+
+            _context.Admins.Remove(admin);
+            _context.SaveChanges();
+            TempData["SuccessMessage"] = "Admin deleted successfully.";
+            return RedirectToAction("Admin");
+        }
+
+        // ========================== Booking Management ========================== //
+        [HttpPost]
+        public IActionResult BookRoom(Booking booking)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid data!");
+            }
+
+            _context.Bookings.Add(booking);
+            _context.SaveChanges();
+
+            return Ok("Booking successful!");
+        }
+
     }
-
-
 }
-

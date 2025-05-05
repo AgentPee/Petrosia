@@ -298,7 +298,7 @@ h2 {
     text-align: center;
     padding: 60px;
     gap: 30px;
-    background: url("../images/junior-suite.jpg") center/cover no-repeat;
+    background: url('../images/junior-suite.jpg') no-repeat center center / cover;
     position: relative;
 }
 

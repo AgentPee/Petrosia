@@ -31,20 +31,20 @@
                 <ul>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                         <li><a href="@Url.Action("About", "Home")">About</a></li>
                         <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
-                        <li><a href="@Url.Action("Gallery", "Home")">GALLERY</a></li>
-                        <li><a href="@Url.Action("Admin", "Home")">ADMIN</a></li>
-                        <li><a href="@Url.Action("Guest", "Home")">GUEST</a></li>
+                        <li><a href="@Url.Action("Gallery", "Home")">Gallery</a></li>
+                        <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
+                        <li><a href="@Url.Action("Guest", "Home")">Guest</a></li>
                         <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
                     }
                     else
                     {
-                        <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                         <li><a href="@Url.Action("About", "Home")">About</a></li>
                         <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
-                        <li><a href="@Url.Action("Gallery", "Home")">GALLERY</a></li>
+                        <li><a href="@Url.Action("Gallery", "Home")">Gallery</a></li>
                         <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
                         <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
                     }
@@ -55,9 +55,9 @@
         </nav>
 
         <div class="text-box">
-            <h1>Relax,Enjoy,Vibes</h1>
+            <h1>Relax, Enjoy, Vibes</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis ullam cupiditate iure odio facilis distinctio error minima quos placeat, repellendus sed, <br>fugit quaerat recusandae! Natus aliquid voluptate provident alias consequatur.</p>
-            <a href="" class="hero-btn">BOOK NOW</a>
+            <a href="@Url.Action("Booking", "Home")" class="hero-btn">BOOK NOW</a>
         </div>
     </section>
     <!-------End of Banner------->
