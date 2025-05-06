@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="shortcut icon" type="x-icon" href="~/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <!-- AOS Library CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+</head>
+<body>
+    <!-------Banner------->
+    <section class="accommodation-header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <span><i class="fa-solid fa-phone"></i> +(63) 09670935136</span>
+                    <span><i class="fa-solid fa-envelope"></i> info@petrosiahotel.com</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html"><img src="~/images/logo1.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("About", "Home")">About</a></li>
+                        <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                        <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
+                        <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
+                        <li><a href="@Url.Action("Guest", "Home")">Guest</a></li>
+                        <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("About", "Home")">About</a></li>
+                        <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                        <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
+                        <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
+                        <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
+                    }
+                </ul>
+            </div>
+            <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </section>
+    <!-------End of Banner------->
+    <div class="accommodation-section">
+        <div class="accommodation-intro">
+            <h2>OUR ROOMS</h2>
+            <p>Petrosia Hotel offers 157 well-appointed rooms, blending comfort and Filipino hospitality. Thoughtfully designed for relaxation, each space ensures a warm, inviting stay, providing guests with a memorable and restful experience.</p>
+        </div>
+        <div class="accommodation">
+            <img src="~/images/single.jpg" alt="Deluxe Single">
+            <div class="accommodation-info">
+                <h2>Deluxe Single</h2>
+                <p>Enjoy the scenic view of the seaside at twilight. Guests can watch the boats as they float lazily across the coastline.</p>
+                <ul>
+                    <li>√ 21 sqm.</li>
+                    <li>√ 1 Single Bed</li>
+                    <li>√ Anti-bacterial Inverter Air Conditioner</li>
+                    <li>√ Full HD Cable TV</li>
+                    <li>√ Telephone</li>
+                    <li>√ Hair Dryer</li>
+                    <li>√ Personal Fridge</li>
+                    <li>√ Coffee/Tea Service</li>
+                </ul>
+                <a href="#" class="book-now">BOOK NOW!</a>
+            </div>
+        </div>
+        <div class="accommodation">
+            <img src="~/images/double.jpg" alt="Deluxe Double">
+            <div class="accommodation-info">
+                <h2>Deluxe Double</h2>
+                <p>Most of the rooms offer the best sunrise view. The dramatic transition of the city skyline from day to night is something to look forward to.</p>
+                <ul>
+                    <li>√ 22-28 sqm.</li>
+                    <li>√ 1 Double Bed</li>
+                    <li>√ Anti-bacterial Inverter Air Conditioner</li>
+                    <li>√ Full HD Cable TV</li>
+                    <li>√ Telephone</li>
+                    <li>√ Hair Dryer</li>
+                    <li>√ Personal Fridge</li>
+                    <li>√ Coffee/Tea Service</li>
+                </ul>
+                <a href="#" class="book-now">BOOK NOW!</a>
+            </div>
+        </div>
+        <div class="accommodation">
+            <img src="~/images/twin.jpg" alt="Deluxe Twin">
+            <div class="accommodation-info">
+                <h2>Deluxe Twin</h2>
+                <p>Guests can welcome the sunrise at daytime with a warm cup coffee in hand. Nighttime offers a more relaxed feel while viewing the city over a glass of wine.</p>
+                <ul>
+                    <li>√ 22-29 sqm.</li>
+                    <li>√ 1 Single Bed and 1 Double Bed</li>
+                    <li>√ Anti-bacterial Inverter Air Conditioner</li>
+                    <li>√ Full HD Cable TV</li>
+                    <li>√ Telephone</li>
+                    <li>√ Hair Dryer</li>
+                    <li>√ Personal Fridge</li>
+                    <li>√ Coffee/Tea Service</li>
+                </ul>
+                <a href="#" class="book-now">BOOK NOW!</a>
+            </div>
+        </div>
+        <div class="accommodation">
+            <img src="~/images/junior.jpg" alt="Deluxe Double">
+            <div class="accommodation-info">
+                <h2>Junior Suite</h2>
+                <p>The suite room has its own living room and dining area. Guests can relax in the bathtub while enjoying the view of the city and the sea.</p>
+                <ul>
+                    <li>√ 70 sqm.</li>
+                    <li>√ 1 King Size Bed</li>
+                    <li>√ Anti-bacterial Inverter Air Conditioner</li>
+                    <li>√ Full HD Cable TV</li>
+                    <li>√ Telephone</li>
+                    <li>√ Hair Dryer</li>
+                    <li>√ Personal Fridge</li>
+                    <li>√ Coffee/Tea Service</li>
+                </ul>
+                <a href="#" class="book-now">BOOK NOW!</a>
+            </div>
+        </div>
+        <div class="accommodation">
+            <img src="~/images/executive.jpg" alt="Executive Suite">
+            <div class="accommodation-info">
+                <h2>Executive Suite</h2>
+                <p>The executive suite is the most luxurious guest room of One Central Hotel. Its interiors mix modern designs with quaint woodworks. With its two bedrooms, the executive suite provides guests with both space and privacy. This is ideal for families who wish to relax within the city.</p>
+                <ul>
+                    <li>√ 85 sqm.</li>
+                    <li>√ 1 King Size Bed and 1 Double Bed</li>
+                    <li>√ Anti-bacterial Inverter Air Conditioner</li>
+                    <li>√ Full HD Cable TV</li>
+                    <li>√ Telephone</li>
+                    <li>√ Hair Dryer</li>
+                    <li>√ Personal Fridge</li>
+                    <li>√ Coffee/Tea Service</li>
+                </ul>
+                <a href="#" class="book-now">BOOK NOW!</a>
+            </div>
+        </div>
+    </div>
+
+    <!-----Footer Section----->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Find & Book</h4>
+                <ul>
+                    <li><a href="#">Our Destinations</a></li>
+                    <li><a href="#">Find a Reservation</a></li>
+                    <li><a href="#">Meetings & Events</a></li>
+                    <li><a href="#">Restaurant & Bars</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Petrosia Circle</h4>
+                <ul>
+                    <li><a href="#">Programme Overview</a></li>
+                    <li><a href="#">Join Petrosia Circle</a></li>
+                    <li><a href="#">Account Overview</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>About Petrosia</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Hotel Brands</a></li>
+                    <li><a href="#">Petrosia Centre</a></li>
+                    <li><a href="#">Residences</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>More</h4>
+                <ul>
+                    <li><a href="#">Investors</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Global Citizenship</a></li>
+                    <li><a href="#">News</a></li>
+                </ul>
+            </div>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="footer-bottom">
+        <p>Copyright © 2025 Petrosia Hotel. All rights reserved.</p>
+    </div>
+    <!-----End of Footer Section----->
+  
+
+    <button id="scrollToTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <script>
+        // JavaSCript for toggle menu
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu(){
+            navLinks.style.right = "0";
+        }
+        function hideMenu(){
+            navLinks.style.right = "-200px";
+        }
+        // end
+
+
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        window.addEventListener("scroll", function() {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add("show");
+                scrollToTopBtn.classList.remove("hidden");
+            } else {
+                scrollToTopBtn.classList.add("hidden");
+                scrollToTopBtn.classList.remove("show");
+            }
+        });
+
+        scrollToTopBtn.addEventListener("click", function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
+
+</body>
+</html>

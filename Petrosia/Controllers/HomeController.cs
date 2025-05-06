@@ -20,7 +20,8 @@ namespace Petrosia.Controllers
         public IActionResult Booking() => View();
         public IActionResult About() => View();
         public IActionResult TouristSpot() => View();
-        public IActionResult Gallery() => View();
+        public IActionResult Accommodation() => View();
+        public IActionResult RoomDetails(string roomType) => View(roomType);
 
         // ========================== Admin Dashboard ========================== //
         [Authorize(Roles = "Admin")]

@@ -15,7 +15,7 @@
 </head>
 <body>
     <!-------Banner------->
-    <section class="sub-header">
+    <section class="tourist-header">
         <div class="top-bar">
             <div class="container">
                 <div class="contact-info">
@@ -25,26 +25,26 @@
             </div>
         </div>
         <nav>
-            <a href="index.html"><img src="~/images/logo.png"></a>
+            <a href="index.html"><img src="~/images/logo1.png"></a>
             <div class="nav-links" id="navLinks">
                 <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
                 <ul>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                         <li><a href="@Url.Action("About", "Home")">About</a></li>
                         <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
-                        <li><a href="@Url.Action("Gallery", "Home")">GALLERY</a></li>
-                        <li><a href="@Url.Action("Admin", "Home")">ADMIN</a></li>
-                        <li><a href="@Url.Action("Guest", "Home")">GUEST</a></li>
+                        <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
+                        <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
+                        <li><a href="@Url.Action("Guest", "Home")">Guest</a></li>
                         <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
                     }
                     else
                     {
-                        <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                         <li><a href="@Url.Action("About", "Home")">About</a></li>
                         <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
-                        <li><a href="@Url.Action("Gallery", "Home")">GALLERY</a></li>
+                        <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
                         <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
                         <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
                     }
@@ -54,6 +54,53 @@
         </nav>
     </section>
     <!-------End of Banner------->
+
+    <section class="outskirts">
+        <h2>CULTURE & HERITAGE</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="~/images/tspot1.jpg">
+                <h3>Magellan's Cross</h3>
+                <p class="photo-credit">Photo by <span>Constantine Agustin</span></p>
+                <p>The Cross of Magellan is a popular historical landmark and tourist attraction in the middle of busy Magallanes Street. This important symbol of Cebu was said to have been planted by Magellan on April 14, 1521, when he baptized the first Christian Filipinos, Rajah Humabon and Queen Juana and about 400 followers of the Catholic faith.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/tspot2.jpg">
+                <h3>Basilica Del Minore Del Sto. Niño</h3>
+                <p class="photo-credit">Photo by <span>Constantine Agustin</span></p>
+                <p>Cebu’s holiest church houses a revered Flemish statuette of the Christ child (Santo Niño) that dates to Magellan’s time. The church’s belfry came crumbling down in the October 2013 earthquake and is being rebuilt. The church is no stranger to hardship. Established in 1565 (the oldest church in the Philippines) and burnt down three times, it was rebuilt in its present form in 1737.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/tspot3.jpg">
+                <h3>Casa Gorordo</h3>
+                <p class="photo-credit">Photo by <span>Constantine Agustin</span></p>
+                <p>This was the residence of the first Catholic bishop of Cebu. It showcases the Filipino history lifestyle between 1860 and 1920. It also displays an array of relics of the 18th century and collections of prints and paintings.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/tspot4.jpg">
+                <h3>Museo Sugbo</h3>
+                <p class="photo-credit">Photo by <span>Constantine Agustin</span></p>
+                <p>The current location of Museo Sugbo was once the main prison of the Visayas region known as Carcel del Distrito. A prison for the Katipuneros during the Spanish era, a site for incarceration during the Japanese occupation, and reclaimed to what it was known as the Cebu Provincial Detention and Rehabilitation Center (CPDRC); Carcel del Distrito is now a site where the rich history and culture of the Cebuanos may be revisited.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/tspot5.jpg" alt="Osmeña Peak">
+                <h3>Fort San Pedro</h3>
+                <p class="photo-credit">Photo by <span>Constantine Agustin</span></p>
+                <p>Built from limestones in 1738, this fort was used to repel Muslim raiders. Filipino revolutionaries used the fort as their stronghold, and the US army used it as both a barracks and a prison camp during the Japanese occupation of the country. It also holds artifacts including, porcelains, coins, lockets, sword, cannons, and helmets, among others.</p>
+            </div>
+
+            <div class="card">
+                <img src="~/images/tspot6.jpg" alt="Bantayan Island">
+                <h3>Liberty Shrine (Mactan Shrine)</h3>
+                <p class="photo-credit">Photo by <span>shankar s.</span></p>
+                <p>The shrine was built in 1866 on the area where Magellan was believed to have been killed in the Battle of Mactan in 1521. The statue of Lapu-Lapu, the chieftain of Mactan Island, stands 20 meters high and is made of bronze.  </p>
+            </div>
+        </div>
+    </section>
 
     <section class="outskirts">
         <h2>OUTSKIRTS OF CEBU</h2>

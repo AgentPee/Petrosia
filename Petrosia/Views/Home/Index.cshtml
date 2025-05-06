@@ -11,7 +11,6 @@
     <!-- AOS Library CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-
 </head>
 <body>
     <!-------Banner------->
@@ -25,7 +24,7 @@
             </div>
         </div>
         <nav>
-            <a href="index.html"><img src="images/logo.png"></a>
+            <a href="@Url.Action("Index", "Home")"><img src="images/logo1.png"></a>
             <div class="nav-links" id="navLinks">
                 <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
                 <ul>
@@ -34,7 +33,7 @@
                         <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                         <li><a href="@Url.Action("About", "Home")">About</a></li>
                         <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
-                        <li><a href="@Url.Action("Gallery", "Home")">Gallery</a></li>
+                        <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
                         <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
                         <li><a href="@Url.Action("Guest", "Home")">Guest</a></li>
                         <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
@@ -44,19 +43,18 @@
                         <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                         <li><a href="@Url.Action("About", "Home")">About</a></li>
                         <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
-                        <li><a href="@Url.Action("Gallery", "Home")">Gallery</a></li>
+                        <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
                         <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
                         <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
                     }
-                    
                 </ul>
             </div>
             <i class="fa-solid fa-bars" onclick="showMenu()"></i>
         </nav>
 
         <div class="text-box">
-            <h1>Relax, Enjoy, Vibes</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis ullam cupiditate iure odio facilis distinctio error minima quos placeat, repellendus sed, <br>fugit quaerat recusandae! Natus aliquid voluptate provident alias consequatur.</p>
+            <h1>Experience Luxury and Comfort</h1>
+            <p>Immerse yourself in a relaxing and vibrant atmosphere with breathtaking city views and a stunning rooftop pool. Whether you're looking for a peaceful retreat or an exciting urban escape, <br>our exclusive location offers the perfect blend of elegance and comfort. Book now and indulge in the ultimate getaway!</p>
             <a href="@Url.Action("Booking", "Home")" class="hero-btn">BOOK NOW</a>
         </div>
     </section>
@@ -64,8 +62,8 @@
     <!-------About------->
     <section class="about">
         <h2>WELCOME TO PETROSIA HOTEL</h2>
-        <p>At Petrosia Hotel, we are dedicated to providing an experience that leaves a lasting impression. Oursignature Petrosia Touch is more than just service—it is the warmth, care, and commitment we extend to every guest. The Petrosia Touch embodies our passion for hospitality, our dedication to ensuring your utmost satisfaction, and the unforgettable memories you take with you, no matter where life leads you. With modern elegance and warm hospitality, Petrosia Hotel offers a refined retreat in the heart of the city.<br> We welcome you to experience our thoughtfully designed accommodations, seamless business facilities, and inviting event spaces, perfect for corporate gatherings, milestone celebrations, and intimate weddings. At Petrosia Hotel, every stay is more than just a visit—it’s an experience crafted just</p>
-        <a href="" class="about-btn">Learn More</a>
+        <p>At Petrosia Hotel, we are dedicated to providing an experience that leaves a lasting impression. Our signature Petrosia Touch is more than just service—it is the warmth, care, and commitment we extend to every guest. The Petrosia Touch embodies our passion for hospitality, our dedication to ensuring your utmost satisfaction, and the unforgettable memories you take with you, no matter where life leads you. With modern elegance and warm hospitality, Petrosia Hotel offers a refined retreat in the heart of the city.<br> We welcome you to experience our thoughtfully designed accommodations, seamless business facilities, and inviting event spaces, perfect for corporate gatherings, milestone celebrations, and intimate weddings. At Petrosia Hotel, every stay is more than just a visit—it's an experience crafted just</p>
+        <a href="@Url.Action("About", "Home")" class="about-btn">Learn More</a>
     </section>
     <!-------End of About------->
     <!-------Features------->
@@ -80,11 +78,11 @@
         </div>
         <div class="feature" data-aos="fade-up" data-aos-delay="400">
             <h3><span class="icons"><i class="fa-solid fa-square-parking"></i></span>Free Parking</h3>
-            <p>Guests have access to the hotel’s parking area for free.</p>
+            <p>Guests have access to the hotel's parking area for free.</p>
         </div>
         <div class="feature" data-aos="fade-up" data-aos-delay="600">
             <h3><span class="icons"><i class="fa-solid fa-receipt"></i></span>Early Check-in</h3>
-            <p>Our guests’ comfort is our top priority.</p>
+            <p>Our guests' comfort is our top priority.</p>
         </div>
     </section>
     <!-------End of Features------->
@@ -92,54 +90,54 @@
     <section class="guest-rooms" data-aos="fade-up">
         <h2>COMFORTABLE GUEST ROOMS</h2>
         <p class="description" data-aos="fade-up" data-aos-delay="100">
-            One Central Hotel has 157 elegantly-furnished and air-conditioned classic rooms,
+            Petrosia Hotel has 157 elegantly-furnished and air-conditioned classic rooms,
             which is a perfect pick for business and leisure travelers.
         </p>
 
         <div class="rooms-container">
             <div class="room" data-aos="fade-up" data-aos-delay="200">
-                <img src="images/deluxe-single.jpg" alt="Deluxe Single">
+                <img src="images/single.jpg" alt="Deluxe Single">
                 <h3>Deluxe Single</h3>
                 <p><strong>√ MAX:</strong> 1 (adult)</p>
                 <p><strong>√ ROOM SIZE:</strong> 21 sqm.</p>
                 <p><strong>√ BED:</strong> 1 Single</p>
-                <a href="#">Check details</a> | <a href="#">BOOK NOW</a>
+                <a href="@Url.Action("RoomDetails", "Home", new { roomType = "DeluxeSingle" })">Check details</a> | <a href="@Url.Action("Booking", "Home")">BOOK NOW</a>
             </div>
 
             <div class="room" data-aos="fade-up" data-aos-delay="300">
-                <img src="images/deluxe-double.jpg" alt="Deluxe Double">
+                <img src="images/double.jpg" alt="Deluxe Double">
                 <h3>Deluxe Double</h3>
                 <p><strong>√ MAX:</strong> 2 (adults)</p>
                 <p><strong>√ ROOM SIZE:</strong> 22-28 sqm.</p>
                 <p><strong>√ BED:</strong> 1 Double</p>
-                <a href="#">Check details</a> | <a href="#">BOOK NOW</a>
+                <a href="@Url.Action("RoomDetails", "Home", new { roomType = "DeluxeDouble" })">Check details</a> | <a href="@Url.Action("Booking", "Home")">BOOK NOW</a>
             </div>
 
             <div class="room" data-aos="fade-up" data-aos-delay="400">
-                <img src="images/deluxe-twin.jpg" alt="Deluxe Twin">
+                <img src="images/twin.jpg" alt="Deluxe Twin">
                 <h3>Deluxe Twin</h3>
                 <p><strong>√ MAX:</strong> 2 (adults) + 2 (kids)</p>
                 <p><strong>√ ROOM SIZE:</strong> 22-29 sqm.</p>
                 <p><strong>√ BED:</strong> 1 Single & 1 Double</p>
-                <a href="#">Check details</a> | <a href="#">BOOK NOW</a>
+                <a href="@Url.Action("RoomDetails", "Home", new { roomType = "DeluxeTwin" })">Check details</a> | <a href="@Url.Action("Booking", "Home")">BOOK NOW</a>
             </div>
 
             <div class="room" data-aos="fade-up" data-aos-delay="500">
-                <img src="images/junior-suite.jpg" alt="Junior Suite">
+                <img src="images/junior.jpg" alt="Junior Suite">
                 <h3>Junior Suite</h3>
                 <p><strong>√ MAX:</strong> 2 (adults) + 2 (kids)</p>
                 <p><strong>√ ROOM SIZE:</strong> 70 sqm.</p>
                 <p><strong>√ BED:</strong> 1 King</p>
-                <a href="#">Check details</a> | <a href="#">BOOK NOW</a>
+                <a href="@Url.Action("RoomDetails", "Home", new { roomType = "JuniorSuite" })">Check details</a> | <a href="@Url.Action("Booking", "Home")">BOOK NOW</a>
             </div>
 
             <div class="room" data-aos="fade-up" data-aos-delay="600">
-                <img src="images/executive-suite.jpg" alt="Executive Suite">
+                <img src="images/executive.jpg" alt="Executive Suite">
                 <h3>Executive Suite</h3>
                 <p><strong>√ MAX:</strong> 4 (adults) + 2 (kids)</p>
                 <p><strong>√ ROOM SIZE:</strong> 85 sqm.</p>
                 <p><strong>√ BED:</strong> 1 King & 1 Double</p>
-                <a href="#">Check details</a> | <a href="#">BOOK NOW</a>
+                <a href="@Url.Action("RoomDetails", "Home", new { roomType = "ExecutiveSuite" })">Check details</a> | <a href="@Url.Action("Booking", "Home")">BOOK NOW</a>
             </div>
         </div>
     </section>
@@ -148,19 +146,18 @@
     <section class="facilities" data-aos="fade-down">
         <h2>EXPLORE OUR FACILITIES</h2>
         <p class="description" data-aos="fade-up" data-aos-delay="100">
-            One Central Hotel balances business with pleasure. From hosting corporate conventions
-            to intimate gatherings of family and friends, we have an array of facilities to tailor fit your requirements.
+            Petrosia Hotel seamlessly blends business and leisure. Whether you're organizing corporate events or intimate gatherings with loved ones, our diverse facilities are designed to meet your every need.
         </p>
 
         <div class="facility-card" data-aos="fade-right" data-aos-delay="200">
-            <img src="images/ballroom.jpg" alt="Molave Grand Ballroom">
+            <img src="images/ball.jpg" alt="Molave Grand Ballroom">
             <div class="facility-info">
                 <h3>Molave Grand Ballroom</h3>
                 <p>
                     A classy venue to hold your important meetings, corporate presentations, and social events.
                     The Molave Grand Ballroom houses up to 300 seated dinner guests and up to 350 persons for cocktails.
                 </p>
-                <button>Learn more</button>
+                <button onclick="location.href='@Url.Action("FacilityDetails", "Home", new { facility = "Ballroom" })'">Learn more</button>
             </div>
         </div>
 
@@ -171,14 +168,13 @@
                     Treat yourself at our all-day dining restaurant. Enjoy good food at our delectable buffet spreads
                     and a la carte choices. We have the longest happy hour at our bar that starts from 4 pm to 10 pm.
                 </p>
-                <button>Learn more</button>
+                <button onclick="location.href='@Url.Action("FacilityDetails", "Home", new { facility = "Cafe" })'">Learn more</button>
             </div>
-            <img src="images/tartanilla.jpg" alt="Cafe Tartanilla">
+            <img src="images/cafe.jpg" alt="Cafe Tartanilla">
         </div>
-
     </section>
-
     <!-------End of Facilities------->
+
     <!-----Gallery Section----->
     <section class="facilities-container" data-aos="zoom-in">
         <h2>GALLERY</h2>
@@ -187,13 +183,13 @@
         </p>
         <div class="slideshow-container">
             <div class="slide fade" data-aos="fade" data-aos-delay="200">
-                <img src="images/ballroom.jpg" alt="Slide 1">
+                <img src="images/ball.jpg" alt="Slide 1">
             </div>
             <div class="slide fade" data-aos="fade" data-aos-delay="300">
-                <img src="images/deluxe-double.jpg" alt="Slide 2">
+                <img src="images/junior.jpg" alt="Slide 2">
             </div>
             <div class="slide fade" data-aos="fade" data-aos-delay="400">
-                <img src="images/deluxe-twin.jpg" alt="Slide 3">
+                <img src="images/executive.jpg" alt="Slide 3">
             </div>
 
             <!-- Navigation Arrows -->
@@ -202,45 +198,52 @@
         </div>
     </section>
     <!-----End of Gallery Section----->
+    <!-----Map Section------>
+    <div class="location">
+        <h2>Destination</h2>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.5455447363574!2d123.86437241428375!3d10.298152970656325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a99da9e6604a81%3A0x422733d996932b11!2sCaduloy!5e0!3m2!1sen!2sph!4v1671028370550!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+    <!-----EndMap Section------>
     <!-----Footer Section----->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-column">
                 <h4>Find & Book</h4>
                 <ul>
-                    <li><a href="#">Our Destinations</a></li>
-                    <li><a href="#">Find a Reservation</a></li>
-                    <li><a href="#">Meetings & Events</a></li>
-                    <li><a href="#">Restaurant & Bars</a></li>
+                    <li><a href="@Url.Action("Index", "Home")">Our Destinations</a></li>
+                    <li><a href="@Url.Action("Booking", "Home")">Find a Reservation</a></li>
+                    <li><a href="@Url.Action("Facilities", "Home")">Meetings & Events</a></li>
+                    <li><a href="@Url.Action("FacilityDetails", "Home", new { facility = "Cafe" })">Restaurant & Bars</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h4>Petrosia Circle</h4>
                 <ul>
-                    <li><a href="#">Programme Overview</a></li>
-                    <li><a href="#">Join Petrosia Circle</a></li>
-                    <li><a href="#">Account Overview</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="@Url.Action("About", "Home")">Programme Overview</a></li>
+                    <li><a href="@Url.Action("SignUp", "Auth")">Join Petrosia Circle</a></li>
+                    <li><a href="@Url.Action("Guest", "Home")">Account Overview</a></li>
+                    <li><a href="@Url.Action("About", "Home")">FAQ</a></li>
+                    <li><a href="@Url.Action("About", "Home")">Contact Us</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h4>About Petrosia</h4>
                 <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Our Hotel Brands</a></li>
-                    <li><a href="#">Petrosia Centre</a></li>
-                    <li><a href="#">Residences</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="@Url.Action("About", "Home")">About Us</a></li>
+                    <li><a href="@Url.Action("About", "Home")">Our Hotel Brands</a></li>
+                    <li><a href="@Url.Action("About", "Home")">Petrosia Centre</a></li>
+                    <li><a href="@Url.Action("About", "Home")">Residences</a></li>
+                    <li><a href="@Url.Action("About", "Home")">Contact Us</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h4>More</h4>
                 <ul>
-                    <li><a href="#">Investors</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Global Citizenship</a></li>
-                    <li><a href="#">News</a></li>
+                    <li><a href="@Url.Action("About", "Home")">Investors</a></li>
+                    <li><a href="@Url.Action("About", "Home")">Careers</a></li>
+                    <li><a href="@Url.Action("About", "Home")">Global Citizenship</a></li>
+                    <li><a href="@Url.Action("About", "Home")">News</a></li>
                 </ul>
             </div>
             <div class="footer-socials">
@@ -256,20 +259,17 @@
     </div>
     <!-----End of Footer Section----->
 
-
     <button id="scrollToTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
 
-
-
     <script>
-        // JavaSCript for toggle menu
+        // JavaScript for toggle menu
         var navLinks = document.getElementById("navLinks");
 
         function showMenu(){
             navLinks.style.right = "0";
         }
         function hideMenu(){
-            navLinks.style.right = "-200px";
+            navLinks.style.right = "-250px";
         }
         // end
 
@@ -309,12 +309,11 @@
         }
 
         AOS.init({
-        duration: 1200,  // Adjust this based on the smoothness you want
-        delay: 150,      // Delay before animation starts
-        easing: "ease-in-out",
-        once: true       // Ensures animations trigger only once
+            duration: 1200,  // Adjust this based on the smoothness you want
+            delay: 150,      // Delay before animation starts
+            easing: "ease-in-out",
+            once: true       // Ensures animations trigger only once
         });
-
 
         const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
@@ -335,9 +334,18 @@
             });
         });
 
+        // Disable Zoom
+        document.addEventListener('wheel', function(event) {
+            if (event.ctrlKey) {
+                event.preventDefault();
+            }
+        }, { passive: false });
 
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && (event.key === '+' || event.key === '-' || event.key === '0')) {
+                event.preventDefault();
+            }
+        });
     </script>
-
-
 </body>
 </html>

@@ -1,0 +1,26 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Room Details";
+}
+
+@switch (Model)
+{
+    case "DeluxeSingle":
+        <partial name="DeluxeSingle" />
+        break;
+    case "DeluxeDouble":
+        <partial name="DeluxeDouble" />
+        break;
+    case "DeluxeTwin":
+        <partial name="DeluxeTwin" />
+        break;
+    case "JuniorSuite":
+        <partial name="JuniorSuite" />
+        break;
+    case "ExecutiveSuite":
+        <partial name="ExecutiveSuite" />
+        break;
+    default:
+        <p>Room not found</p>
+        break;
+}
