@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="shortcut icon" type="x-icon" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <!-- AOS Library CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+</head>
+<body>
+
+    <!-------Banner------->
+    <section class="deluxe-header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <span><i class="fa-solid fa-phone"></i> +(63) 09670935136</span>
+                    <span><i class="fa-solid fa-envelope"></i> info@petrosiahotel.com</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("About", "Home")">About</a></li>
+                        <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                        <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
+                        <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
+                        <li><a href="@Url.Action("Guest", "Home")">Guest</a></li>
+                        <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("About", "Home")">About</a></li>
+                        <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                        <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
+                        <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
+                        <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
+                    }
+                </ul>
+            </div>
+            <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </section>
+
+    <!-------Slideshow------->
+    <!-------Slideshow------->
+    <div class="deluxe-container">
+        <div class="mySlides fade active" data-aos="fade" data-aos-delay="200">
+            <img src="@Url.Content("~/images/junior.jpg")" alt="Deluxe Room">
+        </div>
+        <div class="mySlides fade" data-aos="fade" data-aos-delay="300">
+            <img src="@Url.Content("~/images/cr.jpg")" alt="Bathroom">
+        </div>
+
+        <!-- Navigation Arrows -->
+        <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+        <a class="next" onclick="changeSlide(1)">&#10095;</a>
+    </div>
+
+    <section class="room-intro">
+        <h2>Junior Suite<span class="del-feat"> (Double Occupancy)</span></h2>
+        <p>The suite room has its own living room and dining area. Guests can relax in the bathtub while enjoying the view of the city and the sea.</p>
+    </section>
+
+    <section class="room-features-container">
+        <div class="feature-box">
+            <ul>
+                <li><img src="~/images/del-feature1.png" alt="Bed"> High-quality bed linens and duvet covers</li>
+                <li><img src="~/images/del-feature2.png" alt="Pillow"> Hypoallergenic Pillows</li>
+                <li><img src="~/images/del-feature3.png" alt="Toiletries"> Bath Toiletries</li>
+                <li><img src="~/images/del-feature4.png" alt="Shower"> Hot & Cold Shower</li>
+                <li><img src="~/images/del-feature5.png" alt="Hair Dryer"> Hair Dryer</li>
+                <li><img src="~/images/del-feature6.png" alt="Mirror"> Vanity Mirror</li>
+                <li><img src="~/images/del-feature7.png" alt="Mini Chiller"> Mini Chiller</li>
+                <li><img src="~/images/del-feature8.png" alt="TV"> Flat Screen TV (with HDMI and USB Ports and Premium Cable Channels)</li>
+            </ul>
+        </div>
+        <div class="feature-box">
+            <ul>
+                <li><img src="~/images/del-feature9.png" alt="Key Card"> Key Card and Lock System</li>
+                <li><img src="~/images/del-feature10.png" alt="Safe"> In-room safe</li>
+                <li><img src="~/images/del-feature11.png" alt="AC"> Individually Controlled Air Conditioning Units</li>
+                <li><img src="~/images/del-feature12.png" alt="Smoke Alarm"> Smoke Alarm</li>
+                <li><img src="~/images/del-feature13.png" alt="Telephone"> Telephone</li>
+                <li><img src="~/images/del-feature14.png" alt="Desk"> Desk Space for Working</li>
+                <li><img src="~/images/del-feature15.png" alt="Power"> Easily Accessible Power Outlets</li>
+                <li><img src="~/images/del-feature16.png" alt="Reading Light"> Optimal Reading Light</li>
+            </ul>
+        </div>
+    </section>
+    <div class="button-container">
+        <a href="@Url.Action("Booking", "Home")" class="book-now-btn">BOOK THIS ROOM!</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const slides = document.querySelectorAll('.mySlides');
+            let currentIndex = 0;
+            let autoSlideInterval;
+            const autoSlideDuration = 3000; // 3 seconds for automatic slides
+            const manualTransitionDuration = 500; // 0.5 seconds for manual slides
+
+            // Show current slide and hide others
+            function showSlide(index, isManual = false) {
+                // Remove all active classes and reset transitions
+                slides.forEach(slide => {
+                    slide.classList.remove('active', 'slow-transition');
+                    slide.style.opacity = 0;
+                });
+
+                // Set appropriate transition speed
+                if (!isManual) {
+                    slides[index].classList.add('slow-transition');
+                }
+
+                // Show new slide
+                slides[index].classList.add('active');
+                slides[index].style.opacity = 1;
+                currentIndex = index;
+            }
+
+            // Start automatic slideshow
+            function startAutoSlideshow() {
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = setInterval(() => {
+                    const nextIndex = (currentIndex + 1) % slides.length;
+                    showSlide(nextIndex);
+                }, autoSlideDuration);
+            }
+
+            // Manual navigation
+            function manualSlide(direction) {
+                clearInterval(autoSlideInterval);
+                const newIndex = (currentIndex + direction + slides.length) % slides.length;
+                showSlide(newIndex, true);
+                startAutoSlideshow();
+            }
+
+            // Initialize
+            showSlide(0);
+            startAutoSlideshow();
+
+            // Event listeners for arrows
+            document.querySelector('.prev').addEventListener('click', () => manualSlide(-1));
+            document.querySelector('.next').addEventListener('click', () => manualSlide(1));
+        });
+    </script>
+
+
+</body>
+</html>
