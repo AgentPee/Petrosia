@@ -134,43 +134,17 @@ public partial class UserManagement1Context : DbContext
                 .HasConstraintName("guest_room");
         });
 
+        // Configure the new Booking entity
         modelBuilder.Entity<Booking>(entity =>
         {
-            entity.HasKey(e => e.BookingId).HasName("PRIMARY");
+            entity.ToTable("bookings");
+            entity.HasKey(e => e.BookingId);
 
-            entity.ToTable("booking");
+            entity.Property(e => e.TotalAmount)
+                .HasColumnType("decimal(18, 2)");
 
-            entity.Property(e => e.BookingId)
-                .HasColumnType("int(11)")
-                .HasColumnName("Booking_ID");
-
-            entity.Property(e => e.GuestId)
-                .HasColumnType("int(11)")
-                .HasColumnName("Guest_ID");
-
-            entity.Property(e => e.RoomId)
-                .HasColumnType("int(11)")
-                .HasColumnName("Room_ID");
-
-            entity.Property(e => e.CheckInDate)
-                .HasColumnType("datetime")
-                .HasColumnName("Check_In_Date");
-
-            entity.Property(e => e.CheckOutDate)
-                .HasColumnType("datetime")
-                .HasColumnName("Check_Out_Date");
-
-            entity.HasOne(d => d.Guest)
-                .WithMany(p => p.Bookings)
-                .HasForeignKey(d => d.GuestId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("fk_booking_guest");
-
-            entity.HasOne(d => d.Room)
-                .WithMany(p => p.Bookings)
-                .HasForeignKey(d => d.RoomId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("fk_booking_room");
+            entity.Property(e => e.Status)
+                .HasDefaultValue("Confirmed");
         });
 
         OnModelCreatingPartial(modelBuilder);

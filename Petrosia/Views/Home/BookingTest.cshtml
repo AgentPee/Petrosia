@@ -1,0 +1,300 @@
+﻿@{
+    ViewData["Title"] = "Booking Test Page";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Petrosia Hotel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #222;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .test-section {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .test-section h2 {
+                color: #444;
+                margin-bottom: 15px;
+            }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+            padding: 0 10px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #EFDCAB;
+            color: #222;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            button:hover {
+                background-color: #e0c98f;
+            }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #222;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Petrosia Hotel - Booking System Test</h1>
+
+        <div class="test-section">
+            <h2>Basic Form Test</h2>
+            <p>This section tests if basic form elements work correctly.</p>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="test-name">Your Name</label>
+                    <input type="text" id="test-name" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="test-email">Your Email</label>
+                    <input type="email" id="test-email" placeholder="Enter your email">
+                </div>
+            </div>
+
+            <button type="button" id="testBasicFormBtn">Test Basic Form</button>
+            <div id="basicFormResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Date Selection Test</h2>
+            <p>This section tests if date selection works correctly.</p>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="test-checkin">Check-in Date</label>
+                    <input type="date" id="test-checkin">
+                </div>
+                <div class="form-group">
+                    <label for="test-checkout">Check-out Date</label>
+                    <input type="date" id="test-checkout">
+                </div>
+            </div>
+
+            <button type="button" id="testDateBtn">Test Date Selection</button>
+            <div id="dateResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Room Selection Test</h2>
+            <p>This section tests if room selection works correctly.</p>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="test-room">Select Room</label>
+                    <select id="test-room">
+                        <option value="">Select a room</option>
+                        <option value="Deluxe Single Room">Deluxe Single Room</option>
+                        <option value="Deluxe Double Room">Deluxe Double Room</option>
+                        <option value="Deluxe Twin Room">Deluxe Twin Room</option>
+                        <option value="Junior Suite">Junior Suite</option>
+                        <option value="Executive Suite">Executive Suite</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="test-adults">Number of Adults</label>
+                    <select id="test-adults">
+                        <option value="1">1 Adult</option>
+                        <option value="2">2 Adults</option>
+                        <option value="3">3 Adults</option>
+                        <option value="4">4 Adults</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" id="testRoomBtn">Test Room Selection</button>
+            <div id="roomResult" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Database Connection Test</h2>
+            <p>This section tests if the database connection works correctly.</p>
+
+            <button type="button" id="testDatabaseBtn">Test Database Connection</button>
+            <div id="databaseResult" class="result"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 Petrosia Hotel. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Test page loaded successfully');
+
+            // Test basic form
+            document.getElementById('testBasicFormBtn').addEventListener('click', function() {
+                const name = document.getElementById('test-name').value;
+                const email = document.getElementById('test-email').value;
+
+                const result = document.getElementById('basicFormResult');
+                result.style.display = 'block';
+
+                if (name && email) {
+                    result.innerHTML = `<strong>Success!</strong> Form captured: Name = ${name}, Email = ${email}`;
+                    result.style.backgroundColor = '#e8f5e9';
+                } else {
+                    result.innerHTML = '<strong>Error:</strong> Please fill in all fields';
+                    result.style.backgroundColor = '#ffebee';
+                }
+            });
+
+            // Test date selection
+            document.getElementById('testDateBtn').addEventListener('click', function() {
+                const checkin = document.getElementById('test-checkin').value;
+                const checkout = document.getElementById('test-checkout').value;
+
+                const result = document.getElementById('dateResult');
+                result.style.display = 'block';
+
+                if (checkin && checkout) {
+                    // Calculate nights
+                    const date1 = new Date(checkin);
+                    const date2 = new Date(checkout);
+                    const timeDiff = date2 - date1;
+                    const nights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+                    if (nights > 0) {
+                        result.innerHTML = `<strong>Success!</strong> Date selection works. You selected ${nights} night(s) from ${formatDate(checkin)} to ${formatDate(checkout)}`;
+                        result.style.backgroundColor = '#e8f5e9';
+                    } else {
+                        result.innerHTML = '<strong>Error:</strong> Check-out date must be after check-in date';
+                        result.style.backgroundColor = '#ffebee';
+                    }
+                } else {
+                    result.innerHTML = '<strong>Error:</strong> Please select both dates';
+                    result.style.backgroundColor = '#ffebee';
+                }
+            });
+
+            // Test room selection
+            document.getElementById('testRoomBtn').addEventListener('click', function() {
+                const room = document.getElementById('test-room').value;
+                const adults = document.getElementById('test-adults').value;
+
+                const result = document.getElementById('roomResult');
+                result.style.display = 'block';
+
+                if (room) {
+                    result.innerHTML = `<strong>Success!</strong> You selected: ${room} for ${adults} adult(s)`;
+                    result.style.backgroundColor = '#e8f5e9';
+                } else {
+                    result.innerHTML = '<strong>Error:</strong> Please select a room';
+                    result.style.backgroundColor = '#ffebee';
+                }
+            });
+
+            // Test database connection
+            document.getElementById('testDatabaseBtn').addEventListener('click', function() {
+                const result = document.getElementById('databaseResult');
+                result.style.display = 'block';
+                result.innerHTML = '<strong>Testing...</strong> Checking database connection';
+
+                // Make a simple AJAX request to check database
+                fetch('/Home/TestDatabaseConnection', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        result.innerHTML = `<strong>Success!</strong> Database connection working. Message: ${data.message}`;
+                        result.style.backgroundColor = '#e8f5e9';
+                    } else {
+                        result.innerHTML = `<strong>Error:</strong> Database connection failed. Message: ${data.message}`;
+                        result.style.backgroundColor = '#ffebee';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    result.innerHTML = `<strong>Error:</strong> Failed to check database connection. See console for details.`;
+                    result.style.backgroundColor = '#ffebee';
+                });
+            });
+
+            // Helper function to format dates
+            function formatDate(dateString) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString('en-US', options);
+            }
+        });
+    </script>
+</body>
+</html>

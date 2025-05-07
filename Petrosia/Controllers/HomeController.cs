@@ -115,18 +115,121 @@ namespace Petrosia.Controllers
 
         // ========================== Booking Management ========================== //
         [HttpPost]
-        public IActionResult BookRoom(Booking booking)
+        public IActionResult BookRoom([FromBody] Booking booking)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest("Invalid data!");
-            }
+                if (!ModelState.IsValid)
+                {
+                    // Log the specific validation errors
+                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        Console.WriteLine($"Validation error: {error.ErrorMessage}");
+                    }
+                    return BadRequest(ModelState);
+                }
 
-            _context.Bookings.Add(booking);
+                // Generate a unique booking reference
+                booking.BookingReference = "PH" + DateTime.Now.ToString("yyyyMMdd") + new Random().Next(1000, 9999);
+
+                // Save to database
+                _context.Bookings.Add(booking);
+                _context.SaveChanges();
+
+                return Ok("Booking successful! Reference: " + booking.BookingReference);
+            }
+            catch (Exception ex)
+            {
+                // Log the detailed exception
+                Console.WriteLine($"Error in BookRoom: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+
+                return StatusCode(500, "An error occurred: " + ex.Message);
+            }
+        }
+
+        // ========================== View Bookings (Admin) ========================== //
+        [Authorize(Roles = "Admin")]
+        public IActionResult Bookings()
+        {
+            var bookings = _context.Bookings.ToList();
+            return View(bookings);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult BookingDetails(int id)
+        {
+            var booking = _context.Bookings.Find(id);
+            return booking != null ? View(booking) : NotFound();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult UpdateBookingStatus(int id, string status)
+        {
+            var booking = _context.Bookings.Find(id);
+            if (booking == null) return NotFound();
+
+            booking.Status = status;
             _context.SaveChanges();
 
-            return Ok("Booking successful!");
+            return RedirectToAction("BookingDetails", new { id = id });
         }
+
+
+        // Testing booking (safe to remove)
+
+        public IActionResult BookingTest()
+        {
+            // This action will serve the test page
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult TestDatabaseConnection()
+        {
+            try
+            {
+                // Test if we can access the database
+                bool isConnected = _context.Database.CanConnect();
+
+                // Get some basic stats to confirm tables exist
+                int adminCount = _context.Admins.Count();
+                int guestCount = _context.Guests.Count();
+
+                // Check if Bookings table exists by trying to access it
+                bool bookingsTableExists = true;
+                try
+                {
+                    _context.Bookings.Count();
+                }
+                catch
+                {
+                    bookingsTableExists = false;
+                }
+
+                return Json(new
+                {
+                    success = isConnected,
+                    message = $"Database connection successful. Found {adminCount} admins and {guestCount} guests. Bookings table exists: {bookingsTableExists}"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = $"Error connecting to database: {ex.Message}"
+                });
+            }
+        }
+
 
     }
 }
