@@ -810,73 +810,78 @@ button {
 
 /* About Us Section */
 .about-us {
+    min-height: 100vh;
     text-align: center;
-    padding: 5vw 5%; /* Responsive padding */
-    background-color: white;
+    padding: 5vw 5%;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/bg.jpg') center/cover no-repeat;
+    position: relative;
+    color: white; /* White text for all content */
 }
 
-    /* Container */
-    .about-us .container {
-        max-width: 1000px;
-        margin: auto;
-        padding: 0 20px; /* Added padding for small screens */
-    }
+/* Container */
+.about-us .container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 0 20px;
+    position: relative;
+}
 
-    /* Headings */
-    .about-us h1 {
-        font-size: clamp(24px, 4vw, 32px); /* Responsive font size */
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
+/* Headings */
+.about-us h1 {
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: white;
+}
 
-    .about-us h2 {
-        font-size: clamp(18px, 3vw, 22px);
-        font-weight: bold;
-        margin-top: 40px;
-    }
+.about-us h2 {
+    font-size: clamp(18px, 3vw, 22px);
+    font-weight: bold;
+    margin-top: 40px;
+    color: white;
+}
 
-    /* Paragraphs */
-    .about-us p {
+/* Paragraphs */
+.about-us p {
+    font-size: clamp(14px, 2.5vw, 16px);
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: white;
+}
+
+/* List Styling */
+.about-us ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+    .about-us ul li {
         font-size: clamp(14px, 2.5vw, 16px);
-        line-height: 1.8;
-        margin-bottom: 15px;
-        color: #888;
+        line-height: 1.6;
+        margin-bottom: 10px;
+        display: block;
+        color: white;
     }
 
-    /* List Styling */
-    .about-us ul {
-        list-style: none;
-        padding: 0;
-        text-align: center;
-    }
+/* Text Formatting */
+.about-us strong {
+    font-weight: bold;
+    color: #90EE90; /* Light green for bold text */
+}
 
-        .about-us ul li {
-            font-size: clamp(14px, 2.5vw, 16px);
-            line-height: 1.6;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-    /* Bold & Italics */
-    .about-us strong {
-        font-weight: bold;
-        color: #222;
-    }
-
-    .about-us em {
-        font-style: italic;
-        color: #666;
-    }
-
+.about-us em {
+    font-style: italic;
+    color: #D3D3D3; /* Light gray for emphasis */
+}
 /* Responsive Design */
 @media (max-width: 768px) {
     .about-us {
-        padding: 40px 15px; /* Reduced padding */
+        padding: 40px 15px;
     }
 
         .about-us .container {
             margin: 30px auto;
-            overflow-x: hidden;
         }
 
         .about-us h1 {
