@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Petrosia.Models;
 
@@ -11,9 +12,11 @@ using Petrosia.Models;
 namespace Petrosia.Migrations
 {
     [DbContext(typeof(UserManagement1Context))]
-    partial class UserManagement1ContextModelSnapshot : ModelSnapshot
+    [Migration("20250507175911_AddTry5")]
+    partial class AddTry5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,8 +151,8 @@ namespace Petrosia.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("Password");
 
                     b.Property<string>("PhoneNumber")
@@ -296,6 +299,35 @@ namespace Petrosia.Migrations
                     b.Navigation("HouseKeepings");
                 });
 #pragma warning restore 612, 618
+        }
+    }
+
+    public partial class UpdateGuestPasswordLength : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AlterColumn<string>(
+                name: "Password",
+                table: "guest",
+                type: "varchar(255)",
+                maxLength: 255,
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "varchar(20)",
+                oldMaxLength: 20);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AlterColumn<string>(
+                name: "Password",
+                table: "guest",
+                type: "varchar(20)",
+                maxLength: 20,
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "varchar(255)",
+                oldMaxLength: 255);
         }
     }
 }

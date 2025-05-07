@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Petrosia.Models;
-using Petrosia.Models;
+using Petrosia.Data;
 
 namespace Petrosia.Controllers
 {
@@ -117,18 +117,83 @@ namespace Petrosia.Controllers
 
         // ========================== Booking Management ========================== //
         [HttpPost]
-        public IActionResult BookRoom(Booking booking)
+        public IActionResult BookRoom([FromBody] Booking booking)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest("Invalid data!");
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return Json(new { error = "Please log in to make a booking." });
+                }
+
+                var availableRoom = _context.Rooms
+                    .Where(r => r.RoomType == booking.RoomType && r.Status == "Available")
+                    .FirstOrDefault();
+
+                if (availableRoom == null)
+                {
+                    return Json(new { error = $"No {booking.RoomType}s available." });
+                }
+
+                var guest = _context.Guests.FirstOrDefault(g => g.Email == User.Identity.Name);
+                
+                if (guest == null)
+                {
+                    return Json(new { error = "Guest profile not found." });
+                }
+
+                booking.GuestId = guest.GuestId;
+                booking.RoomId = availableRoom.RoomId;
+
+                availableRoom.Status = "Booked";
+                _context.Bookings.Add(booking);
+                _context.SaveChanges();
+
+                return Json(new { 
+                    success = true,
+                    message = "Booking successful!", 
+                    bookingId = booking.BookingId,
+                    roomNumber = availableRoom.RoomNumber 
+                });
             }
-
-            _context.Bookings.Add(booking);
-            _context.SaveChanges();
-
-            return Ok("Booking successful!");
+            catch (Exception ex)
+            {
+                return Json(new { error = $"Booking failed: {ex.Message}" });
+            }
         }
 
+        [HttpGet]
+        public IActionResult TestDatabaseConnection()
+        {
+            try
+            {
+                bool isConnected = _context.Database.CanConnect();
+                return Json(new { 
+                    connected = isConnected, 
+                    message = isConnected ? "Database connection successful" : "Database connection failed" 
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { 
+                    connected = false, 
+                    error = ex.Message 
+                });
+            }
+        }
+
+        [HttpGet]
+        public IActionResult SeedRooms()
+        {
+            try
+            {
+                RoomSeeder.SeedRooms(_context);
+                return Json(new { success = true, message = "Rooms seeded successfully" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, error = ex.Message });
+            }
+        }
     }
 }
