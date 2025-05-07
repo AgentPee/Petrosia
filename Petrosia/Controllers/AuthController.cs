@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+/* AuthController.Cs */
+
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Petrosia.Models; 
+using Petrosia.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -92,8 +96,8 @@ namespace Petrosia.Controllers
             return RedirectToAction("SignIn");
         }
 
-        
-        
+
+
 
         [HttpGet("SignIn")]
         public IActionResult SignIn()
@@ -172,7 +176,7 @@ namespace Petrosia.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                return RedirectToAction("Index", "Home"); 
+                return RedirectToAction("Index", "Home");
             }
             else if (admin != null)
             {
@@ -189,7 +193,7 @@ namespace Petrosia.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                return RedirectToAction("Admin", "Home"); 
+                return RedirectToAction("Admin", "Home");
             }
             else
             {

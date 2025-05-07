@@ -1,4 +1,6 @@
-﻿using System;
+﻿/*UserManagement1Context.cs*/
+
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;

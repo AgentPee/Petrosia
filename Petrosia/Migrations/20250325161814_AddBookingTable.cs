@@ -1,4 +1,6 @@
-﻿using System;
+﻿/*20250325161814_AddBookingTable.cs*/
+
+using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 

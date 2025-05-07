@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿
+/* 20250314182528_InitialCreate.Cs */
+
+
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable

@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿/*20250320122718_AddNewColumns.cs*/
+
+
+
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
