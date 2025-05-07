@@ -7,6 +7,7 @@ namespace Petrosia.Models
     public class Room
     {
         [Key]
+
         public int RoomId { get; set; }
 
         // ✅ Add RoomNumber property
