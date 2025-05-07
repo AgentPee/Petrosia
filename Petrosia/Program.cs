@@ -1,9 +1,9 @@
-﻿
-// program.cs
+﻿// program.cs
 
 
 using Microsoft.EntityFrameworkCore;
 using Petrosia.Models;
+using Petrosia.Data;
 using System.Configuration;
 using Microsoft.Extensions.Logging;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
@@ -49,6 +49,27 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         Console.WriteLine("Database connection failed: " + ex);
+    }
+}
+
+// Add after app.Build()
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<UserManagement1Context>();
+        
+        // Ensure database is created and migrations are applied
+        context.Database.EnsureCreated();
+        
+        // Seed rooms
+        RoomSeeder.SeedRooms(context);
+        Console.WriteLine("Successfully seeded room data.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while seeding rooms: {ex.Message}");
     }
 }
 
@@ -104,6 +125,20 @@ using (var scope = app.Services.CreateScope())
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
 logger.LogInformation("Application has started!");
+
+// Add this to your Program.cs configuration
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[{DateTime.UtcNow}] Error: {ex.Message}");
+        throw;
+    }
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

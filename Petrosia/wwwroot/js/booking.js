@@ -166,62 +166,86 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Handle form submission
-    completeBookingBtn.addEventListener('click', function () {
-        // Validate form
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const privacyPolicy = document.getElementById('privacyPolicy').checked;
-        const bookingConditions = document.getElementById('bookingConditions').checked;
-
-        if (!firstName || !lastName || !email || !phone) {
-            alert('Please fill in all required personal information fields.');
-            return;
-        }
-
-        if (!privacyPolicy || !bookingConditions) {
-            alert('Please accept our privacy policy and booking conditions.');
-            return;
-        }
-
-        // Validate payment details based on selected method
-        const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-
-        if (selectedPaymentMethod === 'creditCard' || selectedPaymentMethod === 'debitCard') {
-            const cardName = document.getElementById('cardName').value;
-            const cardNumber = document.getElementById('cardNumber').value;
-            const expiryDate = document.getElementById('expiryDate').value;
-            const cvv = document.getElementById('cvv').value;
-
-            if (!cardName || !cardNumber || !expiryDate || !cvv) {
-                alert('Please fill in all required credit card details.');
+    completeBookingBtn.addEventListener('click', async function() {
+        try {
+            // Validate form fields
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const checkIn = document.getElementById('check-in').value;
+            const checkOut = document.getElementById('check-out').value;
+            const adults = parseInt(document.getElementById('adults').value);
+            const children = parseInt(document.getElementById('children').value);
+            
+            // Basic validation
+            if (!firstName || !lastName || !email || !phone || !checkIn || !checkOut || !selectedRoom) {
+                alert('Please fill in all required fields');
                 return;
             }
-        } else if (selectedPaymentMethod === 'eWallet') {
-            const eWalletType = document.getElementById('eWalletType').value;
-            const eWalletNumber = document.getElementById('eWalletNumber').value;
 
-            if (!eWalletType || !eWalletNumber) {
-                alert('Please fill in all required e-wallet details.');
-                return;
+            updateDebugInfo('Preparing to send booking request...');
+
+            // Create booking object
+            const booking = {
+                roomType: selectedRoom,
+                checkInDate: new Date(checkIn).toISOString(),
+                checkOutDate: new Date(checkOut).toISOString(),
+                adults: adults,
+                children: children || 0
+            };
+
+            updateDebugInfo('Sending booking request: ' + JSON.stringify(booking));
+
+            // Send booking to server
+            const response = await fetch('/Home/BookRoom', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(booking)
+            });
+
+            const data = await response.json();
+            
+            if (!response.ok || data.error || data.errors) {
+                throw new Error(data.error || (Array.isArray(data.errors) ? data.errors.join(', ') : 'Booking failed'));
             }
+
+            updateDebugInfo('Booking successful: ' + JSON.stringify(data));
+
+            // Show confirmation modal
+            checkoutModal.style.display = 'none';
+            document.getElementById('bookingReference').textContent = `PH${data.bookingId}`;
+            document.getElementById('confirmRoomType').textContent = selectedRoom;
+            document.getElementById('confirmCheckIn').textContent = formatDate(checkIn);
+            document.getElementById('confirmCheckOut').textContent = formatDate(checkOut);
+            document.getElementById('confirmAmount').textContent = document.getElementById('summaryPrice').textContent;
+            confirmationModal.style.display = 'block';
+
+        } catch (error) {
+            console.error('Booking error:', error);
+            updateDebugInfo('Error: ' + error.message);
+            alert(`Booking failed: ${error.message}`);
         }
+    });
 
-        // If all validations pass, show confirmation modal
-        checkoutModal.style.display = 'none';
+    // Add this helper function for debugging
+    function debugDatabaseConnection() {
+        fetch('/Home/TestDatabaseConnection')
+            .then(response => response.json())
+            .then(result => {
+                console.log('Database connection test:', result);
+            })
+            .catch(error => {
+                console.error('Database connection test failed:', error);
+            });
+    }
 
-        // Update confirmation details
-        document.getElementById('confirmRoomType').textContent = selectedRoom;
-        document.getElementById('confirmCheckIn').textContent = document.getElementById('summaryCheckIn').textContent;
-        document.getElementById('confirmCheckOut').textContent = document.getElementById('summaryCheckOut').textContent;
-        document.getElementById('confirmAmount').textContent = document.getElementById('summaryPrice').textContent;
-
-        // Generate random booking reference
-        const bookingRef = 'PH' + Math.floor(100000 + Math.random() * 900000);
-        document.getElementById('bookingReference').textContent = bookingRef;
-
-        confirmationModal.style.display = 'block';
+    // Call this on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        debugDatabaseConnection();
     });
 
     // Close confirmation modal and redirect
@@ -237,4 +261,38 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         // This is handled by the room selection and checkout process
     });
+
+    // Add event listeners for date changes
+    document.getElementById('check-in').addEventListener('change', updateRoomAvailability);
+    document.getElementById('check-out').addEventListener('change', updateRoomAvailability);
 });
+
+function updateRoomAvailability() {
+    const checkIn = document.getElementById('check-in').value;
+    const checkOut = document.getElementById('check-out').value;
+
+    if (checkIn && checkOut) {
+        fetch(`/Home/GetAvailableRooms?checkIn=${checkIn}&checkOut=${checkOut}`)
+            .then(response => response.json())
+            .then(data => {
+                // Update room selection UI based on availability
+                document.querySelectorAll('.room-option').forEach(roomOption => {
+                    const roomType = roomOption.getAttribute('data-room-type');
+                    const availableCount = data[roomType] || 0;
+                    
+                    const availabilityBadge = roomOption.querySelector('.availability-badge');
+                    const selectButton = roomOption.querySelector('.select-room-btn');
+                    
+                    if (availableCount > 0) {
+                        availabilityBadge.textContent = `${availableCount} rooms available`;
+                        availabilityBadge.classList.remove('sold-out');
+                        selectButton.disabled = false;
+                    } else {
+                        availabilityBadge.textContent = 'Sold Out';
+                        availabilityBadge.classList.add('sold-out');
+                        selectButton.disabled = true;
+                    }
+                });
+            });
+    }
+}

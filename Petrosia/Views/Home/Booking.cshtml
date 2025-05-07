@@ -25,6 +25,12 @@
 
     <!-------Booking Form------->
     <div class="booking-container">
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div class="alert alert-warning" style="margin: 20px; padding: 15px; background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 4px;">
+                <p>Please <a href="@Url.Action("SignIn", "Auth")">sign in</a> to make a booking.</p>
+            </div>
+        }
         <form class="booking-form" data-aos="fade-up" id="bookingForm">
             <div class="form-header">
                 <h2>Reservation Details</h2>
