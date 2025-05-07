@@ -54,8 +54,9 @@
         </nav>
     </section>
     <!-------End of Banner------->
+
     <!-----About us Content ----->
-    <section class="about-us">
+    <section class="about-us" style="background-image: url('/images/bg.jpg'); background-attachment: fixed;">
         <div class="container">
             <h1>ABOUT US</h1>
             <p>
@@ -79,6 +80,8 @@
             <p><strong>Standard Check-Out Time:</strong> 12:00 NN</p>
         </div>
     </section>
+
+
     <!-----Footer Section----->
     <footer class="footer">
         <div class="footer-container">
@@ -136,35 +139,69 @@
     <button id="scrollToTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
 
     <script>
-        // JavaSCript for toggle menu
-        var navLinks = document.getElementById("navLinks");
+            document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.getElementById("navLinks");
+            let menuVisible = false;
 
-        function showMenu(){
-            navLinks.style.right = "0";
-        }
-        function hideMenu(){
-            navLinks.style.right = "-200px";
-        }
-        // end
-
-
-        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-
-        window.addEventListener("scroll", function() {
-            if (window.scrollY > 300) {
-                scrollToTopBtn.classList.add("show");
-                scrollToTopBtn.classList.remove("hidden");
-            } else {
-                scrollToTopBtn.classList.add("hidden");
-                scrollToTopBtn.classList.remove("show");
+            // Menu Functions
+            function showMenu() {
+                navLinks.style.right = "0";
+                menuVisible = true;
+                document.addEventListener('click', closeMenuOnClickOutside);
             }
-        });
 
-        scrollToTopBtn.addEventListener("click", function() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
+            function hideMenu() {
+                navLinks.style.right = "-200px";
+                menuVisible = false;
+                document.removeEventListener('click', closeMenuOnClickOutside);
+            }
+
+            function closeMenuOnClickOutside(e) {
+                if (!navLinks.contains(e.target) && !e.target.classList.contains('fa-bars')) {
+                    hideMenu();
+                }
+            }
+
+            // Scroll to Top Button
+            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+            function handleScroll() {
+                scrollToTopBtn.classList.toggle("show", window.scrollY > 300);
+            }
+
+            window.addEventListener("scroll", function() {
+                requestAnimationFrame(handleScroll);
             });
+            handleScroll(); // Initialize
+
+            scrollToTopBtn.addEventListener("click", function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+
+            // Style Persistence Fix
+            function persistStyles() {
+                const aboutSection = document.querySelector('.about-us');
+                if (aboutSection) {
+                    // Ensure text colors stay consistent
+                    const elements = aboutSection.querySelectorAll('h1, h2, p, li, strong, em');
+                    elements.forEach(el => {
+                        if (el.tagName === 'STRONG') {
+                            el.style.color = '#90EE90';
+                        } else if (el.tagName === 'EM') {
+                            el.style.color = '#D3D3D3';
+                        } else {
+                            el.style.color = 'white';
+                        }
+                    });
+                }
+            }
+
+            // Run on initial load and page transitions
+            persistStyles();
+            window.addEventListener('pageshow', persistStyles);
         });
     </script>
 
