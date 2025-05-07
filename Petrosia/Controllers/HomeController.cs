@@ -87,7 +87,7 @@ namespace Petrosia.Controllers
         [HttpPost]
         public IActionResult EditAdmin(Admin model)
         {
-            if (model == null || model.AdminId == 0) return BadRequest("Invalid admin ID");
+            if (model == null || model.AdminId == this.GetHashCode()) return BadRequest("Invalid admin ID");
 
             var admin = _context.Admins.Find(model.AdminId);
             if (admin == null) return NotFound();
@@ -136,7 +136,7 @@ namespace Petrosia.Controllers
                 }
 
                 var guest = _context.Guests.FirstOrDefault(g => g.Email == User.Identity.Name);
-                
+
                 if (guest == null)
                 {
                     return Json(new { error = "Guest profile not found." });
@@ -149,11 +149,12 @@ namespace Petrosia.Controllers
                 _context.Bookings.Add(booking);
                 _context.SaveChanges();
 
-                return Json(new { 
+                return Json(new
+                {
                     success = true,
-                    message = "Booking successful!", 
+                    message = "Booking successful!",
                     bookingId = booking.BookingId,
-                    roomNumber = availableRoom.RoomNumber 
+                    roomNumber = availableRoom.RoomNumber
                 });
             }
             catch (Exception ex)
@@ -168,16 +169,18 @@ namespace Petrosia.Controllers
             try
             {
                 bool isConnected = _context.Database.CanConnect();
-                return Json(new { 
-                    connected = isConnected, 
-                    message = isConnected ? "Database connection successful" : "Database connection failed" 
+                return Json(new
+                {
+                    connected = isConnected,
+                    message = isConnected ? "Database connection successful" : "Database connection failed"
                 });
             }
             catch (Exception ex)
             {
-                return Json(new { 
-                    connected = false, 
-                    error = ex.Message 
+                return Json(new
+                {
+                    connected = false,
+                    error = ex.Message
                 });
             }
         }
@@ -194,6 +197,34 @@ namespace Petrosia.Controllers
             {
                 return Json(new { success = false, error = ex.Message });
             }
+        }
+
+        // ========================== Review Management ========================== //
+        [HttpPost]
+        public IActionResult SubmitReview(string name, string email, int rating, string review)
+        {
+            // In a real application, you would create a Review model and save to database
+            // For example:
+            /*
+            var newReview = new Review
+            {
+                Name = name,
+                Email = email,
+                Rating = rating,
+                Content = review,
+                DateSubmitted = DateTime.Now,
+                IsApproved = false
+            };
+            
+            _context.Reviews.Add(newReview);
+            _context.SaveChanges();
+            */
+
+            // For now, we'll just display a success message
+            TempData["SuccessMessage"] = "Thank you for your review! It will be displayed after moderation.";
+
+            // Redirect back to the About page
+            return RedirectToAction("About");
         }
     }
 }
