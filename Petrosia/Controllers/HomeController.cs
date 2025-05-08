@@ -179,96 +179,119 @@ namespace Petrosia.Controllers
         {
             try
             {
-                if (!User.Identity.IsAuthenticated)
+                if (!ModelState.IsValid)
                 {
-                    return Json(new { error = "Please log in to make a booking." });
+                    // Log the specific validation errors
+                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        Console.WriteLine($"Validation error: {error.ErrorMessage}");
+                    }
+                    return BadRequest(ModelState);
                 }
 
-                var availableRoom = _context.Rooms
-                    .Where(r => r.RoomType == booking.RoomType && r.Status == "Available")
-                    .FirstOrDefault();
+                // Generate a unique booking reference
+                booking.BookingReference = "PH" + DateTime.Now.ToString("yyyyMMdd") + new Random().Next(1000, 9999);
 
-                if (availableRoom == null)
-                {
-                    return Json(new { error = $"No {booking.RoomType}s available." });
-                }
-
-                var guest = _context.Guests.FirstOrDefault(g => g.Email == User.Identity.Name);
-
-                if (guest == null)
-                {
-                    return Json(new { error = "Guest profile not found." });
-                }
-
-                booking.GuestId = guest.GuestId;
-                booking.RoomId = availableRoom.RoomId;
-
-                availableRoom.Status = "Booked";
+                // Save to database
                 _context.Bookings.Add(booking);
                 _context.SaveChanges();
 
-                return Json(new
-                {
-                    success = true,
-                    message = "Booking successful!",
-                    bookingId = booking.BookingId,
-                    roomNumber = availableRoom.RoomNumber
-                });
+                return Ok("Booking successful! Reference: " + booking.BookingReference);
             }
             catch (Exception ex)
             {
-                return Json(new { error = $"Booking failed: {ex.Message}" });
+                // Log the detailed exception
+                Console.WriteLine($"Error in BookRoom: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+
+                return StatusCode(500, "An error occurred: " + ex.Message);
             }
         }
 
-        // ========================== Reviews Management ========================== //
-        [HttpPost]
-        public IActionResult SubmitReview(string name, string email, int rating, string review)
+        // ========================== View Bookings (Admin) ========================== //
+        [Authorize(Roles = "Admin")]
+        public IActionResult Bookings()
         {
-            // In a real application, you would save this to the database
-            // For now, we'll just display a success message
-            TempData["SuccessMessage"] = "Thank you for your review! It will be displayed after moderation.";
-
-            // Redirect back to the About page
-            return RedirectToAction("About");
+            var bookings = _context.Bookings.ToList();
+            return View(bookings);
         }
 
-        // ========================== Utility Methods ========================== //
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult BookingDetails(int id)
+        {
+            var booking = _context.Bookings.Find(id);
+            return booking != null ? View(booking) : NotFound();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult UpdateBookingStatus(int id, string status)
+        {
+            var booking = _context.Bookings.Find(id);
+            if (booking == null) return NotFound();
+
+            booking.Status = status;
+            _context.SaveChanges();
+
+            return RedirectToAction("BookingDetails", new { id = id });
+        }
+
+
+        // Testing booking (safe to remove)
+
+        public IActionResult BookingTest()
+        {
+            // This action will serve the test page
+            return View();
+        }
+
         [HttpGet]
         public IActionResult TestDatabaseConnection()
         {
             try
             {
+                // Test if we can access the database
                 bool isConnected = _context.Database.CanConnect();
+
+                // Get some basic stats to confirm tables exist
+                int adminCount = _context.Admins.Count();
+                int guestCount = _context.Guests.Count();
+
+                // Check if Bookings table exists by trying to access it
+                bool bookingsTableExists = true;
+                try
+                {
+                    _context.Bookings.Count();
+                }
+                catch
+                {
+                    bookingsTableExists = false;
+                }
+
                 return Json(new
                 {
-                    connected = isConnected,
-                    message = isConnected ? "Database connection successful" : "Database connection failed"
+                    success = isConnected,
+                    message = $"Database connection successful. Found {adminCount} admins and {guestCount} guests. Bookings table exists: {bookingsTableExists}"
                 });
             }
             catch (Exception ex)
             {
                 return Json(new
                 {
-                    connected = false,
-                    error = ex.Message
+                    success = false,
+                    message = $"Error connecting to database: {ex.Message}"
                 });
             }
         }
 
-        [HttpGet]
-        public IActionResult SeedRooms()
-        {
-            try
-            {
-                RoomSeeder.SeedRooms(_context);
-                return Json(new { success = true, message = "Rooms seeded successfully" });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, error = ex.Message });
-            }
-        }
+
+
     }
 
 }
