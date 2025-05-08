@@ -1,5 +1,5 @@
-﻿@using Petrosia.Models
-
+﻿<!------Guest.cshtml------->
+@using Petrosia.Models
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,32 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petrosia Hotel - Records</title>
     <link rel="stylesheet" href="~/css/admin-styles.css" asp-append-version="true" />
-    
-
-    
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 </head>
 <body>
-
     <header>
-        <img src="~/images/logo1.png" alt="Hotel Logo"> <!-- Replace with actual logo file -->
-        
+        <a href="@Url.Action("Index", "Home")">
+            <img src="~/images/logo1.png" alt="Hotel Logo">
+        </a>
     </header>
-
     <section class="container">
         <h2 id="recordTitle">Guest Records</h2>
 
-
-
-
-
-
-        <!-- Room Service Table (Initially Hidden) -->
         <table class="table table-bordered table-striped">
-
             <thead>
                 <tr class="text-center">
-
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
@@ -42,48 +30,39 @@
                 </tr>
             </thead>
             <tbody>
-            <tbody>
-                    @foreach (var guest in Model)
-                    {
+                @foreach (var guest in Model)
+                {
                     <tr>
-                        
                         <td>@guest.FirstName</td>
                         <td>@guest.LastName</td>
                         <td>@guest.Email</td>
                         <td>@guest.PhoneNumber</td>
                         <td>@guest.Address</td>
                         <td>
-
                             <form style="display:inline;" action="@Url.Action("EditGuest", "Home")" method="get">
                                 <input type="hidden" name="id" value="@guest.GuestId" />
                                 <button type="submit" class="btn btn-warning">Edit</button>
                             </form>
 
-                            
                             <form style="display:inline;" action="@Url.Action("DeleteGuest", "Home")" method="post">
                                 <input type="hidden" name="id" value="@guest.GuestId" />
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
                             </form>
                         </td>
                     </tr>
-                    }
+                }
             </tbody>
         </table>
 
         <form class="page-control" style="display:inline;" action="@Url.Action("Admin", "Home")">
             <button class="btn" onclick="prevPage()">◄ Previous</button>
         </form>
-        <form class="page-control" style="display:inline;" action="@Url.Action("Admin", "Home")">
-        <button class="btn" onclick="nextPage()">Next ►</button>
+        <form class="page-control" style="display:inline;" action="@Url.Action("Raa", "Home")">
+            <button class="btn" onclick="nextPage()">Next ►</button>
         </form>
-
     </section>
-
-    <footer class="text-center mt-5">
+    <footer>
         © 2025 Petrosia Hotel - Privacy Policy
     </footer>
-
-    
-    
 </body>
 </html>

@@ -1,3 +1,6 @@
+/* admin-script.js */
+
+
 let currentPage = 1;
 
 function nextPage() {

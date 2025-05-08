@@ -1,5 +1,12 @@
+
+
+
+
+
+
 ﻿document.addEventListener('DOMContentLoaded', function () {
     console.log("Booking page initialization started");
+
 
     // Initialize AOS animation library
     try {
@@ -213,6 +220,9 @@
         });
     });
 
+
+    
+
     // Database submission handling
     if (completeBookingBtn) {
         completeBookingBtn.addEventListener('click', function () {
@@ -353,6 +363,7 @@
         console.warn("Complete booking button not found");
     }
 
+
     // Handle form submission
     const bookingForm = document.getElementById('bookingForm');
     if (bookingForm) {
@@ -363,6 +374,9 @@
     } else {
         console.warn("Booking form not found");
     }
+
+
+   
 
     console.log("Booking page initialization completed");
 });

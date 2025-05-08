@@ -1,4 +1,6 @@
-﻿// Wait for DOM to load
+﻿/* site.js */
+
+// Wait for DOM to load
 document.addEventListener('DOMContentLoaded', function () {
     // Mobile menu toggle
     const navLinks = document.getElementById("navLinks");

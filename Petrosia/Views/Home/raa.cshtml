@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel - Reports & Analytics</title>
+    <link rel="stylesheet" href="~/css/admin-styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="@Url.Action("Index", "Home")">
+            <img src="~/images/logo1.png" alt="Hotel Logo">
+        </a>
+    </header>
+    <section class="container">
+        <h1 class="section-title">Reports & Analytics</h1>
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-bed"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Room Occupancy</h3>
+                    <p class="stat-value">@ViewBag.OccupancyRate.ToString("0.0")%</p>
+                    <p class="stat-detail">@ViewBag.OccupiedRooms of @ViewBag.TotalRooms rooms</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total Guests</h3>
+                    <p class="stat-value">@ViewBag.TotalGuests</p>
+                    <p class="stat-detail">Registered in system</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total Revenue</h3>
+                    <p class="stat-value">₱@ViewBag.TotalRevenue.ToString("N0")</p>
+                    <p class="stat-detail">From @ViewBag.TotalBookings bookings</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Average Stay</h3>
+                    <p class="stat-value">@ViewBag.AverageStay.ToString("0.0") nights</p>
+                    <p class="stat-detail">Per booking</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optimized Room Occupancy Chart Section -->
+        <div class="room-occupancy-chart">
+            <div class="doughnut-container">
+                <canvas id="occupancyChart"></canvas>
+                <div class="doughnut-center">
+                    <p class="doughnut-value">@ViewBag.OccupancyRate.ToString("0.0")%</p>
+                    <p class="doughnut-label">Occupancy</p>
+                </div>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <div class="legend-color legend-available"></div>
+                    <span>Available</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color legend-occupied"></div>
+                    <span>Occupied</span>
+                </div>
+            </div>
+            <div class="room-count">
+                @ViewBag.OccupiedRooms of @ViewBag.TotalRooms rooms
+            </div>
+        </div>
+
+        <h3 class="section-title">Recent Bookings</h3>
+        <table class="analytics-table">
+            <thead>
+                <tr>
+                    <th>Guest</th>
+                    <th>Room</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Duration</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.RecentBookings != null && ViewBag.RecentBookings.Count > 0)
+                {
+                    foreach (var booking in ViewBag.RecentBookings)
+                    {
+                        var duration = (booking.CheckOutDate - booking.CheckInDate).Days;
+                        var total = booking.Room != null ? booking.Room.Price * duration : 0;
+
+                        <tr>
+                            <td>@booking.Guest.FirstName @booking.Guest.LastName</td>
+                            <td>@(booking.Room != null ? $"{booking.Room.RoomType} ({booking.Room.RoomNumber})" : "N/A")</td>
+                            <td>@booking.CheckInDate.ToString("MMM dd, yyyy")</td>
+                            <td>@booking.CheckOutDate.ToString("MMM dd, yyyy")</td>
+                            <td>@duration night@(duration != 1 ? "s" : "")</td>
+                            <td>₱@total.ToString("N0")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="text-align: center;">No recent bookings found</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button class="btn" onclick="prevPage()">
+                <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <button class="btn" onclick="nextPage()">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <footer class="footer">
+        © 2025 Petrosia Hotel - Privacy Policy
+    </footer>
+
+    <script>
+        // Room Occupancy Chart with improved configuration
+        const occupancyCtx = document.getElementById('occupancyChart').getContext('2d');
+        const occupancyChart = new Chart(occupancyCtx, {
+            type: 'doughnut', // Changed from pie to doughnut for better appearance
+            data: {
+                labels: ['Available', 'Occupied'],
+                datasets: [{
+                    data: [@ViewBag.AvailableRooms, @ViewBag.OccupiedRooms],
+                    backgroundColor: [
+                        '#2ecc71',  // Green for available (matches CSS)
+                        '#e74c3c'   // Red for occupied (matches CSS)
+                    ],
+                    borderColor: 'white',
+                    borderWidth: 2,
+                    borderRadius: 4,
+                    hoverOffset: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                cutout: '70%', // Creates a doughnut with hole in center
+                plugins: {
+                    legend: {
+                        display: false // Hide default legend, using custom one
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw + ' rooms';
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        });
+
+        // Navigation functions
+        function prevPage() {
+            // Handle previous page navigation
+        }
+
+        function nextPage() {
+            // Handle next page navigation
+        }
+    </script>
+</body>
+</html>
