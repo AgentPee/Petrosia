@@ -1,7 +1,4 @@
-﻿/*Booking.cs*/
-
-
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,10 +9,6 @@ namespace Petrosia.Models
     {
         [Key]
         public int BookingId { get; set; }
-
-
-       
-
 
         [Required]
         [StringLength(50)]
@@ -59,25 +52,11 @@ namespace Petrosia.Models
         [StringLength(50)]
         public string RoomType { get; set; }
 
-
-        [Required]
-        public string RoomType { get; set; }
-
-        [Required]
-        [Range(1, 10)]
-        public int Adults { get; set; }
-
-        [Range(0, 5)]
-        public int Children { get; set; }
-
         [Required]
         public DateTime CheckInDate { get; set; }
 
         [Required]
         public DateTime CheckOutDate { get; set; }
-
-
-       
 
         [Required]
         public int NumberOfAdults { get; set; }
@@ -106,6 +85,8 @@ namespace Petrosia.Models
 
         [StringLength(20)]
         public string Status { get; set; } = "Confirmed";
+
+       
 
     }
 }

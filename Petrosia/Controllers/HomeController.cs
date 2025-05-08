@@ -47,16 +47,21 @@ namespace Petrosia.Controllers
             // Calculate occupancy percentage
             double occupancyRate = totalRooms > 0 ? (double)occupiedRooms / totalRooms * 100 : 0;
 
-            // Calculate total revenue (simplified version)
+            // Calculate total revenue
             decimal totalRevenue = 0;
-            var bookings = _context.Bookings.Include(b => b.Room).ToList();
+            var bookings = _context.Bookings.ToList();
+
             foreach (var booking in bookings)
             {
-                if (booking.Room != null)
+                if (booking.RoomId != null)
                 {
-                    int stayDays = (booking.CheckOutDate - booking.CheckInDate).Days;
-                    if (stayDays <= 0) stayDays = 1; // Minimum one day
-                    totalRevenue += booking.Room.Price * stayDays;
+                    var room = _context.Rooms.FirstOrDefault(r => r.RoomId == booking.RoomId);
+                    if (room != null)
+                    {
+                        int stayDays = (booking.CheckOutDate - booking.CheckInDate).Days;
+                        if (stayDays <= 0) stayDays = 1; // Minimum one day
+                        totalRevenue += room.Price * stayDays; // Use Room.Price
+                    }
                 }
             }
 
@@ -69,11 +74,21 @@ namespace Petrosia.Controllers
             }
 
             // Get recent bookings for table display
-            var recentBookings = _context.Bookings
-                .Include(b => b.Guest)
-                .Include(b => b.Room)
+            var recentBookings = bookings
                 .OrderByDescending(b => b.BookingId)
                 .Take(5)
+                .Select(b => new
+                {
+                    b.BookingId,
+                    FullName = $"{b.FirstName} {b.LastName}",
+                    b.Email,
+                    b.PhoneNumber,
+                    b.CheckInDate,
+                    b.CheckOutDate,
+                    b.Status,
+                    b.TotalAmount,
+                    Room = _context.Rooms.FirstOrDefault(r => r.RoomId == b.RoomId) // Fetch Room details
+                })
                 .ToList();
 
             // Pass data to view using ViewBag
@@ -89,6 +104,8 @@ namespace Petrosia.Controllers
 
             return View();
         }
+
+
 
         // ========================== Guest Management ========================== //
         [Authorize(Roles = "Admin")]
