@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Petrosia.Models;
 using Petrosia.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Petrosia.Controllers
 {
@@ -31,6 +32,63 @@ namespace Petrosia.Controllers
 
         [Authorize(Roles = "Admin")]
         public IActionResult Guest() => View(_context.Guests.ToList());
+
+        // ========================== Reports & Analytics ========================== //
+        [Authorize(Roles = "Admin")]
+        public IActionResult Raa()
+        {
+            // Get counts for dashboard stats
+            int totalRooms = _context.Rooms.Count();
+            int availableRooms = _context.Rooms.Count(r => r.Status == "Available");
+            int occupiedRooms = _context.Rooms.Count(r => r.Status == "Used" || r.Status == "Booked");
+            int totalGuests = _context.Guests.Count();
+            int totalBookings = _context.Bookings.Count();
+
+            // Calculate occupancy percentage
+            double occupancyRate = totalRooms > 0 ? (double)occupiedRooms / totalRooms * 100 : 0;
+
+            // Calculate total revenue (simplified version)
+            decimal totalRevenue = 0;
+            var bookings = _context.Bookings.Include(b => b.Room).ToList();
+            foreach (var booking in bookings)
+            {
+                if (booking.Room != null)
+                {
+                    int stayDays = (booking.CheckOutDate - booking.CheckInDate).Days;
+                    if (stayDays <= 0) stayDays = 1; // Minimum one day
+                    totalRevenue += booking.Room.Price * stayDays;
+                }
+            }
+
+            // Calculate average stay
+            double averageStay = 0;
+            if (bookings.Count > 0)
+            {
+                averageStay = bookings.Average(b => (b.CheckOutDate - b.CheckInDate).Days);
+                if (averageStay <= 0) averageStay = 1; // Ensure minimum of 1 day
+            }
+
+            // Get recent bookings for table display
+            var recentBookings = _context.Bookings
+                .Include(b => b.Guest)
+                .Include(b => b.Room)
+                .OrderByDescending(b => b.BookingId)
+                .Take(5)
+                .ToList();
+
+            // Pass data to view using ViewBag
+            ViewBag.TotalRooms = totalRooms;
+            ViewBag.AvailableRooms = availableRooms;
+            ViewBag.OccupiedRooms = occupiedRooms;
+            ViewBag.OccupancyRate = occupancyRate;
+            ViewBag.TotalGuests = totalGuests;
+            ViewBag.TotalBookings = totalBookings;
+            ViewBag.TotalRevenue = totalRevenue;
+            ViewBag.AverageStay = averageStay;
+            ViewBag.RecentBookings = recentBookings;
+
+            return View();
+        }
 
         // ========================== Guest Management ========================== //
         [Authorize(Roles = "Admin")]
@@ -136,7 +194,7 @@ namespace Petrosia.Controllers
                 }
 
                 var guest = _context.Guests.FirstOrDefault(g => g.Email == User.Identity.Name);
-                
+
                 if (guest == null)
                 {
                     return Json(new { error = "Guest profile not found." });
@@ -149,11 +207,12 @@ namespace Petrosia.Controllers
                 _context.Bookings.Add(booking);
                 _context.SaveChanges();
 
-                return Json(new { 
+                return Json(new
+                {
                     success = true,
-                    message = "Booking successful!", 
+                    message = "Booking successful!",
                     bookingId = booking.BookingId,
-                    roomNumber = availableRoom.RoomNumber 
+                    roomNumber = availableRoom.RoomNumber
                 });
             }
             catch (Exception ex)
@@ -162,22 +221,37 @@ namespace Petrosia.Controllers
             }
         }
 
+        // ========================== Reviews Management ========================== //
+        [HttpPost]
+        public IActionResult SubmitReview(string name, string email, int rating, string review)
+        {
+            // In a real application, you would save this to the database
+            // For now, we'll just display a success message
+            TempData["SuccessMessage"] = "Thank you for your review! It will be displayed after moderation.";
+
+            // Redirect back to the About page
+            return RedirectToAction("About");
+        }
+
+        // ========================== Utility Methods ========================== //
         [HttpGet]
         public IActionResult TestDatabaseConnection()
         {
             try
             {
                 bool isConnected = _context.Database.CanConnect();
-                return Json(new { 
-                    connected = isConnected, 
-                    message = isConnected ? "Database connection successful" : "Database connection failed" 
+                return Json(new
+                {
+                    connected = isConnected,
+                    message = isConnected ? "Database connection successful" : "Database connection failed"
                 });
             }
             catch (Exception ex)
             {
-                return Json(new { 
-                    connected = false, 
-                    error = ex.Message 
+                return Json(new
+                {
+                    connected = false,
+                    error = ex.Message
                 });
             }
         }
@@ -196,4 +270,6 @@ namespace Petrosia.Controllers
             }
         }
     }
+
 }
+
