@@ -278,6 +278,45 @@ public IActionResult TestDatabaseConnection()
         }
 
 
+        // ========================== Room Management ========================== //
+        [Authorize(Roles = "Admin")]
+        public IActionResult ManageRooms()
+        {
+            var rooms = _context.Rooms
+                .Select(r => new
+                {
+                    r.RoomId,
+                    r.RoomNumber,
+                    r.RoomType,
+                    r.Status,
+                    GuestName = _context.Bookings
+                        .Where(b => b.RoomTypeId == r.RoomTypeId && b.Status == "Checked-in")
+                        .Select(b => b.FirstName + " " + b.LastName)
+                        .FirstOrDefault()
+                })
+                .ToList();
+
+            return View(rooms);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult UpdateRoomStatus(int roomId, string status)
+        {
+            var room = _context.Rooms.Find(roomId);
+            if (room == null) return NotFound();
+
+            room.Status = status;
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = "Room status updated successfully.";
+            return RedirectToAction("ManageRooms");
+        }
+
+        
+
+
+
 
     }
 

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<dynamic>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Rooms</title>
+    <link rel="stylesheet" href="~/css/admin-booking.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Manage Rooms</h1>
+            <p>View and update room statuses</p>
+        </div>
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        <div class="admin-card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Room ID</th>
+                        <th>Room Number</th>
+                        <th>Room Type</th>
+                        <th>Status</th>
+                        <th>Guest Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var room in Model)
+                    {
+                        <tr>
+                            <td>@room.RoomId</td>
+                            <td>@room.RoomNumber</td>
+                            <td>@room.RoomType</td>
+                            <td>@room.Status</td>
+                            <td>@room.GuestName</td>
+                            <td>
+                                <form method="post" action="@Url.Action("UpdateRoomStatus", "Home")">
+                                    <input type="hidden" name="roomId" value="@room.RoomId" />
+                                    <select name="status" class="form-control">
+                                        <option value="Available" @(room.Status == "Available" ? "selected" : "")>Available</option>
+                                        <option value="Occupied" @(room.Status == "Occupied" ? "selected" : "")>Occupied</option>
+                                        <option value="Under Maintenance" @(room.Status == "Under Maintenance" ? "selected" : "")>Under Maintenance</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
