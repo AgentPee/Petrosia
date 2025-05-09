@@ -3,7 +3,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Petrosia.Models;
-using Petrosia.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Petrosia.Controllers
 {
@@ -27,49 +28,74 @@ namespace Petrosia.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Admin() => View(_context.Admins.ToList());
 
+        // ========================== Reports & Analytics ========================== //
         [Authorize(Roles = "Admin")]
-        public IActionResult Guest() => View(_context.Guests.ToList());
-
-        // ========================== Guest Management ========================== //
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public IActionResult EditGuest(int id)
+        public IActionResult Raa()
         {
-            var guest = _context.Guests.Find(id);
-            return guest != null ? View(guest) : NotFound();
-        }
+            // Get counts for dashboard stats
+            int totalRooms = _context.Rooms.Count();
+            int availableRooms = _context.Rooms.Count(r => r.Status == "Available");
+            int occupiedRooms = _context.Rooms.Count(r => r.Status == "Used" || r.Status == "Booked");
+            int totalBookings = _context.Bookings.Count();
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public IActionResult EditGuest(Guest model)
-        {
-            if (model == null || model.GuestId == 0) return BadRequest("Invalid guest ID");
+            // Calculate occupancy percentage
+            double occupancyRate = totalRooms > 0 ? (double)occupiedRooms / totalRooms * 100 : 0;
 
-            var guest = _context.Guests.Find(model.GuestId);
-            if (guest == null) return NotFound();
+            // Calculate total revenue
+            decimal totalRevenue = 0;
+            var bookings = _context.Bookings.ToList();
 
-            guest.FirstName = model.FirstName;
-            guest.LastName = model.LastName;
-            guest.Email = model.Email;
-            guest.PhoneNumber = model.PhoneNumber;
-            guest.Address = model.Address;
+            foreach (var booking in bookings)
+            {
+                if (booking.RoomId != null)
+                {
+                    var room = _context.Rooms.FirstOrDefault(r => r.RoomId == booking.RoomId);
+                    if (room != null)
+                    {
+                        int stayDays = (booking.CheckOutDate - booking.CheckInDate).Days;
+                        if (stayDays <= 0) stayDays = 1; // Minimum one day
+                        totalRevenue += room.Price * stayDays; // Use Room.Price
+                    }
+                }
+            }
 
-            _context.SaveChanges();
-            TempData["SuccessMessage"] = "Guest details updated successfully.";
-            return RedirectToAction("Guest");
-        }
+            // Calculate average stay
+            double averageStay = 0;
+            if (bookings.Count > 0)
+            {
+                averageStay = bookings.Average(b => (b.CheckOutDate - b.CheckInDate).Days);
+                if (averageStay <= 0) averageStay = 1; // Ensure minimum of 1 day
+            }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public IActionResult DeleteGuest(int id)
-        {
-            var guest = _context.Guests.Find(id);
-            if (guest == null) return NotFound();
+            // Get recent bookings for table display
+            var recentBookings = bookings
+                .OrderByDescending(b => b.BookingId)
+                .Take(5)
+                .Select(b => new
+                {
+                    b.BookingId,
+                    FullName = $"{b.FirstName} {b.LastName}",
+                    b.Email,
+                    b.PhoneNumber,
+                    b.CheckInDate,
+                    b.CheckOutDate,
+                    b.Status,
+                    b.TotalAmount,
+                    Room = _context.Rooms.FirstOrDefault(r => r.RoomId == b.RoomId) // Fetch Room details
+                })
+                .ToList();
 
-            _context.Guests.Remove(guest);
-            _context.SaveChanges();
-            TempData["SuccessMessage"] = "Guest deleted successfully.";
-            return RedirectToAction("Guest");
+            // Pass data to view using ViewBag
+            ViewBag.TotalRooms = totalRooms;
+            ViewBag.AvailableRooms = availableRooms;
+            ViewBag.OccupiedRooms = occupiedRooms;
+            ViewBag.OccupancyRate = occupancyRate;
+            ViewBag.TotalBookings = totalBookings;
+            ViewBag.TotalRevenue = totalRevenue;
+            ViewBag.AverageStay = averageStay;
+            ViewBag.RecentBookings = recentBookings;
+
+            return View();
         }
 
         // ========================== Admin Management ========================== //
@@ -115,18 +141,208 @@ namespace Petrosia.Controllers
 
         // ========================== Booking Management ========================== //
         [HttpPost]
-        public IActionResult BookRoom(Booking booking)
+        public IActionResult BookRoom([FromBody] Booking booking)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest("Invalid data!");
+                if (!ModelState.IsValid)
+                {
+                    // Log the specific validation errors
+                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        Console.WriteLine($"Validation error: {error.ErrorMessage}");
+                    }
+                    return BadRequest(ModelState);
+                }
+
+                // Generate a unique booking reference
+                booking.BookingReference = "PH" + DateTime.Now.ToString("yyyyMMdd") + new Random().Next(1000, 9999);
+
+                // Save to database
+                _context.Bookings.Add(booking);
+                _context.SaveChanges();
+
+                return Ok("Booking successful! Reference: " + booking.BookingReference);
             }
+            catch (Exception ex)
+            {
+                // Log the detailed exception
+                Console.WriteLine($"Error in BookRoom: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
 
-            _context.Bookings.Add(booking);
-            _context.SaveChanges();
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
 
-            return Ok("Booking successful!");
+                return StatusCode(500, "An error occurred: " + ex.Message);
+            }
         }
 
+        // ========================== View Bookings (Admin) ========================== //
+        [Authorize(Roles = "Admin")]
+        public IActionResult Bookings()
+        {
+            var bookings = _context.Bookings.ToList();
+            return View(bookings);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult BookingDetails(int id)
+        {
+            var booking = _context.Bookings.Find(id);
+            return booking != null ? View(booking) : NotFound();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult UpdateBookingStatus(int id, string status)
+        {
+            var booking = _context.Bookings.Find(id);
+            if (booking == null) return NotFound();
+
+            booking.Status = status;
+            _context.SaveChanges();
+
+            return RedirectToAction("BookingDetails", new { id = id });
+        }
+
+        // ========================== Room Inventory Management ========================== //
+        public async Task<IActionResult> RoomInventory()
+        {
+            var rooms = await _context.Rooms.ToListAsync();
+            return View(rooms);
+        }
+
+        [HttpGet]
+        public IActionResult AddRoom()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddRoom(Room room)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(room);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(RoomInventory));
+            }
+            return View(room);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditRoom(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var room = await _context.Rooms.FindAsync(id);
+            if (room == null)
+            {
+                return NotFound();
+            }
+            return View(room);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditRoom(int id, Room room)
+        {
+            if (id != room.RoomId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(room);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RoomExists(room.RoomId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(RoomInventory));
+            }
+            return View(room);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteRoom(int id)
+        {
+            var room = await _context.Rooms.FindAsync(id);
+            if (room != null)
+            {
+                _context.Rooms.Remove(room);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(RoomInventory));
+        }
+
+        private bool RoomExists(int id)
+        {
+            return _context.Rooms.Any(e => e.RoomId == id);
+        }
+
+        // Testing booking (safe to remove)
+        public IActionResult BookingTest()
+        {
+            // This action will serve the test page
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult TestDatabaseConnection()
+        {
+            try
+            {
+                // Test if we can access the database
+                bool isConnected = _context.Database.CanConnect();
+
+                // Get some basic stats to confirm tables exist
+                int adminCount = _context.Admins.Count();
+
+                // Check if Bookings table exists by trying to access it
+                bool bookingsTableExists = true;
+                try
+                {
+                    _context.Bookings.Count();
+                }
+                catch
+                {
+                    bookingsTableExists = false;
+                }
+
+                return Json(new
+                {
+                    success = isConnected,
+                    message = $"Database connection successful. Found {adminCount} admins. Bookings table exists: {bookingsTableExists}"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = $"Error connecting to database: {ex.Message}"
+                });
+            }
+        }
     }
 }

@@ -1,0 +1,144 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel - Records</title>
+    <link rel="stylesheet" href="~/css/admin-booking.css" asp-append-version="true" />
+
+</head>
+<body>
+
+    <header>
+        <img src="~/images/logo1.png" alt="Hotel Logo"> <!-- Replace with actual logo file -->
+
+    </header>
+
+
+
+
+<div class="admin-container">
+    <div class="admin-header">
+        <h1>Manage Bookings</h1>
+        <p>View and manage all hotel bookings</p>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="admin-card">
+        <div class="card-header">
+            <h2>Booking Records</h2>
+            <div class="search-filter">
+                <input type="text" id="searchInput" placeholder="Search bookings..." />
+                <select id="statusFilter">
+                    <option value="">All Statuses</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Checked-in">Checked-in</option>
+                    <option value="Checked-out">Checked-out</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Booking Ref</th>
+                        <th>Guest Name</th>
+                        <th>Room Type</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var booking in Model)
+                        {
+                            <tr>
+                                <td>@booking.BookingId</td>
+                                <td>@booking.BookingReference</td>
+                                <td>@booking.FirstName @booking.LastName</td>
+                                <td>@booking.RoomType</td>
+                                <td>@booking.CheckInDate.ToString("MMM dd, yyyy")</td>
+                                <td>@booking.CheckOutDate.ToString("MMM dd, yyyy")</td>
+                                <td>
+                                    <span class="status-badge @booking.Status.ToLower()">@booking.Status</span>
+                                </td>
+                                <td>₱@booking.TotalAmount.ToString("N2")</td>
+                                <td>
+                                    <a href="@Url.Action("BookingDetails", "Home", new { id = booking.BookingId })" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="9" class="text-center">No bookings found</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <form class="page-control" style="display:inline;" action="@Url.Action("Admin", "Home")"></form>
+            <button class="btn" onclick="prevPage()">◄ Previous</button>
+        </form>
+        <form class="page-control" style="display:inline;" action="@Url.Action("raa", "Home")">
+            <button class="btn" onclick="nextPage()">Next ►</button>
+        </form>
+        </div>
+    </div>
+</div>
+<form class="page-control" style="display:inline;" action="@Url.Action("Admin", "Home")"></form>
+            <button class="btn" onclick="prevPage()">◄ Previous</button>
+        </form>
+        <form class="page-control" style="display:inline;" action="@Url.Action("raa", "Home")">
+            <button class="btn" onclick="nextPage()">Next ►</button>
+        </form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Search functionality
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("table tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            // Status filter
+            $("#statusFilter").on("change", function () {
+                var value = $(this).val().toLowerCase();
+                if (value === "") {
+                    $("table tbody tr").show();
+                } else {
+                    $("table tbody tr").filter(function () {
+                        return $(this).find("td:nth-child(7)").text().toLowerCase().indexOf(value) > -1;
+                    }).show();
+                    $("table tbody tr").filter(function () {
+                        return $(this).find("td:nth-child(7)").text().toLowerCase().indexOf(value) === -1;
+                    }).hide();
+                }
+            });
+        });
+    </script>
+}
+
+
+</body>
+</html>

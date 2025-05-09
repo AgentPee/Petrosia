@@ -15,15 +15,14 @@ namespace Petrosia.Models
         public int RoomNumber { get; set; }
 
         [Required]
-        public string RoomType { get; set; } = string.Empty;
+        public string RoomType { get; set; }
 
         [Required]
         public int Capacity { get; set; }
 
         [Required]
         public decimal Price { get; set; }
-
-        public string Status { get; set; } = "Available";
+        public string Status { get; set; }
 
         // ✅ Add GuestId (Nullable in case the room is unassigned)
         public int? GuestId { get; set; }

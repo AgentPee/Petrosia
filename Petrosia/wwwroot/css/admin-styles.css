@@ -1,39 +1,56 @@
-/* General Styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-}
-/* Header Styling */
-header {
+
+/* ---- navbar ----- */
+nav {
     display: flex;
-    align-items: center; /* Aligns logo and text in one line */
-    justify-content: start; /* Aligns them to the left */
-    padding: 20px;
-    gap: 15px; /* Space between logo and text */
+    padding: 0 6%;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Logo */
-header img {
-    height: 240px; /* Adjust the logo size */
-    width: auto; /* Keeps the aspect ratio */
+    nav img {
+        width: 220px;
+        margin-top: 15px;
+    }
+
+.nav-links {
+    flex: 1;
+    text-align: right;
 }
 
-/* Hotel Name */
-h1 {
-    margin-left: 630px;
-    font-size: 40px;
-    color: black;
-    text-align: center; /* Ensures alignment */
-}
+    .nav-links ul li {
+        list-style: none;
+        display: inline-block;
+        padding: 8px 12px;
+        position: relative;
+    }
 
+        .nav-links ul li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .nav-links ul li::after {
+            content: '';
+            width: 0%;
+            height: 2px;
+            background: #EFDCAB;
+            display: block;
+            margin: auto;
+            transition: 1s ease;
+        }
+
+        .nav-links ul li:hover::after {
+            width: 100%;
+        }
 
 /* Container Styling */
 .container {
     width: 80%;
-    margin: auto;
+    margin: 30px auto;
     padding: 20px;
     background: white;
     border-radius: 10px;
@@ -45,12 +62,12 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
-    
+    margin: 20px 0;
 }
 
 th, td {
-    padding: 10px;
-    border: 1px solid black;
+    padding: 12px;
+    border: 1px solid #ddd;
     text-align: center;
 }
 
@@ -59,14 +76,16 @@ th {
     color: white;
 }
 
-.footer {
-    text-align: center;
-    margin-top: 20px;
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
 }
 
 /* Buttons */
-button {
-    margin-top: px;
+.btn {
     padding: 8px 12px;
     background-color: #d1b88d;
     border: none;
@@ -74,65 +93,200 @@ button {
     cursor: pointer;
     transition: 0.3s ease-in-out;
     border-radius: 5px;
+    margin: 5px;
 }
 
-
-
-/*.btn:hover {
-    background-color: #b89b6f;
-}
+    .btn:hover {
+        background-color: #b89b6f;
+    }
 
 .btn-danger {
-    padding: 8px 12px;
-    background-color: rgb(0, 0, 0);
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s ease-in-out;
+    background-color: #dc3545;
+    color: white;
 }
 
-.btn-danger:hover {
-    background-color: rgb(39, 39, 39);
-}*/
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
 
-/* Search Bar */
-.input-group {
+.btn-warning {
+    background-color: #ffc107;
+    color: black;
+}
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    margin-top: 30px;
+}
+
+/* Page Controls */
+.page-control {
     margin: 20px 0;
+    display: inline-block;
 }
 
-#searchInput {
-    padding: 8px;
-    width: 50%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Responsive Styles */
+@media (max-width: 700px) {
+    .nav-links {
+        position: absolute;
+        background: #EFDCAB;
+        height: 100vh;
+        width: 200px;
+        top: 0;
+        right: -200px;
+        text-align: left;
+        z-index: 2;
+        transition: 1s;
+    }
+
+        .nav-links ul {
+            padding: 30px;
+        }
+
+            .nav-links ul li {
+                display: block;
+            }
+
+    nav .fa-solid {
+        display: block;
+        color: #333;
+        margin: 10px;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
 }
 
-/* Availability Status */
-.status-Available {
-    background-color: green;
+/* Mobile menu icons */
+nav .fa-solid {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .top-bar {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .contact-info {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+/* Room Inventory Specific Styles */
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-add {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+    .btn-add:hover {
+        background-color: #218838;
+    }
+
+.room-table {
+    margin-top: 20px;
+}
+
+    .room-table th {
+        background-color: #343a40;
+        color: white;
+        padding: 12px;
+    }
+
+    .room-table td {
+        padding: 10px;
+        vertical-align: middle;
+    }
+
+.status-available {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.status-occupied {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.status-maintenance {
+    background-color: #ffc107;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-edit {
+    background-color: #17a2b8;
     color: white;
 }
 
-.status-Used {
-    background-color: red;
+.btn-delete {
+    background-color: #dc3545;
     color: white;
 }
 
-.status-Cleaning {
-    background-color: orange;
-    color: white;
-}
-.status-OnDuty{
-    background-color: green;
-    color: white;
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.status-Absent{
-    background-color: red;
-    color: white;
-}
-.status-Excused{
-    background-color: orange;
-    color: white;
-}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-actions {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
 
+    .room-table {
+        font-size: 14px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+}

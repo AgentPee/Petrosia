@@ -25,7 +25,7 @@
             </div>
         </div>
         <nav>
-            <a href="index.html"><img src="~/images/logo1.png"></a>
+            <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png"></a>
             <div class="nav-links" id="navLinks">
                 <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
                 <ul>
@@ -36,7 +36,6 @@
                         <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
                         <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
                         <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
-                        <li><a href="@Url.Action("Guest", "Home")">Guest</a></li>
                         <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
                     }
                     else

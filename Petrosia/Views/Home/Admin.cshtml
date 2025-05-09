@@ -5,28 +5,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Petrosia Hotel - Records</title>
+    <title>Petrosia Hotel - Admin</title>
     <link rel="stylesheet" href="~/css/admin-styles.css" asp-append-version="true" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
-    <header>
-        <img src="~/images/logo.png" alt="Hotel Logo"> <!-- Replace with actual logo file -->
-        <h1>Petrosia Hotel</h1>
-    </header>
+    <nav>
+        <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png"></a>
+        <div class="nav-links" id="navLinks">
+            <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
+                <li><a href="@Url.Action("Bookings", "Home")">Bookings</a></li>
+                <li><a href="@Url.Action("RoomInventory", "Home")">Room Inventory</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
+                }
+            </ul>
+        </div>
+        <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+    </nav>
 
     <section class="container">
         <h2 id="recordTitle">Employee Records</h2>
 
-        
-
-     
-        
-
-        
-        <table  >
-
+        <table>
             <thead>
                 <tr>
                     <th>Admin ID</th>
@@ -35,14 +39,12 @@
                     <th>Role</th>
                     <th>Email</th>
                     <th>Phone Number</th>
-                   
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-            <tbody>
-                    @foreach (var admin in Model)
-                    {
+                @foreach (var admin in Model)
+                {
                     <tr>
                         <td>@admin.AdminId</td>
                         <td>@admin.FirstName</td>
@@ -50,27 +52,20 @@
                         <td>@admin.Role</td>
                         <td>@admin.Email</td>
                         <td>@admin.PhoneNumber</td>
-
                         <td>
                             <form style="display:inline;" action="@Url.Action("EditAdmin", "Home")" method="get">
                                 <input type="hidden" name="id" value="@admin.AdminId" />
                                 <button type="submit" class="btn btn-warning">Edit</button>
                             </form>
-
                             <form style="display:inline;" action="@Url.Action("DeleteAdmin", "Home")" method="post">
                                 <input type="hidden" name="id" value="@admin.AdminId" />
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
                             </form>
                         </td>
                     </tr>
-                    }
+                }
             </tbody>
         </table>
-
-       
-
-
-
 
         <form class="page-control" style="display:inline;" action="@Url.Action("Guest", "Home")">
             <button class="btn" onclick="prevPage()">◄ Previous</button>
@@ -78,14 +73,19 @@
         <form class="page-control" style="display:inline;" action="@Url.Action("Guest", "Home")">
             <button class="btn" onclick="nextPage()">Next ►</button>
         </form>
-
     </section>
 
     <footer>
         © 2025 Petrosia Hotel - Privacy Policy
     </footer>
 
-    
-
+    <script>
+        function showMenu() {
+            document.getElementById("navLinks").style.right = "0";
+        }
+        function hideMenu() {
+            document.getElementById("navLinks").style.right = "-200px";
+        }
+    </script>
 </body>
 </html>
