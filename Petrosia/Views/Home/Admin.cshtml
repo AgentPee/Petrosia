@@ -18,6 +18,7 @@
                 <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
                 <li><a href="@Url.Action("Bookings", "Home")">Bookings</a></li>
                 <li><a href="@Url.Action("RoomInventory", "Home")">Room Inventory</a></li>
+                
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
