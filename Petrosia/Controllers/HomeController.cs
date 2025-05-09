@@ -33,6 +33,8 @@ namespace Petrosia.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Guest() => View(_context.Guests.ToList());
 
+       
+
         // ========================== Reports & Analytics ========================== //
         [Authorize(Roles = "Admin")]
         public IActionResult Raa()

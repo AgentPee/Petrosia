@@ -127,14 +127,12 @@
             </tbody>
         </table>
 
-        <div class="pagination">
-            <button class="btn" onclick="prevPage()">
-                <i class="fas fa-chevron-left"></i> Previous
-            </button>
-            <button class="btn" onclick="nextPage()">
-                Next <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
+        <form class="page-control" style="display:inline;" action="@Url.Action("Guest", "Home")">
+            <button class="btn" onclick="prevPage()">◄ Previous</button>
+        </form>
+        <form class="page-control" style="display:inline;" action="@Url.Action("Bookings", "Home")">
+            <button class="btn" onclick="nextPage()">Next ►</button>
+        </form>
     </section>
 
     <footer class="footer">
