@@ -5,16 +5,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Petrosia Hotel - Records</title>
+    <title>Petrosia Hotel - Admin</title>
     <link rel="stylesheet" href="~/css/admin-styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <a href="@Url.Action("Index", "Home")">
-            <img src="~/images/logo1.png" alt="Hotel Logo">
-        </a>
-    </header>
+    <nav>
+        <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png"></a>
+        <div class="nav-links" id="navLinks">
+            <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
+                <li><a href="@Url.Action("Bookings", "Home")">Bookings</a></li>
+                <li><a href="@Url.Action("RoomInventory", "Home")">Room Inventory</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
+                }
+            </ul>
+        </div>
+        <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+    </nav>
     <section class="container">
         <h2 id="recordTitle">Employee Records</h2>
 
@@ -57,7 +68,7 @@
         </table>
 
         <form class="page-control" style="display:inline;" action="@Url.Action("Bookings", "Home")">
-            <button class="btn" onclick="prevPage()">◄ Previous</button>
+            <button class="btn" onclick="prevPage()">◄ Previous</button>    
         </form>
         <form class="page-control" style="display:inline;" action="@Url.Action("Guest", "Home")">
             <button class="btn" onclick="nextPage()">Next ►</button>
@@ -66,5 +77,15 @@
     <footer>
         © 2025 Petrosia Hotel - Privacy Policy
     </footer>
+
+    <script>
+        function showMenu() {
+            document.getElementById("navLinks").style.right = "0";
+        }
+        function hideMenu() {
+            document.getElementById("navLinks").style.right = "-200px";
+        }
+    </script>
+
 </body>
 </html>
