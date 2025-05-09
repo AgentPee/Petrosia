@@ -1,0 +1,106 @@
+﻿@model Petrosia.Models.Room
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel - Edit Room</title>
+    <link rel="stylesheet" href="~/css/admin-styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png"></a>
+        <div class="nav-links" id="navLinks">
+            <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
+                <li><a href="@Url.Action("Bookings", "Home")">Bookings</a></li>
+                <li><a href="@Url.Action("RoomInventory", "Home")">Room Inventory</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
+                }
+            </ul>
+        </div>
+        <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+    </nav>
+
+    <section class="container">
+        <div class="header-actions">
+            <h2>Edit Room</h2>
+            <a href="@Url.Action("RoomInventory", "Home")" class="btn btn-back">Back to Inventory</a>
+        </div>
+
+        <form asp-action="EditRoom" method="post" class="room-form">
+            <input type="hidden" asp-for="RoomId" />
+
+            <div class="form-group">
+                <label asp-for="RoomNumber" class="control-label"></label>
+                <input asp-for="RoomNumber" class="form-control" />
+                <span asp-validation-for="RoomNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RoomType" class="control-label"></label>
+                <select asp-for="RoomType" class="form-control">
+                    <option value="Single">Single</option>
+                    <option value="Double">Double</option>
+                    <option value="Suite">Suite</option>
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Executive">Executive</option>
+                </select>
+                <span asp-validation-for="RoomType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Capacity" class="control-label"></label>
+                <input asp-for="Capacity" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="Available">Available</option>
+                    <option value="Booked">Booked</option>
+                    <option value="Used">Used</option>
+                    <option value="Maintenance">Maintenance</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+                <a href="@Url.Action("RoomInventory", "Home")" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </section>
+
+    <footer>
+        © 2025 Petrosia Hotel - Privacy Policy
+    </footer>
+
+    <script>
+        function showMenu() {
+            document.getElementById("navLinks").style.right = "0";
+        }
+        function hideMenu() {
+            document.getElementById("navLinks").style.right = "-200px";
+        }
+    </script>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

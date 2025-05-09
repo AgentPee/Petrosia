@@ -179,35 +179,6 @@ namespace Petrosia.Controllers
             }
         }
 
-        // ========================== View Bookings (Admin) ========================== //
-        [Authorize(Roles = "Admin")]
-        public IActionResult Bookings()
-        {
-            var bookings = _context.Bookings.ToList();
-            return View(bookings);
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public IActionResult BookingDetails(int id)
-        {
-            var booking = _context.Bookings.Find(id);
-            return booking != null ? View(booking) : NotFound();
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public IActionResult UpdateBookingStatus(int id, string status)
-        {
-            var booking = _context.Bookings.Find(id);
-            if (booking == null) return NotFound();
-
-            booking.Status = status;
-            _context.SaveChanges();
-
-            return RedirectToAction("BookingDetails", new { id = id });
-        }
-
         // ========================== Room Inventory Management ========================== //
         public async Task<IActionResult> RoomInventory()
         {
@@ -218,30 +189,44 @@ namespace Petrosia.Controllers
         [HttpGet]
         public IActionResult AddRoom()
         {
-            return View();
+            return View(new Room()); // Return empty room for form
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddRoom(Room room)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(room);
+                return View(room);
+            }
+
+            try
+            {
+                // Check if room number already exists
+                if (_context.Rooms.Any(r => r.RoomNumber == room.RoomNumber))
+                {
+                    ModelState.AddModelError("RoomNumber", "Room number already exists");
+                    return View(room);
+                }
+
+                _context.Rooms.Add(room);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(RoomInventory));
-            }
-            return View(room);
-        }
 
-        [HttpGet]
-        public async Task<IActionResult> EditRoom(int? id)
-        {
-            if (id == null)
+                TempData["SuccessMessage"] = "Room added successfully!";
+                return RedirectToAction("RoomInventory");
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                // Log the error
+                Console.WriteLine($"Error adding room: {ex.Message}");
+                ModelState.AddModelError("", "An error occurred while saving the room.");
+                return View(room);
             }
-
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditRoom(int id)
+        {
             var room = await _context.Rooms.FindAsync(id);
             if (room == null)
             {
@@ -263,21 +248,31 @@ namespace Petrosia.Controllers
             {
                 try
                 {
-                    _context.Update(room);
+                    var existingRoom = await _context.Rooms.FindAsync(id);
+                    if (existingRoom == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Manually update each property
+                    existingRoom.RoomNumber = room.RoomNumber;
+                    existingRoom.RoomType = room.RoomType;
+                    existingRoom.Price = room.Price;
+                    existingRoom.Capacity = room.Capacity;
+                    existingRoom.Status = room.Status;
+
                     await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Room updated successfully!";
+                    return RedirectToAction("RoomInventory");
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
                     if (!RoomExists(room.RoomId))
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+                    ModelState.AddModelError("", "Concurrency error: " + ex.Message);
                 }
-                return RedirectToAction(nameof(RoomInventory));
             }
             return View(room);
         }
@@ -312,27 +307,44 @@ namespace Petrosia.Controllers
         {
             try
             {
-                // Test if we can access the database
-                bool isConnected = _context.Database.CanConnect();
+                bool canConnect = _context.Database.CanConnect();
+                int roomCount = _context.Rooms.Count();
+                bool canInsert = false;
 
-                // Get some basic stats to confirm tables exist
-                int adminCount = _context.Admins.Count();
-
-                // Check if Bookings table exists by trying to access it
-                bool bookingsTableExists = true;
+                // Test actual insertion
                 try
                 {
-                    _context.Bookings.Count();
+                    var testRoom = new Room
+                    {
+                        RoomNumber = "TEST" + Guid.NewGuid().ToString().Substring(0, 4),
+                        RoomType = "Test",
+                        Capacity = 1,
+                        Price = 100,
+                        Status = "Available"
+                    };
+
+                    _context.Rooms.Add(testRoom);
+                    _context.SaveChanges();
+                    canInsert = true;
+
+                    // Clean up
+                    _context.Rooms.Remove(testRoom);
+                    _context.SaveChanges();
                 }
-                catch
+                catch (Exception ex)
                 {
-                    bookingsTableExists = false;
+                    return Json(new
+                    {
+                        success = false,
+                        message = $"Insert test failed: {ex.Message}",
+                        details = ex.ToString()
+                    });
                 }
 
                 return Json(new
                 {
-                    success = isConnected,
-                    message = $"Database connection successful. Found {adminCount} admins. Bookings table exists: {bookingsTableExists}"
+                    success = true,
+                    message = $"Database healthy. Rooms: {roomCount}. Can insert: {canInsert}"
                 });
             }
             catch (Exception ex)
@@ -340,7 +352,8 @@ namespace Petrosia.Controllers
                 return Json(new
                 {
                     success = false,
-                    message = $"Error connecting to database: {ex.Message}"
+                    message = $"Connection test failed: {ex.Message}",
+                    details = ex.ToString()
                 });
             }
         }
