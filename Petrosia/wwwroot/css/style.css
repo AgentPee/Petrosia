@@ -22,8 +22,8 @@ body {
 
 /*---- Top Navigation ----*/
 .top-bar {
-    background-color: #1a1a1a;
-    color: white;
+    background-color: #EFDCAB;
+    color: #333;
     font-size: 14px;
     padding: 8px 0;
     text-align: center;
@@ -790,113 +790,236 @@ button {
         }
 }
 
-/* About Us Page */
-
-.sub-header {
-    min-height: 100%;
+/* About Us Page - Enhanced Design */
+/* Hero Section */
+.about-hero {
     height: 60vh;
-    background-image: url("../images/aboutbanner.png");
-    background-position: center;
-    background-size: cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/hotel-lobby.jpg') center/cover no-repeat fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    position: relative;
-    color: #fff;
-}
-
-
-/* About Us Section */
-.about-us {
-    min-height: 100vh;
-    text-align: center;
-    padding: 5vw 5%;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/bg.jpg') center/cover no-repeat;
-    position: relative;
-    color: white; /* White text for all content */
-}
-
-/* Container */
-.about-us .container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 0 20px;
+    color: white;
     position: relative;
 }
 
-/* Headings */
-.about-us h1 {
-    font-size: clamp(24px, 4vw, 32px);
-    font-weight: bold;
-    margin-bottom: 20px;
+.about-hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     color: white;
 }
 
-.about-us h2 {
-    font-size: clamp(18px, 3vw, 22px);
-    font-weight: bold;
-    margin-top: 40px;
-    color: white;
+    .about-hero p {
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+        font-weight: 300;
+        letter-spacing: 1px;
+        color: #333;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 3px rgba(255, 255, 255, 0.8);
+    }
+
+/* Main Content */
+.about-content {
+    padding: 5rem 0;
+    background-color: #fff;
 }
 
-/* Paragraphs */
-.about-us p {
-    font-size: clamp(14px, 2.5vw, 16px);
-    line-height: 1.8;
-    margin-bottom: 15px;
-    color: white;
+/* About Sections */
+.about-section {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin-bottom: 5rem;
 }
 
-/* List Styling */
-.about-us ul {
-    list-style: none;
-    padding: 0;
-    text-align: center;
+    .about-section.reverse {
+        flex-direction: row-reverse;
+    }
+
+.about-text {
+    flex: 1;
+    padding: 2rem;
+    background: #333;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-    .about-us ul li {
-        font-size: clamp(14px, 2.5vw, 16px);
-        line-height: 1.6;
-        margin-bottom: 10px;
+    .about-text h2 {
+        font-size: 1.8rem;
+        color: #333;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+        .about-text h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #333;
+        }
+
+    .about-text p {
+        color: #333;
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+
+.about-image {
+    flex: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-height: 400px;
+}
+
+    .about-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         display: block;
-        color: white;
+        transition: transform 0.5s ease;
     }
 
-/* Text Formatting */
-.about-us strong {
-    font-weight: bold;
-    color: #90EE90; /* Light green for bold text */
+    .about-image:hover img {
+        transform: scale(1.05);
+    }
+
+/* Travel Info */
+.travel-info {
+    margin: 5rem 0;
+    text-align: center;
+    background-color: #EFDCAB;
+    padding: 2rem;
+    border-radius: 8px;
 }
 
-.about-us em {
-    font-style: italic;
-    color: #D3D3D3; /* Light gray for emphasis */
+    .travel-info h2 {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 3rem;
+        position: relative;
+        display: inline-block;
+    }
+
+        .travel-info h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #EFDCAB;
+        }
+
+.info-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
 }
+
+.info-card {
+    background: #333;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 280px;
+    transition: transform 0.3s ease;
+    text-align: center;
+}
+
+    .info-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .info-card i {
+        font-size: 2.5rem;
+        color: #EFDCAB;
+        margin-bottom: 1rem;
+    }
+
+    .info-card h3 {
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .info-card p {
+        color: #333;
+        line-height: 1.6;
+    }
+
+        .info-card p em {
+            font-style: italic;
+            color: #333;
+        }
+
 /* Responsive Design */
-@media (max-width: 768px) {
-    .about-us {
-        padding: 40px 15px;
+@media (max-width: 992px) {
+    .about-section {
+        flex-direction: column;
     }
 
-        .about-us .container {
-            margin: 30px auto;
+        .about-section.reverse {
+            flex-direction: column;
         }
 
-        .about-us h1 {
-            font-size: 24px;
-        }
+    .about-text, .about-image {
+        width: 100%;
+    }
 
-        .about-us h2 {
-            font-size: 18px;
-        }
-
-        .about-us p {
-            font-size: 14px;
-        }
-
-        .about-us ul li {
-            font-size: 14px;
-        }
+    .about-image {
+        max-height: 350px;
+    }
 }
-/* End of about Page*/
+
+@media (max-width: 768px) {
+    .about-hero {
+        height: 50vh;
+    }
+
+    .info-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-card {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .about-content {
+        padding: 3rem 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-hero {
+        height: 40vh;
+    }
+
+    .about-text {
+        padding: 1.5rem;
+    }
+
+        .about-text h2 {
+            font-size: 1.5rem;
+        }
+
+        .about-text p {
+            font-size: 1rem;
+        }
+
+    .travel-info h2 {
+        font-size: 1.8rem;
+    }
+}
 
 /* Tourist Spots Page */
 

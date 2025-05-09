@@ -43,8 +43,6 @@
                         <li><a href="@Url.Action("About", "Home")">About</a></li>
                         <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
                         <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
-                        <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
-                        <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
                     }
                 </ul>
             </div>
@@ -156,7 +154,7 @@
                     A classy venue to hold your important meetings, corporate presentations, and social events.
                     The Molave Grand Ballroom houses up to 300 seated dinner guests and up to 350 persons for cocktails.
                 </p>
-                <button onclick="location.href='@Url.Action("FacilityDetails", "Home", new { facility = "Ballroom" })'">Learn more</button>
+                <button onclick="location.href='@Url.Action("About", "Home", new { facility = "Ballroom" })'">Learn more</button>
             </div>
         </div>
 
@@ -167,7 +165,7 @@
                     Treat yourself at our all-day dining restaurant. Enjoy good food at our delectable buffet spreads
                     and a la carte choices. We have the longest happy hour at our bar that starts from 4 pm to 10 pm.
                 </p>
-                <button onclick="location.href='@Url.Action("FacilityDetails", "Home", new { facility = "Cafe" })'">Learn more</button>
+                <button onclick="location.href='@Url.Action("About", "Home", new { facility = "Cafe" })'">Learn more</button>
             </div>
             <img src="images/cafe.jpg" alt="Cafe Tartanilla">
         </div>
