@@ -36,52 +36,32 @@ namespace Petrosia.Controllers
        
 
         // ========================== Reports & Analytics ========================== //
-        [Authorize(Roles = "Admin")]
+       [Authorize(Roles = "Admin")]
 public IActionResult Raa()
 {
-    // Fetch bookings and include necessary fields
-    var bookings = _context.Bookings
-        .Select(b => new
-        {
-            b.BookingId,
-            b.FirstName,
-            b.LastName,
-            b.RoomTypeId,
-            b.CheckInDate,
-            b.CheckOutDate,
-            b.TotalAmount,
-            b.BookingDate // Include BookingDate
-        })
-        .ToList(); // Execute the query to fetch data into memory
-
-    // Fetch RoomType explicitly in memory
-    var bookingsWithRoomType = bookings.Select(b => new
+    try
     {
-        b.BookingId,
-        b.FirstName,
-        b.LastName,
-        b.RoomTypeId,
-        Room = _context.Rooms.FirstOrDefault(r => r.RoomTypeId == b.RoomTypeId)?.RoomType ?? "Unknown", // Handle null here
-        b.CheckInDate,
-        b.CheckOutDate,
-        b.TotalAmount,
-        b.BookingDate
-    }).ToList();
+        // Fetch bookings directly from the Bookings table
+        var bookings = _context.Bookings.ToList();
 
-    // Calculate analytics
-    ViewBag.TotalBookings = bookingsWithRoomType.Count;
-    ViewBag.TotalRevenue = bookingsWithRoomType.Sum(b => b.TotalAmount);
-    ViewBag.AverageStay = bookingsWithRoomType.Any()
-        ? bookingsWithRoomType.Average(b => (b.CheckOutDate - b.CheckInDate).Days)
-        : 0;
+        ViewBag.TotalBookings = bookings.Count;
+        ViewBag.TotalRevenue = bookings.Sum(b => b.TotalAmount);
+        ViewBag.AverageStay = bookings.Any()
+            ? bookings.Average(b => (b.CheckOutDate - b.CheckInDate).Days)
+            : 0;
 
-    // Get recent bookings
-    ViewBag.RecentBookings = bookingsWithRoomType
-        .OrderByDescending(b => b.BookingDate)
-        .Take(5)
-        .ToList();
+        ViewBag.RecentBookings = bookings
+            .OrderByDescending(b => b.BookingDate)
+            .Take(5)
+            .ToList();
 
-    return View();
+        return View();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error in Raa action: {ex.Message}");
+        return StatusCode(500, "An error occurred while processing your request.");
+    }
 }
 
 
