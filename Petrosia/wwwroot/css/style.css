@@ -22,8 +22,8 @@ body {
 
 /*---- Top Navigation ----*/
 .top-bar {
-    background-color: #EFDCAB;
-    color: #333;
+    background-color: #333;
+    color: #fff;
     font-size: 14px;
     padding: 8px 0;
     text-align: center;
