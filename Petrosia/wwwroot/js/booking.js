@@ -1,10 +1,4 @@
-
-
-
-
-
-
-﻿document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     console.log("Booking page initialization started");
 
 
@@ -76,7 +70,16 @@
             selectedRoom = this.getAttribute('data-room');
             selectedRoomPrice = parseInt(this.getAttribute('data-price'));
 
-
+            // Create the hidden input if it doesn't exist
+            let selectedRoomTypeIdInput = document.getElementById('selectedRoomTypeId');
+            if (!selectedRoomTypeIdInput) {
+                console.log("Creating missing selectedRoomTypeId input");
+                selectedRoomTypeIdInput = document.createElement('input');
+                selectedRoomTypeIdInput.type = 'hidden';
+                selectedRoomTypeIdInput.id = 'selectedRoomTypeId';
+                selectedRoomTypeIdInput.name = 'roomTypeId';
+                document.getElementById('bookingForm').appendChild(selectedRoomTypeIdInput);
+            }
 
             // Update the hidden input field with the selected room ID
             if (selectedRoomTypeIdInput) {
@@ -237,8 +240,62 @@
         });
     });
 
-
-    
+    // Helper function to prepare booking data with proper type conversion
+    const prepareBookingData = () => {
+        // Get the room type ID and ensure it's an integer
+        const roomTypeIdElement = document.getElementById('selectedRoomTypeId');
+        let roomTypeId = 0; // Default value
+        
+        if (roomTypeIdElement && roomTypeIdElement.value) {
+            // Ensure it's a valid integer by explicitly converting with parseInt
+            roomTypeId = parseInt(roomTypeIdElement.value, 10);
+            
+            // Log for debugging
+            console.log(`Converting roomTypeId from "${roomTypeIdElement.value}" (${typeof roomTypeIdElement.value}) to ${roomTypeId} (${typeof roomTypeId})`);
+            
+            // Check if conversion resulted in NaN
+            if (isNaN(roomTypeId)) {
+                console.error("roomTypeId conversion resulted in NaN, using default value of 0");
+                roomTypeId = 0;
+            }
+        } else {
+            console.warn("roomTypeId element or value missing, using default value of 0");
+        }
+        
+        // Handle price conversion from display format
+        const priceText = document.getElementById('summaryPrice')?.textContent || '₱0';
+        // Remove currency symbol and commas, then parse as float
+        const totalAmount = parseFloat(priceText.replace('₱', '').replace(/,/g, ''));
+        
+        // Get the room type name (not just the ID)
+        const roomTypeName = document.getElementById('summaryRoomType')?.textContent || '';
+        
+        // Get special requests (if any)
+        const specialRequests = document.querySelector('.special-requests textarea')?.value || '';
+        
+        // Build the booking data object with proper types and all required fields
+        return {
+            roomTypeId: roomTypeId, // Explicitly converted integer
+            RoomType: roomTypeName, // Add the room type name as a string
+            firstName: document.getElementById('firstName')?.value || '',
+            lastName: document.getElementById('lastName')?.value || '',
+            email: document.getElementById('email')?.value || '',
+            phoneNumber: document.getElementById('phone')?.value || '',
+            address: document.getElementById('address')?.value || '',
+            city: document.getElementById('city')?.value || '',
+            zipCode: document.getElementById('zipCode')?.value || '',
+            country: document.getElementById('country')?.value || '',
+            checkInDate: document.getElementById('check-in')?.value || '',
+            checkOutDate: document.getElementById('check-out')?.value || '',
+            numberOfAdults: parseInt(document.getElementById('adults')?.value || '1', 10),
+            numberOfChildren: parseInt(document.getElementById('children')?.value || '0', 10),
+            totalAmount: totalAmount,
+            paymentMethod: document.querySelector('input[name="paymentMethod"]:checked')?.value || 'creditCard',
+            bookingDate: new Date().toISOString(),
+            bookingReference: 'PH' + Math.floor(100000 + Math.random() * 900000),
+            SpecialRequests: specialRequests // Add the special requests field
+        };
+    };
 
     // Database submission handling
     if (completeBookingBtn) {
@@ -294,46 +351,11 @@
                 }
             }
 
-            // Get booking details
-            const checkIn = document.getElementById('check-in')?.value;
-            const checkOut = document.getElementById('check-out')?.value;
-            const adults = document.getElementById('adults')?.value;
-            const children = document.getElementById('children')?.value;
-            const specialRequests = document.querySelector('.special-requests textarea')?.value;
-            const roomType = document.getElementById('summaryRoomType')?.textContent;
-            const totalAmount = parseFloat(document.getElementById('summaryPrice').textContent.replace('₱', '').replace(',', ''));
-
-            // Calculate number of nights
-            let nights = 0;
-            if (checkIn && checkOut) {
-                const date1 = new Date(checkIn);
-                const date2 = new Date(checkOut);
-                const timeDiff = date2 - date1;
-                nights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-            }
-
-            // Create booking object
-            const bookingData = {
-    roomTypeId: parseInt(document.getElementById('roomTypeId').value), // Use RoomTypeId
-    firstName: document.getElementById('firstName').value,
-    lastName: document.getElementById('lastName').value,
-    email: document.getElementById('email').value,
-    phoneNumber: document.getElementById('phone').value,
-    address: document.getElementById('address').value,
-    city: document.getElementById('city').value,
-    zipCode: document.getElementById('zipCode').value,
-    country: document.getElementById('country').value,
-    checkInDate: document.getElementById('check-in').value,
-    checkOutDate: document.getElementById('check-out').value,
-    numberOfAdults: parseInt(document.getElementById('adults').value),
-    numberOfChildren: parseInt(document.getElementById('children').value),
-    totalAmount: parseFloat(document.getElementById('summaryPrice').textContent.replace('₱', '').replace(',', '')),
-    paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
-    bookingDate: new Date().toISOString(),
-    bookingReference: 'PH' + Math.floor(100000 + Math.random() * 900000)
-};
-
-console.log("Booking data:", bookingData);
+            // Create booking data with guaranteed proper types
+            const bookingData = prepareBookingData();
+            
+            // Log the exact data being sent for debugging
+            console.log("Sending booking data to API:", JSON.stringify(bookingData, null, 2));
 
             // Look for anti-forgery token
             const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
@@ -341,7 +363,7 @@ console.log("Booking data:", bookingData);
                 console.warn("Anti-forgery token not found, proceeding without it");
             }
 
-            // Submit to server
+            // Submit to server with improved error handling
             fetch('/Home/BookRoom', {
                 method: 'POST',
                 headers: {
@@ -350,34 +372,40 @@ console.log("Booking data:", bookingData);
                 },
                 body: JSON.stringify(bookingData)
             })
-                .then(response => {
-                    console.log("Response received:", response.status);
+            .then(response => {
+                console.log("Response status:", response.status);
+                
+                // Clone the response so we can both log it and return it
+                return response.text().then(text => {
+                    console.log("Response body:", text);
+                    
                     if (!response.ok) {
-                        throw new Error('Network response was not ok, status: ' + response.status);
+                        throw new Error(`Network response was not ok, status: ${response.status}, body: ${text}`);
                     }
-                    return response.text();
-                })
-                .then(data => {
-                    console.log('Success:', data);
-
-                    // Generate random booking reference
-                    const bookingRef = 'PH' + Math.floor(100000 + Math.random() * 900000);
-                    if (document.getElementById('bookingReference'))
-                        document.getElementById('bookingReference').textContent = bookingRef;
-
-                    // Hide checkout modal and show confirmation
-                    if (checkoutModal) checkoutModal.style.display = 'none';
-                    if (confirmationModal) confirmationModal.style.display = 'block';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('There was an error processing your booking. Please try again.');
+                    
+                    return text;
                 });
+            })
+            .then(data => {
+                console.log('Success:', data);
+                
+                // Generate random booking reference
+                const bookingRef = 'PH' + Math.floor(100000 + Math.random() * 900000);
+                if (document.getElementById('bookingReference'))
+                    document.getElementById('bookingReference').textContent = bookingRef;
+                
+                // Hide checkout modal and show confirmation
+                if (checkoutModal) checkoutModal.style.display = 'none';
+                if (confirmationModal) confirmationModal.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error details:', error);
+                alert('There was an error processing your booking. Please try again.');
+            });
         });
     } else {
         console.warn("Complete booking button not found");
     }
-
 
     // Handle form submission
     const bookingForm = document.getElementById('bookingForm');
@@ -389,9 +417,6 @@ console.log("Booking data:", bookingData);
     } else {
         console.warn("Booking form not found");
     }
-
-
-   
 
     console.log("Booking page initialization completed");
 });

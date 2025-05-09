@@ -80,7 +80,7 @@
                 <p>Choose from our luxurious accommodations</p>
 
                 <!-- Hidden input to store the selected room -->
-                <input type="hidden" id="roomTypeId" name="roomTypeId" value="">
+                <input type="hidden" id="selectedRoomTypeId" name="roomTypeId" value="">
 
                 <div class="room-option" data-aos="fade-up">
                     <div class="room-image">
@@ -292,7 +292,7 @@
     </div>
 
     <!-- Personal Information & Payment Modal -->
-    <div id="checkoutModal" class="modal">
+    <div id="checkoutModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close">&times;</span>
             <div class="modal-body">

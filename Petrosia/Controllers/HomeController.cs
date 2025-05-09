@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Petrosia.Models;
 using Petrosia.Data;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Petrosia.Controllers
 {
@@ -162,11 +163,12 @@ public IActionResult BookRoom([FromBody] Booking booking)
         return BadRequest(ModelState);
     }
 
+    Console.WriteLine($"Received booking: {JsonConvert.SerializeObject(booking)}");
+
     // Validate RoomTypeId
-    var roomType = _context.Rooms.FirstOrDefault(r => r.RoomTypeId == booking.RoomTypeId);
-    if (roomType == null)
+    if (booking.RoomTypeId <= 0)
     {
-        return BadRequest(new { RoomType = "The selected room type is invalid." });
+        return BadRequest(new { Error = "The RoomTypeId field is required and must be a valid integer." });
     }
 
     // Save booking
