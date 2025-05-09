@@ -13,6 +13,9 @@ namespace Petrosia.Models
         [Key]
         public int RoomId { get; set; }
 
+        [Required]
+        public int RoomTypeId { get; set; } // Grouping key for RoomType
+
         // ✅ Add RoomNumber property
         [Required]
         public int RoomNumber { get; set; }

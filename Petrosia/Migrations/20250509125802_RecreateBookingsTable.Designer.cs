@@ -12,8 +12,8 @@ using Petrosia.Models;
 namespace Petrosia.Migrations
 {
     [DbContext(typeof(UserManagement1Context))]
-    [Migration("20250507175911_AddTry5")]
-    partial class AddTry5
+    [Migration("20250509125802_RecreateBookingsTable")]
+    partial class RecreateBookingsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,45 +78,111 @@ namespace Petrosia.Migrations
                 {
                     b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int(11)")
-                        .HasColumnName("Booking_ID");
+                        .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("BookingId"));
 
-                    b.Property<int>("Adults")
-                        .HasColumnType("int");
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime>("BookingDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("BookingReference")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("CheckInDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("Check_In_Date");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("CheckOutDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("Check_Out_Date");
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Children")
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int?>("GuestId")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("NumberOfAdults")
                         .HasColumnType("int");
 
-                    b.Property<int>("GuestId")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("Guest_ID");
+                    b.Property<int>("NumberOfChildren")
+                        .HasColumnType("int");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("Room_ID");
+                    b.Property<int>("NumberOfNights")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int(11)");
 
                     b.Property<string>("RoomType")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
-                    b.HasKey("BookingId")
-                        .HasName("PRIMARY");
+                    b.Property<string>("SpecialRequests")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasDefaultValue("Confirmed");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("BookingId");
 
                     b.HasIndex("GuestId");
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("booking", (string)null);
+                    b.ToTable("bookings", (string)null);
                 });
 
             modelBuilder.Entity("Petrosia.Models.Guest", b =>
@@ -151,8 +217,8 @@ namespace Petrosia.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("Password");
 
                     b.Property<string>("PhoneNumber")
@@ -245,21 +311,13 @@ namespace Petrosia.Migrations
 
             modelBuilder.Entity("Petrosia.Models.Booking", b =>
                 {
-                    b.HasOne("Petrosia.Models.Guest", "Guest")
+                    b.HasOne("Petrosia.Models.Guest", null)
                         .WithMany("Bookings")
-                        .HasForeignKey("GuestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_booking_guest");
+                        .HasForeignKey("GuestId");
 
                     b.HasOne("Petrosia.Models.Room", "Room")
                         .WithMany("Bookings")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_booking_room");
-
-                    b.Navigation("Guest");
+                        .HasForeignKey("RoomId");
 
                     b.Navigation("Room");
                 });
@@ -299,35 +357,6 @@ namespace Petrosia.Migrations
                     b.Navigation("HouseKeepings");
                 });
 #pragma warning restore 612, 618
-        }
-    }
-
-    public partial class UpdateGuestPasswordLength : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<string>(
-                name: "Password",
-                table: "guest",
-                type: "varchar(255)",
-                maxLength: 255,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "varchar(20)",
-                oldMaxLength: 20);
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<string>(
-                name: "Password",
-                table: "guest",
-                type: "varchar(20)",
-                maxLength: 20,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "varchar(255)",
-                oldMaxLength: 255);
         }
     }
 }

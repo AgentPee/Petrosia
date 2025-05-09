@@ -33,7 +33,7 @@
                 <p>Please <a href="@Url.Action("SignIn", "Auth")">sign in</a> to make a booking.</p>
             </div>
         }
-        <form class="booking-form" data-aos="fade-up" id="bookingForm">
+        <form asp-action="SaveBooking" asp-controller="Home" method="post" class="booking-form" data-aos="fade-up" id="bookingForm">
             @Html.AntiForgeryToken()
             <div class="form-header">
                 <h2>Reservation Details</h2>
@@ -79,6 +79,9 @@
                 <h2>Select Your Room</h2>
                 <p>Choose from our luxurious accommodations</p>
 
+                <!-- Hidden input to store the selected room -->
+                <input type="hidden" id="roomTypeId" name="roomTypeId" value="">
+
                 <div class="room-option" data-aos="fade-up">
                     <div class="room-image">
                         <img src="~/images/single.jpg" alt="Deluxe Single Room">
@@ -108,7 +111,7 @@
                     <div class="room-price">
                         <div class="price">₱2,500</div>
                         <div class="per-night">per night</div>
-                        <button type="button" class="select-room-btn" data-room="Deluxe Single Room" data-price="2500">Select Room</button>
+                        <button type="button" class="select-room-btn" data-room-id="1" data-room="Deluxe Single Room" data-price="2500">Select Room</button>
                     </div>
                 </div>
 
@@ -141,7 +144,7 @@
                     <div class="room-price">
                         <div class="price">₱3,200</div>
                         <div class="per-night">per night</div>
-                        <button type="button" class="select-room-btn" data-room="Deluxe Double Room" data-price="3200">Select Room</button>
+                        <button type="button" class="select-room-btn" data-room-id="2" data-room="Deluxe Double Room" data-price="3200">Select Room</button>
                     </div>
                 </div>
 
@@ -174,7 +177,7 @@
                     <div class="room-price">
                         <div class="price">₱3,800</div>
                         <div class="per-night">per night</div>
-                        <button type="button" class="select-room-btn" data-room="Deluxe Twin Room" data-price="3800">Select Room</button>
+                        <button type="button" class="select-room-btn" data-room-id="3" data-room="Deluxe Twin Room" data-price="3800">Select Room</button>
                     </div>
                 </div>
 
@@ -207,7 +210,7 @@
                     <div class="room-price">
                         <div class="price">₱5,500</div>
                         <div class="per-night">per night</div>
-                        <button type="button" class="select-room-btn" data-room="Junior Suite" data-price="5500">Select Room</button>
+                        <button type="button" class="select-room-btn" data-room-id="4" data-room="Junior Suite" data-price="5500">Select Room</button>
                     </div>
                 </div>
             </div>
@@ -241,7 +244,7 @@
                 <div class="room-price">
                     <div class="price">₱7,200</div>
                     <div class="per-night">per night</div>
-                    <button type="button" class="select-room-btn" data-room="Executive Suite" data-price="7200">Select Room</button>
+                    <button type="button" class="select-room-btn" data-room-id="5" data-room="Executive Suite" data-price="7200">Select Room</button>
                 </div>
             </div>
             <!-------Special Requests------->

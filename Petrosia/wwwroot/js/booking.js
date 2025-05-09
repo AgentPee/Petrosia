@@ -43,11 +43,16 @@
 
     // Room selection functionality
     const selectRoomBtns = document.querySelectorAll('.select-room-btn');
+    const selectedRoomTypeIdInput = document.getElementById('selectedRoomTypeId'); // Hidden input for RoomTypeId
     const selectedRoomSummary = document.getElementById('selectedRoomSummary');
     const continueToCheckoutBtn = document.getElementById('continueToCheckout');
 
     if (!selectRoomBtns.length) {
         console.warn("No room selection buttons found");
+    }
+
+    if (!selectedRoomTypeIdInput) {
+        console.warn("Hidden input for RoomTypeId not found");
     }
 
     if (!selectedRoomSummary) {
@@ -65,11 +70,23 @@
         btn.addEventListener('click', function () {
             console.log("Room selected:", this.getAttribute('data-room'));
 
+            const roomTypeId = this.getAttribute('data-room-id');
+
             // Update selected room
             selectedRoom = this.getAttribute('data-room');
             selectedRoomPrice = parseInt(this.getAttribute('data-price'));
 
-            // Update UI to show selected room
+
+
+            // Update the hidden input field with the selected room ID
+            if (selectedRoomTypeIdInput) {
+                selectedRoomTypeIdInput.value = roomTypeId;
+                console.log("Room ID updated:", roomTypeId);
+            } else {
+                console.error("Hidden input for RoomTypeId is missing");
+            }
+
+            // Highlight the selected room
             selectRoomBtns.forEach(b => b.classList.remove('selected'));
             this.classList.add('selected');
 
@@ -284,7 +301,7 @@
             const children = document.getElementById('children')?.value;
             const specialRequests = document.querySelector('.special-requests textarea')?.value;
             const roomType = document.getElementById('summaryRoomType')?.textContent;
-            const totalAmount = document.getElementById('summaryPrice')?.textContent.replace('₱', '').replace(',', '');
+            const totalAmount = parseFloat(document.getElementById('summaryPrice').textContent.replace('₱', '').replace(',', ''));
 
             // Calculate number of nights
             let nights = 0;
@@ -297,28 +314,26 @@
 
             // Create booking object
             const bookingData = {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                phoneNumber: phone,
-                address: address,
-                city: city,
-                zipCode: zipCode,
-                country: country,
-                roomType: roomType,
-                checkInDate: checkIn,
-                checkOutDate: checkOut,
-                numberOfAdults: parseInt(adults),
-                numberOfChildren: parseInt(children),
-                numberOfNights: nights,
-                specialRequests: specialRequests,
-                totalAmount: parseFloat(totalAmount),
-                paymentMethod: selectedPaymentMethod,
-                bookingDate: new Date().toISOString(),
-                bookingReference: 'PH' + Math.floor(100000 + Math.random() * 900000)
-            };
+    roomTypeId: parseInt(document.getElementById('roomTypeId').value), // Use RoomTypeId
+    firstName: document.getElementById('firstName').value,
+    lastName: document.getElementById('lastName').value,
+    email: document.getElementById('email').value,
+    phoneNumber: document.getElementById('phone').value,
+    address: document.getElementById('address').value,
+    city: document.getElementById('city').value,
+    zipCode: document.getElementById('zipCode').value,
+    country: document.getElementById('country').value,
+    checkInDate: document.getElementById('check-in').value,
+    checkOutDate: document.getElementById('check-out').value,
+    numberOfAdults: parseInt(document.getElementById('adults').value),
+    numberOfChildren: parseInt(document.getElementById('children').value),
+    totalAmount: parseFloat(document.getElementById('summaryPrice').textContent.replace('₱', '').replace(',', '')),
+    paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
+    bookingDate: new Date().toISOString(),
+    bookingReference: 'PH' + Math.floor(100000 + Math.random() * 900000)
+};
 
-            console.log("Booking data:", bookingData);
+console.log("Booking data:", bookingData);
 
             // Look for anti-forgery token
             const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');

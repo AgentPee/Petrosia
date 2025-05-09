@@ -18,10 +18,10 @@ namespace Petrosia.Models
         [StringLength(50)]
         public string LastName { get; set; }
 
-
         public int? GuestId { get; set; }  // Nullable
-        public int? RoomId { get; set; }
 
+        [Required]
+        public int RoomTypeId { get; set; } // Foreign key for Room
 
         [Required]
         [EmailAddress]
@@ -85,8 +85,5 @@ namespace Petrosia.Models
 
         [StringLength(20)]
         public string Status { get; set; } = "Confirmed";
-
-       
-
     }
 }
