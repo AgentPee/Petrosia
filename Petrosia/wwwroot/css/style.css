@@ -31,14 +31,15 @@ body {
     text-align: center;
     width: 100%;
 }
-/* Contact info container */
+/* Contact info container - Added centering */
 .contact-info {
     background-color: #1a1a1a;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center; /* Center the elements */
     padding: 8px 6%;
     width: 100%;
+    gap: 20px; /* Add spacing between elements */
 }
 
     /* Phone number styling */
@@ -56,15 +57,9 @@ body {
             font-size: 16px;
         }
 
-/* Contact info container - Added centering */
-.contact-info {
-    background-color: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Center the elements */
-    padding: 8px 6%;
-    width: 100%;
-    gap: 20px; /* Add spacing between elements */
+/* Hide the third element since we've moved its content to the button */
+.hidden-element {
+    display: none;
 }
 
 /* Contact Button Styling - Kept exactly as provided */
@@ -79,7 +74,7 @@ body {
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     border: none;
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
@@ -130,6 +125,7 @@ body {
             justify-content: center;
         }
 }
+
 /* ---- navbar ----- */
 
 nav {
