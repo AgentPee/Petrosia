@@ -31,15 +31,51 @@ body {
     text-align: center;
     width: 100%;
 }
+/* Contact info container */
+.contact-info {
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 6%;
+    width: 100%;
+}
 
-/* Contact Button Styling */
+    /* Phone number styling */
+    .contact-info span {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        font-size: 15px;
+    }
+
+        /* Phone icon styling */
+        .contact-info span i {
+            color: #EFDCAB;
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+/* Contact info container - Added centering */
+.contact-info {
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the elements */
+    padding: 8px 6%;
+    width: 100%;
+    gap: 20px; /* Add spacing between elements */
+}
+
+/* Contact Button Styling - Kept exactly as provided */
 .contact-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     background-color: #EFDCAB;
     color: #222;
-    padding: 10px 16px;
-    border-radius: 6px;
+    padding: 8px 20px;
+    border-radius: 10px;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
@@ -75,23 +111,25 @@ body {
     }
 
     .contact-btn i {
-        margin-right: 8px;
-        font-size: 16px;
+        margin-right: 10px;
+        font-size: 18px;
         color: #222;
     }
 
-/* Mobile Responsive Styles */
+/* Responsive adjustments - Kept exactly as provided */
 @media (max-width: 768px) {
-    .contact-btn {
-        padding: 8px 12px;
-        font-size: 14px;
+    .contact-info {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 4%;
     }
 
-        .contact-btn i {
-            font-size: 14px;
+        .contact-info span,
+        .contact-btn {
+            width: 100%;
+            justify-content: center;
         }
 }
-
 /* ---- navbar ----- */
 
 nav {
@@ -1436,14 +1474,13 @@ button {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     max-width: 700px;
     width: 100%;
-    va
 }
 
-    .feature-box ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+.feature-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
     .feature-box li {
         display: flex;

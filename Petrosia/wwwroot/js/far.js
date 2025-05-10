@@ -7,7 +7,7 @@ $(document).ready(function () {
             if (index < rating) {
                 $(this).addClass('fas').removeClass('far');
             } else {
-                $(this).addClass('far').removeClass('fas');
+                $(this).addClass('far').removeClass('far');
             }
         });
     });
