@@ -41,7 +41,6 @@ body {
     width: 100%;
     gap: 20px; /* Add spacing between elements */
 }
-
     /* Phone number styling */
     .contact-info span {
         display: flex;
