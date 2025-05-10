@@ -42,7 +42,7 @@
                         <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
                         <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
                         <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
-                        <li><a href="@Url.Action("Guest", "Home")">Guest</a></li>
+                        
                         <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
                     }
                     else
@@ -51,8 +51,7 @@
                         <li><a href="@Url.Action("About", "Home")">About</a></li>
                         <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
                         <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
-                        <li><a href="@Url.Action("SignUp", "Auth")">Sign Up</a></li>
-                        <li><a href="@Url.Action("SignIn", "Auth")">Sign In</a></li>
+                        
                     }
                 </ul>
             </div>
@@ -62,28 +61,75 @@
     <!-------End of Banner------->
 
     <!-----About us Content ----->
-    <section class="about-us" style="background-image: url('/images/bg.jpg'); background-attachment: fixed;">
-        <div class="container">
-            <h1>ABOUT US</h1>
-            <p>
-                Nestled in the heart of Cebu, Petrosial Hotel is your gateway to luxury and convenience. Offering stylish accommodations and breathtaking city views, our hotel is perfectly situated for both business and leisure travelers. With easy access to key destinations, including transport hubs and commercial centers, we ensure a seamless stay for our guests.
-            </p>
-            <p>
-                Our hotel features well-appointed rooms with modern amenities, state-of-the-art meeting spaces, and a grand ballroom designed for memorable gatherings. Take a refreshing dip in our serene pool, maintain your fitness routine at our fully equipped gym, or indulge in an exquisite dining experience at our signature restaurant, serving a delightful array of international and local cuisine.
-            </p>
-            <p>
-                Built on a foundation of excellence, Petrosial Hotel stands as a landmark of comfort and sophistication, reflecting Cebu’s dynamic growth while preserving its rich heritage. Whether you're visiting for business or leisure, we invite you to experience a stay like no other.
-            </p>
+    <section class="about-us">
+        <div class="about-hero">
+            <div class="container">
+                <h1 data-aos="fade-up">Discover Petrosia Hotel</h1>
+                <p data-aos="fade-up" data-aos-delay="100">
+                    Where luxury meets the vibrant spirit of Cebu
+                </p>
+            </div>
+        </div>
+        <div class="about-content">
+            <div class="container">
+                <div class="about-section" data-aos="fade-up">
+                    <div class="about-text">
+                        <h2>Our Story</h2>
+                        <p>
+                            Nestled in the heart of Cebu, Petrosial Hotel is your gateway to luxury and convenience. Offering stylish accommodations and breathtaking city views, our hotel is perfectly situated for both business and leisure travelers. With easy access to key destinations, including transport hubs and commercial centers, we ensure a seamless stay for our guests.
+                        </p>
+                    </div>
+                    <div class="about-image" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="~/images/ball.jpg" alt="Petrosia Hotel Exterior">
+                    </div>
+                </div>
 
-            <h2>GETTING HERE</h2>
-            <ul>
-                <li><strong>By Plane:</strong> <em>From Manila to Cebu</em> – Approximately 1 hour and 10 minutes</li>
-                <li><strong>By Vessel:</strong> <em>From Manila to Cebu</em> – Approximately 12-14 hours</li>
-                <li><strong>By Car:</strong> <em>From Mactan Cebu International Airport</em> – Approximately 30-45 minutes</li>
-            </ul>
+                <div class="about-section reverse" data-aos="fade-up">
+                    <div class="about-text">
+                        <h2>Our Facilities</h2>
+                        <p>
+                            Our hotel features well-appointed rooms with modern amenities, state-of-the-art meeting spaces, and a grand ballroom designed for memorable gatherings. Take a refreshing dip in our serene pool, maintain your fitness routine at our fully equipped gym, or indulge in an exquisite dining experience at our signature restaurant, serving a delightful array of international and local cuisine.
+                        </p>
+                    </div>
+                    <div class="about-image" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="@Url.Content("~/images/facility-1.jpg")">
 
-            <p><strong>Standard Check-In Time:</strong> 02:00 PM</p>
-            <p><strong>Standard Check-Out Time:</strong> 12:00 NN</p>
+                    </div>
+                </div>
+
+                <div class="about-section" data-aos="fade-up">
+                    <div class="about-text">
+                        <h2>Our Commitment</h2>
+                        <p>
+                            Built on a foundation of excellence, Petrosial Hotel stands as a landmark of comfort and sophistication, reflecting Cebu's dynamic growth while preserving its rich heritage. Whether you're visiting for business or leisure, we invite you to experience a stay like no other.
+                        </p>
+                    </div>
+                    <div class="about-image" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="~/images/facility-2.jpg" alt="Hotel Lobby">
+                    </div>
+                </div>
+
+                <div class="travel-info" data-aos="fade-up">
+                    <h2>Getting Here</h2>
+                    <div class="info-cards">
+                        <div class="info-card" data-aos="flip-left" data-aos-delay="100">
+                            <i class="fas fa-plane"></i>
+                            <h3>By Plane</h3>
+                            <p><em>From Manila to Cebu</em> – Approximately 1 hour and 10 minutes</p>
+                        </div>
+                        <div class="info-card" data-aos="flip-left" data-aos-delay="200">
+                            <i class="fas fa-ship"></i>
+                            <h3>By Vessel</h3>
+                            <p><em>From Manila to Cebu</em> – Approximately 12-14 hours</p>
+                        </div>
+                        <div class="info-card" data-aos="flip-left" data-aos-delay="300">
+                            <i class="fas fa-car"></i>
+                            <h3>By Car</h3>
+                            <p><em>From Mactan Cebu International Airport</em> – Approximately 30-45 minutes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -208,6 +254,7 @@
             // Run on initial load and page transitions
             persistStyles();
             window.addEventListener('pageshow', persistStyles);
+            AOS.init();
         });
     </script>
 

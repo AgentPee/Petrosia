@@ -6,151 +6,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup Form</title>
+    <title>Hotel Portal | Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-
+        :root {
+            --primary-color: #EFDCAB;
+            --primary-dark: #d8c79a;
+            --text-light: #f8f9fa;
+            --bg-dark: #1a1a1a;
+            --card-bg: #1a1a1a;
+            --error-color: #ff4d4f;
+            --border-color: rgba(239, 220, 171, 0.2);
+        }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: url("../images/bg.jpg") no-repeat center center/cover;
-            margin: 0;
+            min-height: 100vh;
+            background: #1a1a1a;
+            padding: 20px;
         }
 
         .container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 50px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
-            width: 380px;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 420px;
             text-align: center;
-            height: auto;
+            border: 1px solid var(--border-color);
         }
 
+        .logo-container {
+            margin: 0 auto 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+            .logo-container img {
+                height: 100px;
+                width: auto;
+            }
+
         h2 {
-            font-size: 30px;
+            font-size: 1.5rem;
             color: white;
-            margin: 0 0 35px 0;            
-            font-style: oblique;
-            font-family: 'poppins', sans-serif;
+            margin: 0 0 1.5rem 0;
+            font-weight: 500;
         }
 
         .input-container {
             position: relative;
-            margin-bottom: 25px;
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+            .input-container input {
+                padding-right: 35px;
+                width: 100%;
+                padding: 0.75rem 1rem;
+                border: 1px solid var(--border-color);
+                border-radius: 6px;
+                background: rgba(239, 220, 171, 0.05);
+                font-size: 0.9rem;
+                color: var(--text-light);
+                outline: none;
+                transition: all 0.2s ease;
+                box-sizing: border-box;
+            }
+
+                .input-container input:focus {
+                    border-color: var(--primary-color);
+                }
+
+            .input-container label {
+                display: block;
+                margin-bottom: 0.5rem;
+                color: var(--primary-color);
+                font-size: 0.8rem;
+                font-weight: 400;
+                opacity: 0.8;
+            }
+
+        .name-fields {
             display: flex;
-        justify-content: center;
-        margin-top: 10px;
-            width: 100%;
+            gap: 1rem;
         }
 
-        .input-container input {
-            width: 100%;
-            padding: 10px 10px;
-            border: 2px solid gray;
-            border-radius: 5px;
-            background: transparent;
-            font-size: 16px;
-            color: white;
-            outline: none;
-            transition: border-color 0.3s, padding-top 0.3s;
+            .name-fields .input-container {
+                flex: 1;
+                margin-bottom: 1.25rem;
+            }
+
+        .password-field-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
-           
+            .password-field-wrapper input {
+                padding-right: 2.5rem;
+                width: 100%;
+            }
 
-        .button-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 10px;
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            cursor: pointer;
+            color: var(--text-light);
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+            background: none;
+            border: none;
+            font-size: 1rem;
         }
+
+            .password-toggle:hover {
+                opacity: 1;
+            }
 
         button {
-    width: 100%; /* Adjust width as needed */
-    padding: 12px;
-    background: #EFDCAB;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-    font-size: medium;
-    font-family: 'Poppins', sans-serif;  
-}
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary-color);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
 
-button:hover {
-    background-color: #404040;
-    color: white;
-}
+            button:hover {
+                background: var(--primary-dark);
+            }
 
-.link-signIn {
-    color: #1E90FF;
-    text-decoration: none;
-}
+        .footer-text {
+            color: rgba(239, 220, 171, 0.6);
+            font-size: 0.8rem;
+            margin-top: 1.5rem;
+        }
 
+        .link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+            .link:hover {
+                opacity: 1;
+                text-decoration: underline;
+            }
+
+        .text-danger {
+            color: var(--error-color);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: block;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="logo-container">
+            <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png"></a>
+        </div>
+        <h2>Create Your Account</h2>
 
-        
-
-        <h2>Sign Up</h2>
         <form asp-action="SignUp" asp-controller="Auth" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="input-container">
-                
-                <input asp-for="FirstName" placeholder="Enter your first name" name="FirstName">
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+            <div class="name-fields">
+                <div class="input-container">
+                    <label for="FirstName">First Name</label>
+                    <input asp-for="FirstName" placeholder="First Name" name="FirstName">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="input-container">
+                    <label for="LastName">Last Name</label>
+                    <input asp-for="LastName" placeholder="Last Name" name="LastName">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
             </div>
 
             <div class="input-container">
-                
-                <input asp-for="LastName" placeholder="Enter your last name" name="LastName">
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-
-            <div class="input-container">
-                
-                <input asp-for="Email" type="email" placeholder="Enter your email" name="Email">
+                <label for="Email">Email</label>
+                <input asp-for="Email" type="email" placeholder="Admin@Petrosia.com" name="Email">
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="input-container">
-                
-                <input asp-for="PhoneNumber" placeholder="Enter your phone number" name="PhoneNumber">
+                <label for="PhoneNumber">Phone Number</label>
+                <input asp-for="PhoneNumber" placeholder="Phone Number" name="PhoneNumber">
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
 
             <div class="input-container">
-                
-                <input asp-for="Address" placeholder="Enter Address" name="Address">
+                <label for="Address">Address</label>
+                <input asp-for="Address" placeholder="Address" name="Address">
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
 
             <div class="input-container">
-                
-                <input asp-for="Password" type="password" placeholder="Enter your password" name="Password">
+                <label for="Password">Password</label>
+                <div class="password-field-wrapper">
+                    <input asp-for="Password" type="password" placeholder="••••••••" name="Password" id="password">
+                    <i class="far fa-eye password-toggle" id="togglePassword"></i>
+                </div>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
-            <div class="button-container">
-                <button type="submit">Sign Up</button>
-            </div>
+            <button type="submit">Sign Up</button>
 
-            <p style="color: white; margin-top: 15px; font-size: 14px;">
-                Already have an account? <a class="link-signIn" href="@Url.Action("SignIn", "Auth")">Sign In</a>
+            <p class="footer-text">
+                Already have an account? <a class="link" href="@Url.Action("SignIn", "Auth")">Sign In</a>
             </p>
         </form>
-
-        @section Scripts {
-            <partial name="_ValidationScriptsPartial" />
-        }
     </div>
-    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.getElementById('togglePassword');
+            const password = document.getElementById('password');
+            if (togglePassword && password) {
+                togglePassword.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Toggle the type attribute
+                    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                    password.setAttribute('type', type);
+                    // Toggle the eye icon
+                    this.classList.toggle('fa-eye');
+                    this.classList.toggle('fa-eye-slash');
+                });
+            }
+        });
+    </script>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
 </body>
 </html>

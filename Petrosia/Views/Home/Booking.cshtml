@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
     <link rel="shortcut icon" type="x-icon" href="~/images/logo.png">
     <script src="~/js/booking.js" asp-append-version="true"></script>
@@ -16,6 +17,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 </head>
 <body>
+    <!-------Top Bar and Navigation------->
+    <section class="">
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <span><i class="fa-solid fa-phone"></i> +(63) 09670935136</span>
+                    <span><i class="fa-solid fa-envelope"></i> info@petrosiahotel.com</span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("About", "Home")">About</a></li>
+                        <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                        <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
+                        <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
+                        
+                        <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("About", "Home")">About</a></li>
+                        <li><a href="@Url.Action("TouristSpot", "Home")">Tourist Spots</a></li>
+                        <li><a href="@Url.Action("Accommodation", "Home")">Accommodation</a></li>
+
+                    }
+                </ul>
+            </div>
+            <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </section>
+    <!-------End of Navigation------->
     <!-------Booking Hero Section------->
     <section class="booking-hero" data-aos="fade">
         <div>
@@ -564,6 +604,15 @@
     <button id="scrollToTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <!---<script src="~/js/booking.js" asp-append-version="true"></script>--->
+    <script>
+        // Toggle menu for mobile navigation
+        function showMenu() {
+            document.getElementById("navLinks").style.right = "0";
+        }
+        function hideMenu() {
+            document.getElementById("navLinks").style.right = "-200px";
+        }
+    </script>
+
 </body>
 </html>
