@@ -1,12 +1,12 @@
-﻿﻿ /* Petrosia Hotel - Feedback and Reviews CSS */
+﻿/* Petrosia Hotel - Feedback and Reviews CSS (Improved) */
 /* Google Fonts Import - Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 /* CSS Variables */
 :root {
     --primary-color: #EFDCAB;
     --primary-hover: #e0c98f;
-    --dark-bg: #222;
-    --darker-bg: #111;
+    --dark-bg: #222; /* Header and footer color */
+    --darker-bg: #1a1a1a; /* Slightly lighter than before for better contrast */
     --text-dark: #222;
     --text-medium: #555;
     --text-light: #777;
@@ -36,15 +36,14 @@ body {
     background-color: #f8f8f8;
 }
 
-
 /* ---- navbar ----- */
-
 nav {
     display: flex;
     padding: 0 6%;
     justify-content: space-between;
     align-items: center;
-    background: #222; /* Changed from #fff to #222 */
+    background: var(--dark-bg); /* Using variable for consistency */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
 }
 
     nav img {
@@ -66,26 +65,30 @@ nav {
     }
 
         .nav-links ul li a {
-            color: #bbb; /* Changed to light gray similar to the image */
+            color: #ddd; /* Brightened slightly from #bbb for better visibility */
             text-decoration: none;
             font-size: 20px;
             font-weight: 500;
+            transition: color 0.3s ease; /* Added smooth color transition */
         }
+
+            .nav-links ul li a:hover {
+                color: var(--primary-color); /* Color change on hover for better UX */
+            }
 
         .nav-links ul li::after {
             content: '';
             width: 0%;
             height: 2px;
-            background: #EFDCAB;
+            background: var(--primary-color);
             display: block;
             margin: auto;
-            transition: 1s ease;
+            transition: 0.5s ease; /* Made transition faster */
         }
 
         .nav-links ul li:hover::after {
             width: 100%;
         }
-
 
 /* Hero Section */
 .hero-section {
@@ -105,15 +108,20 @@ nav {
     padding: 0 20px;
 }
 
+    /* Improved H1 visibility */
     .hero-content h1 {
-        font-size: 42px;
-        margin-bottom: 15px;
-        font-weight: 600;
+        font-size: 46px; /* Increased from 42px */
+        margin-bottom: 20px; /* Increased from 15px */
+        font-weight: 700; /* Bolder than before */
+        letter-spacing: 1px; /* Added letter spacing */
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Added text shadow for better contrast */
+        color: var(--white); /* Ensuring it's white for best contrast */
     }
 
     .hero-content p {
         font-size: 18px;
         margin-bottom: 20px;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
     }
 
 /* Container */
@@ -141,18 +149,19 @@ nav {
     min-width: 300px;
 }
 
-/* Section Headers */
+/* Section Headers - Improved h2 visibility */
 .section-header {
     margin-bottom: 30px;
 }
 
     .section-header h2 {
-        font-size: 28px;
+        font-size: 30px; /* Increased from 28px */
         color: var(--text-dark);
-        margin-bottom: 10px;
+        margin-bottom: 12px; /* Increased from 10px */
         font-weight: 600;
         position: relative;
-        padding-bottom: 10px;
+        padding-bottom: 12px; /* Increased from 10px */
+        letter-spacing: 0.5px; /* Added letter spacing */
     }
 
         .section-header h2::after {
@@ -160,25 +169,26 @@ nav {
             position: absolute;
             left: 0;
             bottom: 0;
-            width: 60px;
+            width: 70px; /* Increased from 60px */
             height: 3px;
             background-color: var(--primary-color);
         }
 
     .section-header p {
         color: var(--text-medium);
+        font-size: 16px; /* Added font size */
     }
 
 /* Form Styling */
 .review-form {
     background-color: var(--white);
-    padding: 30px;
+    padding: 35px; /* Increased from 30px */
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 22px; /* Increased from 20px */
 }
 
     .form-group label {
@@ -198,6 +208,7 @@ nav {
         border-radius: 6px;
         font-family: var(--font-family);
         font-size: 14px;
+        transition: var(--transition); /* Added transition */
     }
 
         .form-group input:focus,
@@ -231,7 +242,7 @@ nav {
         .star-rating i:hover ~ i,
         .star-rating i.selected,
         .star-rating i.selected ~ i {
-            color: #EFDCAB;
+            color: var(--primary-color);
         }
 
 .rating-text {
@@ -245,7 +256,7 @@ nav {
 .checkbox-group {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 10px;
+    gap: 12px; /* Increased from 10px */
 }
 
 .checkbox {
@@ -275,15 +286,16 @@ nav {
     background-color: var(--primary-color);
     color: var(--text-dark);
     border: none;
-    padding: 12px 25px;
+    padding: 14px 25px; /* Increased height from 12px */
     border-radius: 6px;
-    font-weight: 500;
+    font-weight: 600; /* Increased from 500 */
     cursor: pointer;
     transition: var(--transition);
     display: inline-block;
     font-size: 16px;
     margin-top: 10px;
     width: 100%;
+    letter-spacing: 0.5px; /* Added letter spacing */
 }
 
     .submit-btn:hover {
@@ -295,7 +307,7 @@ nav {
 /* Reviews Section */
 .rating-summary {
     background-color: var(--white);
-    padding: 20px;
+    padding: 25px; /* Increased from 20px */
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
     margin-bottom: 20px;
@@ -309,20 +321,20 @@ nav {
 }
 
 .rating-number {
-    font-size: 60px;
-    font-weight: 600;
+    font-size: 64px; /* Increased from 60px */
+    font-weight: 700; /* Increased from 600 */
     line-height: 1;
     color: var(--text-dark);
 }
 
 .stars {
-    margin: 10px 0;
+    margin: 12px 0; /* Increased from 10px */
 }
 
     .stars i {
         color: var(--primary-color);
-        font-size: 20px;
-        margin: 0 2px;
+        font-size: 22px; /* Increased from 20px */
+        margin: 0 3px; /* Increased from 2px */
     }
 
 .rating-count {
@@ -334,15 +346,15 @@ nav {
 .reviews-filter {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 22px; /* Increased from 20px */
     background-color: var(--white);
-    padding: 15px;
+    padding: 16px; /* Increased from 15px */
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
 }
 
     .reviews-filter label {
-        margin-right: 10px;
+        margin-right: 12px; /* Increased from 10px */
         font-weight: 500;
     }
 
@@ -352,6 +364,7 @@ nav {
         border-radius: 4px;
         font-family: var(--font-family);
         cursor: pointer;
+        transition: var(--transition); /* Added transition */
     }
 
         .reviews-filter select:focus {
@@ -368,9 +381,10 @@ nav {
     background-color: var(--white);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 22px; /* Increased from 20px */
+    margin-bottom: 22px; /* Increased from 20px */
     transition: var(--transition);
+    border-left: 3px solid var(--primary-color); /* Added border accent */
 }
 
     .review-card:hover {
@@ -381,7 +395,7 @@ nav {
 .review-header {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 16px; /* Increased from 15px */
 }
 
 .reviewer-avatar {
@@ -390,6 +404,7 @@ nav {
     border-radius: 50%;
     object-fit: cover;
     margin-right: 15px;
+    border: 2px solid var(--primary-color); /* Added border */
 }
 
 .reviewer-info {
@@ -399,6 +414,7 @@ nav {
     .reviewer-info h3 {
         font-size: 18px;
         margin-bottom: 5px;
+        font-weight: 600; /* Added font weight */
     }
 
 .review-rating {
@@ -414,12 +430,13 @@ nav {
 
 .review-title {
     font-size: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 12px; /* Increased from 10px */
     color: var(--text-dark);
+    font-weight: 600; /* Added font weight */
 }
 
 .review-content {
-    margin-bottom: 15px;
+    margin-bottom: 16px; /* Increased from 15px */
     color: var(--text-medium);
     line-height: 1.6;
 }
@@ -434,14 +451,14 @@ nav {
 .tag {
     background-color: rgba(239, 220, 171, 0.2);
     color: var(--text-dark);
-    padding: 4px 10px;
+    padding: 4px 12px; /* Increased right/left padding from 10px */
     border-radius: 20px;
     font-size: 12px;
     font-weight: 500;
 }
 
 .review-image {
-    margin-top: 15px;
+    margin-top: 16px; /* Increased from 15px */
     border-radius: var(--border-radius);
     overflow: hidden;
 }
@@ -460,14 +477,14 @@ nav {
 /* Load More Button */
 .load-more {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 25px; /* Increased from 20px */
 }
 
 .load-more-btn {
     background-color: transparent;
     color: var(--text-dark);
     border: 2px solid var(--primary-color);
-    padding: 10px 20px;
+    padding: 12px 24px; /* Increased from 10px 20px */
     border-radius: 6px;
     font-weight: 500;
     cursor: pointer;
@@ -490,7 +507,7 @@ nav {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6); /* Darkened from 0.5 */
     align-items: center;
     justify-content: center;
 }
@@ -498,13 +515,14 @@ nav {
 .modal-content {
     background-color: var(--white);
     margin: auto;
-    padding: 30px;
+    padding: 35px; /* Increased from 30px */
     border-radius: var(--border-radius);
     max-width: 500px;
     width: 90%;
     text-align: center;
     position: relative;
     animation: modalFadeIn 0.3s ease;
+    box-shadow: var(--shadow-lg); /* Added shadow */
 }
 
 @keyframes modalFadeIn {
@@ -521,7 +539,7 @@ nav {
 
 .close-modal {
     position: absolute;
-    top: 10px;
+    top: 12px; /* Increased from 10px */
     right: 15px;
     font-size: 24px;
     color: #aaa;
@@ -534,7 +552,7 @@ nav {
     }
 
 .success-icon {
-    font-size: 60px;
+    font-size: 64px; /* Increased from 60px */
     color: var(--success);
     margin-bottom: 20px;
 }
@@ -542,33 +560,38 @@ nav {
 .modal-content h2 {
     margin-bottom: 15px;
     color: var(--text-dark);
+    font-size: 24px; /* Added font size */
 }
 
 .modal-content p {
     margin-bottom: 25px;
     color: var(--text-medium);
+    font-size: 16px; /* Added font size */
 }
 
 .modal-btn {
     background-color: var(--primary-color);
     color: var(--text-dark);
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px; /* Increased from 10px 20px */
     border-radius: 6px;
     font-weight: 500;
     cursor: pointer;
     transition: var(--transition);
+    font-size: 16px; /* Added font size */
 }
 
     .modal-btn:hover {
         background-color: var(--primary-hover);
+        transform: translateY(-2px); /* Added transform effect */
     }
 
-/* Footer */
+/* Footer - Updated to match header */
 footer {
-    background-color: var(--dark-bg);
+    background-color: var(--dark-bg); /* Ensuring it matches the header */
     color: var(--white);
     padding-top: 60px;
+    border-top: 5px solid var(--primary-color); /* Added border for visual interest */
 }
 
 .footer-content {
@@ -593,7 +616,8 @@ footer {
 
     .footer-logo p {
         font-size: 14px;
-        color: #ccc;
+        color: #ddd; /* Brightened from #ccc */
+        line-height: 1.8; /* Improved line height */
     }
 
 .footer-contact,
@@ -606,9 +630,11 @@ footer {
 
 footer h3 {
     position: relative;
-    font-size: 18px;
+    font-size: 20px; /* Increased from 18px */
     margin-bottom: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 12px; /* Increased from 10px */
+    color: var(--white); /* Ensure heading color is white */
+    font-weight: 600; /* Added font weight */
 }
 
     footer h3::after {
@@ -616,15 +642,15 @@ footer h3 {
         position: absolute;
         left: 0;
         bottom: 0;
-        width: 40px;
-        height: 2px;
+        width: 45px; /* Increased from 40px */
+        height: 3px; /* Increased from 2px */
         background-color: var(--primary-color);
     }
 
 .footer-contact p {
-    margin-bottom: 10px;
+    margin-bottom: 12px; /* Increased from 10px */
     font-size: 14px;
-    color: #ccc;
+    color: #ddd; /* Brightened from #ccc */
 }
 
 .footer-contact i {
@@ -637,11 +663,11 @@ footer h3 {
 }
 
 .footer-links li {
-    margin-bottom: 10px;
+    margin-bottom: 12px; /* Increased from 10px */
 }
 
 .footer-links a {
-    color: #ccc;
+    color: #ddd; /* Brightened from #ccc */
     text-decoration: none;
     transition: var(--transition);
     font-size: 14px;
@@ -663,7 +689,7 @@ footer h3 {
         justify-content: center;
         width: 40px;
         height: 40px;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.15); /* Increased from 0.1 */
         border-radius: 50%;
         color: var(--white);
         transition: var(--transition);
@@ -675,21 +701,23 @@ footer h3 {
             transform: translateY(-3px);
         }
 
+/* Matching footer-bottom with header */
 .footer-bottom {
-    background-color: var(--darker-bg);
+    background-color: var(--darker-bg); /* Still slightly darker than footer */
     padding: 20px 0;
     text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Added subtle border */
 }
 
     .footer-bottom p {
         font-size: 14px;
-        color: #999;
+        color: #aaa; /* Brightened from #999 */
     }
 
 /* Contact Bar */
 .contact-bar {
     background-color: var(--white);
-    padding: 15px 20px;
+    padding: 18px 22px; /* Increased from 15px 20px */
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
     margin-bottom: 30px;
@@ -699,7 +727,7 @@ footer h3 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 22px; /* Increased from 20px */
 }
 
     .contact-info span {
@@ -711,14 +739,14 @@ footer h3 {
 
     .contact-info i {
         color: var(--primary-color);
-        margin-right: 8px;
+        margin-right: 10px;
         font-size: 18px;
     }
 
 /* File Upload Styling */
 input[type="file"] {
     border: 1px dashed var(--border-color);
-    padding: 30px 15px;
+    padding: 32px 15px; /* Increased from 30px 15px */
     border-radius: 6px;
     width: 100%;
     cursor: pointer;
@@ -742,11 +770,17 @@ input[type="file"] {
     .reviews-section {
         width: 100%;
     }
+
+    /* Improve h1 visibility on medium screens */
+    .hero-content h1 {
+        font-size: 40px;
+    }
 }
 
 @media (max-width: 768px) {
     .hero-content h1 {
-        font-size: 32px;
+        font-size: 36px; /* Increased from 32px */
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7); /* Enhanced shadow for better visibility */
     }
 
     .hero-content p {
@@ -754,7 +788,7 @@ input[type="file"] {
     }
 
     .section-header h2 {
-        font-size: 24px;
+        font-size: 26px; /* Increased from 24px */
     }
 
     .footer-content {
@@ -800,6 +834,7 @@ input[type="file"] {
 
                 .nav-links ul li a {
                     color: var(--white);
+                    font-size: 18px; /* Reduced from 20px for mobile */
                 }
 
                 .nav-links ul li::after {
@@ -808,7 +843,7 @@ input[type="file"] {
 
     nav .fa-solid {
         display: block;
-        color: var(--text-dark);
+        color: var(--white); /* Changed from var(--text-dark) to match nav bg */
         margin: 10px;
         font-size: 22px;
         cursor: pointer;
@@ -824,6 +859,12 @@ input[type="file"] {
 
     .checkbox-group {
         grid-template-columns: 1fr;
+    }
+
+    /* Improve h1 visibility on small screens */
+    .hero-content h1 {
+        font-size: 32px;
+        text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8); /* Enhanced shadow */
     }
 }
 
@@ -843,28 +884,50 @@ input[type="file"] {
 .new-review {
     animation: fadeInUp 0.5s ease;
 }
-
-/* Email Button Styling */
-.contact-email-btn {
+/* Contact Button Styling */
+.contact-btn {
     display: inline-flex;
     align-items: center;
-    background-color: var(--primary-color);
-    color: var(--text-dark);
-    padding: 10px 15px;
+    background-color: #EFDCAB;
+    color: #222;
+    padding: 10px 16px;
     border-radius: 6px;
     text-decoration: none;
     font-weight: 500;
-    transition: var(--transition);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: none;
     cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
 }
 
-    .contact-email-btn:hover {
-        background-color: var(--primary-hover);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-sm);
-    }
+.contact-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: 0.5s;
+    pointer-events: none;
+}
 
-    .contact-email-btn i {
-        margin-right: 8px;
-        color: var(--text-dark);
-    }
+.contact-btn:hover::before {
+    left: 100%;
+}
+
+.contact-btn:hover {
+    background-color: #e0c98f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: #222;
+}
+
+.contact-btn i {
+    margin-right: 8px;
+    font-size: 16px;
+    color: #222;
+}
