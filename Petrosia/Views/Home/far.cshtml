@@ -1,0 +1,324 @@
+﻿﻿
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrosia Hotel - Feedback and Reviews</title>
+    <link rel="stylesheet" href="~/css/far.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <nav>
+        <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png"></a>
+        <div class="nav-links" id="navLinks">
+            <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                <li><a href="@Url.Action("Rooms", "Home")">Rooms</a></li>
+                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                <li><a href="@Url.Action("Far", "Home")" class="active">Reviews</a></li>
+            </ul>
+        </div>
+        <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Feedback & Reviews</h1>
+            <p>We value your opinion - share your experience or read what others have to say</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Two-column layout -->
+        <div class="content-wrapper">
+            <!-- Left column - Submit a review -->
+            <div class="review-form-section">
+                <div class="section-header">
+                    <h2>Share Your Experience</h2>
+                    <p>Your feedback helps us improve and assists other travelers in making their decisions.</p>
+                </div>
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                <form id="reviewForm" class="review-form" asp-action="SubmitReview" asp-controller="Home" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <label for="Name">Your Name</label>
+                        <input type="text" id="Name" name="Name" required>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Email">Email Address</label>
+                        <input type="email" id="Email" name="Email" required>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="StayDate">Date of Stay</label>
+                        <input type="date" id="StayDate" name="StayDate" required>
+                        <span asp-validation-for="StayDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group rating-group">
+                        <label>Rate Your Experience</label>
+                        <div class="star-rating">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" name="Rating" id="Rating" value="0">
+                        <span class="rating-text">Select your rating</span>
+                        <span asp-validation-for="Rating" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ReviewTitle">Review Title</label>
+                        <input type="text" id="ReviewTitle" name="ReviewTitle" placeholder="Sum up your experience in a headline" required>
+                        <span asp-validation-for="ReviewTitle" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ReviewText">Your Review</label>
+                        <textarea id="ReviewText" name="ReviewText" rows="5" placeholder="Tell us about your stay at Petrosia Hotel..." required></textarea>
+                        <span asp-validation-for="ReviewText" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>What did you like most?</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox">
+                                <input type="checkbox" name="LikedCategories" value="Room Comfort"> Room Comfort
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="LikedCategories" value="Staff & Service"> Staff & Service
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="LikedCategories" value="Cleanliness"> Cleanliness
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="LikedCategories" value="Location"> Location
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="LikedCategories" value="Value for Money"> Value for Money
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="LikedCategories" value="Amenities"> Amenities
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group terms-group">
+                        <label class="checkbox">
+                            <input type="checkbox" name="terms" required>
+                            <span>I certify that this review is based on my own experience and is my genuine opinion.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Review</button>
+                </form>
+            </div>
+
+            <!-- Right column - Read reviews -->
+            <div class="reviews-section">
+                <div class="section-header">
+                    <h2>Guest Reviews</h2>
+                    <div class="rating-summary">
+                        <div class="average-rating">
+                            <span class="rating-number">4.8</span>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">Based on 142 reviews</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-filter">
+                    <label for="sortReviews">Sort by:</label>
+                    <select id="sortReviews">
+                        <option value="newest">Most Recent</option>
+                        <option value="highest">Highest Rating</option>
+                        <option value="lowest">Lowest Rating</option>
+                    </select>
+                </div>
+
+                <div class="reviews-list" id="reviewsList">
+                    @if (ViewBag.Reviews != null && ViewBag.Reviews.Count > 0)
+                    {
+                        foreach (var review in ViewBag.Reviews)
+                        {
+                            <div class="review-card" data-rating="@review.Rating">
+                                <div class="review-header">
+                                    <div class="reviewer-info">
+                                        <h3>@review.Name</h3>
+                                        <div class="review-rating">
+                                            <div class="stars">
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    if (i <= review.Rating)
+                                                    {
+                                                        <i class="fas fa-star"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="far fa-star"></i>
+                                                    }
+                                                }
+                                            </div>
+                                            <span class="review-date">@review.SubmissionDate.ToString("MMM dd, yyyy")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="review-title">@review.ReviewTitle</h4>
+                                <p class="review-content">@review.ReviewText</p>
+                                @if (!string.IsNullOrEmpty(review.LikedCategories))
+                                {
+                                    <div class="review-tags">
+                                        @foreach (var category in review.LikedCategories.Split(','))
+                                        {
+                                            <span class="tag">@category</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <!-- Sample Reviews - Will show if no reviews in database -->
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <h3>Maria S.</h3>
+                                    <div class="review-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="review-date">May 2, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="review-title">Exceptional Luxury Experience</h4>
+                            <p class="review-content">Our stay at Petrosia was absolutely fantastic! The rooms were immaculate and the staff went above and beyond to make our anniversary special. The breakfast buffet offered a wide variety of delicious options, and the spa treatments were truly rejuvenating. We'll definitely be returning next year!</p>
+                            <div class="review-tags">
+                                <span class="tag">Room Comfort</span>
+                                <span class="tag">Staff & Service</span>
+                                <span class="tag">Cleanliness</span>
+                            </div>
+                        </div>
+
+                        <!-- Review 2 -->
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <h3>James T.</h3>
+                                    <div class="review-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <span class="review-date">April 18, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="review-title">Great location, minor service issues</h4>
+                            <p class="review-content">The hotel is in a perfect location with stunning views. Our room was spacious and well-appointed. The only drawback was the somewhat slow service at the restaurant during peak hours. Despite this minor issue, we had a very pleasant stay overall.</p>
+                            <div class="review-tags">
+                                <span class="tag">Location</span>
+                                <span class="tag">Room Comfort</span>
+                                <span class="tag">Amenities</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="load-more">
+                    <button id="loadMoreBtn" class="load-more-btn">Load More Reviews</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Thank You!</h2>
+            <p>Your review has been submitted successfully. We appreciate your feedback!</p>
+            <button class="modal-btn" id="closeModal">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="~/images/logo1.png" alt="Petrosia Hotel">
+                <p>Experience Luxury & Comfort</p>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Seaside Avenue, Cebu City, Philippines</p>
+                <p><i class="fas fa-phone"></i> +(63) 09670935136</p>
+                <p><i class="fas fa-envelope"></i> info@petrosiahotel.com</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li><a href="@Url.Action("Rooms", "Home")">Rooms & Suites</a></li>
+                    <li><a href="@Url.Action("Far", "Home")">Reviews</a></li>
+                    <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tripadvisor"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Petrosia Hotel. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Include validation scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/far.js" asp-append-version="true"></script>
+</body>
+</html>

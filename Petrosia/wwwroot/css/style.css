@@ -1,3 +1,5 @@
+
+/* admin-styles */
 * {
     margin: 0;
     padding: 0;
@@ -22,57 +24,88 @@ body {
 
 /*---- Top Navigation ----*/
 .top-bar {
-    background-color: #333;
-    color: #fff;
+    background-color: #1a1a1a;
+    color: white;
     font-size: 14px;
     padding: 8px 0;
     text-align: center;
     width: 100%;
 }
 
-/* Contact Info Layout */
-.contact-info {
-    display: flex;
-    justify-content: center;
+/* Contact Button Styling */
+.contact-btn {
+    display: inline-flex;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    padding: 0 10px;
+    background-color: #EFDCAB;
+    color: #222;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
 }
 
-    .contact-info span {
-        display: flex;
-        align-items: center;
-        gap: 5px;
+    .contact-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: 0.5s;
+        pointer-events: none;
     }
 
-/* ✅ Responsive Adjustments */
-@media (max-width: 600px) {
-    .top-bar {
-        font-size: 12px; /* Reduce font size */
-        padding: 10px; /* Adjust padding */
+    .contact-btn:hover::before {
+        left: 100%;
     }
 
-    .contact-info {
-        flex-direction: column; /* Stack elements vertically */
-        gap: 5px;
-        text-align: center;
+    .contact-btn:hover {
+        background-color: #e0c98f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        color: #222;
     }
+
+    .contact-btn i {
+        margin-right: 8px;
+        font-size: 16px;
+        color: #222;
+    }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .contact-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+        .contact-btn i {
+            font-size: 14px;
+        }
 }
-
 
 /* ---- navbar ----- */
+
 nav {
     display: flex;
     padding: 0 6%;
     justify-content: space-between;
     align-items: center;
-    background: #fff;
+    background: #222; /* Changed from #fff to #222 */
 }
 
     nav img {
         width: 220px;
         margin-top: 15px;
+        /* No filter applied to preserve original logo appearance */
     }
 
 .nav-links {
@@ -88,7 +121,7 @@ nav {
     }
 
         .nav-links ul li a {
-            color: #333;
+            color: #bbb; /* Changed to light gray similar to the image */
             text-decoration: none;
             font-size: 20px;
             font-weight: 500;
@@ -107,6 +140,7 @@ nav {
         .nav-links ul li:hover::after {
             width: 100%;
         }
+
 
 /* ======= General Styles ======= */
 .text-box {
@@ -669,13 +703,14 @@ button {
 }
 /* End of Section Gallery */
 
-/* ======= Footer Styles ======= */
+/* ----- Footer Styles ----- */
 .footer {
-    background: #1a1a1a; /* dark-bg color */
+    background-color: #1a1a1a; /* dark-bg color */
     color: white;
     padding: 40px 0 0;
     font-family: Arial, sans-serif;
 }
+
 
 .footer-container {
     max-width: 1200px;
@@ -688,8 +723,10 @@ button {
     gap: 40px; /* Increased gap for better spacing */
 }
 
+
 .footer-column {
     flex: 0 1 200px; /* More controlled flex behavior */
+
     margin-bottom: 20px;
 }
 
@@ -737,6 +774,7 @@ button {
                     transform: translateX(5px);
                 }
 
+
 .footer-socials {
     width: 100%;
     text-align: center;
@@ -753,10 +791,13 @@ button {
         display: inline-block;
     }
 
+
+
         .footer-socials a:hover {
             color: #EFDCAB;
             transform: translateY(-3px);
         }
+
 
 .footer-bottom {
     background: #121212;
@@ -790,236 +831,113 @@ button {
         }
 }
 
-/* About Us Page - Enhanced Design */
-/* Hero Section */
-.about-hero {
+/* About Us Page */
+
+.sub-header {
+    min-height: 100%;
     height: 60vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/hotel-lobby.jpg') center/cover no-repeat fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-image: url("../images/aboutbanner.png");
+    background-position: center;
+    background-size: cover;
     text-align: center;
-    color: white;
     position: relative;
+    color: #fff;
 }
 
-    .about-hero h1 {
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 600;
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
+
+/* About Us Section */
+.about-us {
+    min-height: 100vh;
+    text-align: center;
+    padding: 5vw 5%;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/bg.jpg') center/cover no-repeat;
+    position: relative;
+    color: white; /* White text for all content */
+}
+
+    /* Container */
+    .about-us .container {
+        max-width: 1000px;
+        margin: auto;
+        padding: 0 20px;
+        position: relative;
+    }
+
+    /* Headings */
+    .about-us h1 {
+        font-size: clamp(24px, 4vw, 32px);
+        font-weight: bold;
+        margin-bottom: 20px;
         color: white;
     }
 
-    .about-hero p {
-        font-size: clamp(1rem, 2.5vw, 1.5rem);
-        font-weight: 300;
-        letter-spacing: 1px;
-        color: #333;
-        text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 3px rgba(255, 255, 255, 0.8);
+    .about-us h2 {
+        font-size: clamp(18px, 3vw, 22px);
+        font-weight: bold;
+        margin-top: 40px;
+        color: white;
     }
 
-/* Main Content */
-.about-content {
-    padding: 5rem 0;
-    background-color: #fff;
-}
-
-/* About Sections */
-.about-section {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
-    margin-bottom: 5rem;
-}
-
-    .about-section.reverse {
-        flex-direction: row-reverse;
-    }
-
-.about-text {
-    flex: 1;
-    padding: 2rem;
-    background: #333;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-    .about-text h2 {
-        font-size: 1.8rem;
-        color: #333;
-        margin-bottom: 1.5rem;
-        position: relative;
-        padding-bottom: 0.5rem;
-    }
-
-        .about-text h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: #333;
-        }
-
-    .about-text p {
-        color: #333;
+    /* Paragraphs */
+    .about-us p {
+        font-size: clamp(14px, 2.5vw, 16px);
         line-height: 1.8;
-        font-size: 1.1rem;
+        margin-bottom: 15px;
+        color: white;
     }
 
-.about-image {
-    flex: 1;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    max-height: 400px;
-}
-
-    .about-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        transition: transform 0.5s ease;
+    /* List Styling */
+    .about-us ul {
+        list-style: none;
+        padding: 0;
+        text-align: center;
     }
 
-    .about-image:hover img {
-        transform: scale(1.05);
-    }
-
-/* Travel Info */
-.travel-info {
-    margin: 5rem 0;
-    text-align: center;
-    background-color: #EFDCAB;
-    padding: 2rem;
-    border-radius: 8px;
-}
-
-    .travel-info h2 {
-        font-size: 2rem;
-        color: #333;
-        margin-bottom: 3rem;
-        position: relative;
-        display: inline-block;
-    }
-
-        .travel-info h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: #EFDCAB;
+        .about-us ul li {
+            font-size: clamp(14px, 2.5vw, 16px);
+            line-height: 1.6;
+            margin-bottom: 10px;
+            display: block;
+            color: white;
         }
 
-.info-cards {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.info-card {
-    background: #333;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    width: 280px;
-    transition: transform 0.3s ease;
-    text-align: center;
-}
-
-    .info-card:hover {
-        transform: translateY(-10px);
+    /* Text Formatting */
+    .about-us strong {
+        font-weight: bold;
+        color: #90EE90; /* Light green for bold text */
     }
 
-    .info-card i {
-        font-size: 2.5rem;
-        color: #EFDCAB;
-        margin-bottom: 1rem;
+    .about-us em {
+        font-style: italic;
+        color: #D3D3D3; /* Light gray for emphasis */
     }
-
-    .info-card h3 {
-        color: #333;
-        margin-bottom: 1rem;
-    }
-
-    .info-card p {
-        color: #333;
-        line-height: 1.6;
-    }
-
-        .info-card p em {
-            font-style: italic;
-            color: #333;
-        }
-
 /* Responsive Design */
-@media (max-width: 992px) {
-    .about-section {
-        flex-direction: column;
-    }
-
-        .about-section.reverse {
-            flex-direction: column;
-        }
-
-    .about-text, .about-image {
-        width: 100%;
-    }
-
-    .about-image {
-        max-height: 350px;
-    }
-}
-
 @media (max-width: 768px) {
-    .about-hero {
-        height: 50vh;
+    .about-us {
+        padding: 40px 15px;
     }
 
-    .info-cards {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .info-card {
-        width: 100%;
-        max-width: 350px;
-    }
-
-    .about-content {
-        padding: 3rem 0;
-    }
-}
-
-@media (max-width: 576px) {
-    .about-hero {
-        height: 40vh;
-    }
-
-    .about-text {
-        padding: 1.5rem;
-    }
-
-        .about-text h2 {
-            font-size: 1.5rem;
+        .about-us .container {
+            margin: 30px auto;
         }
 
-        .about-text p {
-            font-size: 1rem;
+        .about-us h1 {
+            font-size: 24px;
         }
 
-    .travel-info h2 {
-        font-size: 1.8rem;
-    }
+        .about-us h2 {
+            font-size: 18px;
+        }
+
+        .about-us p {
+            font-size: 14px;
+        }
+
+        .about-us ul li {
+            font-size: 14px;
+        }
 }
+/* End of about Page*/
 
 /* Tourist Spots Page */
 
@@ -1518,6 +1436,7 @@ button {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     max-width: 700px;
     width: 100%;
+    va
 }
 
     .feature-box ul {
