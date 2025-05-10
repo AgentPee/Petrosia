@@ -6,12 +6,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Rooms</title>
-    <link rel="stylesheet" href="~/css/admin-booking.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/rooms.css" asp-append-version="true" />
 </head>
 <body>
+
+    <nav>
+        <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png"></a>
+        <div class="nav-links" id="navLinks">
+            <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
+                <li><a href="@Url.Action("Bookings", "Home")">Bookings</a></li>
+                <li><a href="@Url.Action("raa", "Home")">Reports and analystics</a></li>
+                <li><a href="@Url.Action("ManageRooms", "Home")">Room Management</a></li>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
+                }
+            </ul>
+        </div>
+        <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+    </nav>
+
     <div class="admin-container">
         <div class="admin-header">
-            <h1>Manage Rooms</h1>
+            <h1> Rooms Management</h1>
             <p>View and update room statuses</p>
         </div>
 

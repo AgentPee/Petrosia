@@ -20,6 +20,7 @@
                 <li><a href="@Url.Action("Admin", "Home")">Admin</a></li>
                 <li><a href="@Url.Action("Bookings", "Home")">Bookings</a></li>
                 <li><a href="@Url.Action("raa", "Home")">Reports and analystics</a></li>
+                <li><a href="@Url.Action("ManageRooms", "Home")">Room Management</a></li>
 
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -29,7 +30,6 @@
         </div>
         <i class="fa-solid fa-bars" onclick="showMenu()"></i>
     </nav>
-
 
 
     <div class="admin-container">

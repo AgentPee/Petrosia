@@ -8,6 +8,7 @@ using Petrosia.Models;
 using Petrosia.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Petrosia.Controllers
 {
@@ -27,6 +28,32 @@ namespace Petrosia.Controllers
         public IActionResult Accommodation() => View();
         public IActionResult RoomDetails(string roomType) => View(roomType);
 
+        // ========================== Feedback and Reviews ========================== //
+        public IActionResult Far()
+        {
+            // In a real application, you would fetch reviews from the database
+            // For now, we'll just display the view with sample data
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SubmitReview(Review model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Far", model);
+            }
+
+            // In a real application, you would save the review to the database
+            // For example:
+            // _context.Reviews.Add(model);
+            // _context.SaveChanges();
+
+            TempData["SuccessMessage"] = "Thank you! Your review has been submitted successfully.";
+            return RedirectToAction("Far");
+        }
+
         // ========================== Admin Dashboard ========================== //
         [Authorize(Roles = "Admin")]
         public IActionResult Admin() => View(_context.Admins.ToList());
@@ -34,36 +61,36 @@ namespace Petrosia.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Guest() => View(_context.Guests.ToList());
 
-       
+
 
         // ========================== Reports & Analytics ========================== //
-       [Authorize(Roles = "Admin")]
-public IActionResult Raa()
-{
-    try
-    {
-        // Fetch bookings directly from the Bookings table
-        var bookings = _context.Bookings.ToList();
+        [Authorize(Roles = "Admin")]
+        public IActionResult Raa()
+        {
+            try
+            {
+                // Fetch bookings directly from the Bookings table
+                var bookings = _context.Bookings.ToList();
 
-        ViewBag.TotalBookings = bookings.Count;
-        ViewBag.TotalRevenue = bookings.Sum(b => b.TotalAmount);
-        ViewBag.AverageStay = bookings.Any()
-            ? bookings.Average(b => (b.CheckOutDate - b.CheckInDate).Days)
-            : 0;
+                ViewBag.TotalBookings = bookings.Count;
+                ViewBag.TotalRevenue = bookings.Sum(b => b.TotalAmount);
+                ViewBag.AverageStay = bookings.Any()
+                    ? bookings.Average(b => (b.CheckOutDate - b.CheckInDate).Days)
+                    : 0;
 
-        ViewBag.RecentBookings = bookings
-            .OrderByDescending(b => b.BookingDate)
-            .Take(5)
-            .ToList();
+                ViewBag.RecentBookings = bookings
+                    .OrderByDescending(b => b.BookingDate)
+                    .Take(5)
+                    .ToList();
 
-        return View();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error in Raa action: {ex.Message}");
-        return StatusCode(500, "An error occurred while processing your request.");
-    }
-}
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Raa action: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
 
 
 
@@ -152,31 +179,31 @@ public IActionResult Raa()
 
         // ========================== Booking Management ========================== //
         [HttpPost]
-public IActionResult BookRoom([FromBody] Booking booking)
-{
-    if (!ModelState.IsValid)
-    {
-        foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+        public IActionResult BookRoom([FromBody] Booking booking)
         {
-            Console.WriteLine($"Validation error: {error.ErrorMessage}");
+            if (!ModelState.IsValid)
+            {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine($"Validation error: {error.ErrorMessage}");
+                }
+                return BadRequest(ModelState);
+            }
+
+            Console.WriteLine($"Received booking: {JsonConvert.SerializeObject(booking)}");
+
+            // Validate RoomTypeId
+            if (booking.RoomTypeId <= 0)
+            {
+                return BadRequest(new { Error = "The RoomTypeId field is required and must be a valid integer." });
+            }
+
+            // Save booking
+            _context.Bookings.Add(booking);
+            _context.SaveChanges();
+
+            return Ok("Booking successfully saved!");
         }
-        return BadRequest(ModelState);
-    }
-
-    Console.WriteLine($"Received booking: {JsonConvert.SerializeObject(booking)}");
-
-    // Validate RoomTypeId
-    if (booking.RoomTypeId <= 0)
-    {
-        return BadRequest(new { Error = "The RoomTypeId field is required and must be a valid integer." });
-    }
-
-    // Save booking
-    _context.Bookings.Add(booking);
-    _context.SaveChanges();
-
-    return Ok("Booking successfully saved!");
-}
 
         // ========================== View Bookings (Admin) ========================== //
         [Authorize(Roles = "Admin")]
@@ -217,43 +244,43 @@ public IActionResult BookRoom([FromBody] Booking booking)
         }
 
         [HttpGet]
-public IActionResult TestDatabaseConnection()
-{
-    try
-    {
-        // Test if we can access the database
-        bool isConnected = _context.Database.CanConnect();
-
-        // Get some basic stats to confirm tables exist
-        int adminCount = _context.Admins.Count(); // Ensure Count() is invoked
-        int guestCount = _context.Guests.Count(); // Ensure Count() is invoked
-
-        // Check if Bookings table exists by trying to access it
-        bool bookingsTableExists = true;
-        try
+        public IActionResult TestDatabaseConnection()
         {
-            _context.Bookings.Count(); // Ensure Count() is invoked
+            try
+            {
+                // Test if we can access the database
+                bool isConnected = _context.Database.CanConnect();
+
+                // Get some basic stats to confirm tables exist
+                int adminCount = _context.Admins.Count(); // Ensure Count() is invoked
+                int guestCount = _context.Guests.Count(); // Ensure Count() is invoked
+
+                // Check if Bookings table exists by trying to access it
+                bool bookingsTableExists = true;
+                try
+                {
+                    _context.Bookings.Count(); // Ensure Count() is invoked
+                }
+                catch
+                {
+                    bookingsTableExists = false;
+                }
+
+                return Json(new
+                {
+                    success = isConnected,
+                    message = $"Database connection successful. Found {adminCount} admins and {guestCount} guests. Bookings table exists: {bookingsTableExists}"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = $"Error connecting to database: {ex.Message}"
+                });
+            }
         }
-        catch
-        {
-            bookingsTableExists = false;
-        }
-
-        return Json(new
-        {
-            success = isConnected,
-            message = $"Database connection successful. Found {adminCount} admins and {guestCount} guests. Bookings table exists: {bookingsTableExists}"
-        });
-    }
-    catch (Exception ex)
-    {
-        return Json(new
-        {
-            success = false,
-            message = $"Error connecting to database: {ex.Message}"
-        });
-    }
-}
 
 
         // ========================== Saving Booking ========================== //
@@ -312,13 +339,5 @@ public IActionResult TestDatabaseConnection()
             TempData["SuccessMessage"] = "Room status updated successfully.";
             return RedirectToAction("ManageRooms");
         }
-
-        
-
-
-
-
     }
-
 }
-
