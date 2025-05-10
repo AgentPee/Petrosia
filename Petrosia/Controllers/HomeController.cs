@@ -38,32 +38,32 @@ namespace Petrosia.Controllers
 
         // ========================== Reports & Analytics ========================== //
        [Authorize(Roles = "Admin")]
-public IActionResult Raa()
-{
-    try
-    {
-        // Fetch bookings directly from the Bookings table
-        var bookings = _context.Bookings.ToList();
+        public IActionResult Raa()
+        {
+            try
+            {
+                // Fetch bookings directly from the Bookings table
+                var bookings = _context.Bookings.ToList();
 
-        ViewBag.TotalBookings = bookings.Count;
-        ViewBag.TotalRevenue = bookings.Sum(b => b.TotalAmount);
-        ViewBag.AverageStay = bookings.Any()
-            ? bookings.Average(b => (b.CheckOutDate - b.CheckInDate).Days)
-            : 0;
+                ViewBag.TotalBookings = bookings.Count;
+                ViewBag.TotalRevenue = bookings.Sum(b => b.TotalAmount);
+                ViewBag.AverageStay = bookings.Any()
+                    ? bookings.Average(b => (b.CheckOutDate - b.CheckInDate).Days)
+                    : 0;
 
-        ViewBag.RecentBookings = bookings
-            .OrderByDescending(b => b.BookingDate)
-            .Take(5)
-            .ToList();
+                ViewBag.RecentBookings = bookings
+                    .OrderByDescending(b => b.BookingDate)
+                    .Take(5)
+                    .ToList();
 
-        return View();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error in Raa action: {ex.Message}");
-        return StatusCode(500, "An error occurred while processing your request.");
-    }
-}
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Raa action: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
 
 
 
@@ -311,6 +311,33 @@ public IActionResult TestDatabaseConnection()
 
             TempData["SuccessMessage"] = "Room status updated successfully.";
             return RedirectToAction("ManageRooms");
+        }
+
+        // ========================== Review Management ========================== //
+        [HttpGet]
+        public IActionResult Far()
+        {
+            var reviews = _context.Reviews.OrderByDescending(r => r.SubmissionDate).ToList();
+            ViewBag.Reviews = reviews;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SubmitReview(Review review)
+        {
+            if (ModelState.IsValid)
+            {
+                review.SubmissionDate = DateTime.Now;
+                _context.Reviews.Add(review);
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = "Thank you for your review!";
+                return RedirectToAction("Far");
+            }
+
+            // If invalid, re-fetch reviews and return to view
+            ViewBag.Reviews = _context.Reviews.OrderByDescending(r => r.SubmissionDate).ToList();
+            return View("Far", review);
         }
 
         

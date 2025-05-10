@@ -1,4 +1,5 @@
-﻿﻿
+﻿﻿@using Petrosia.Models
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,10 +45,15 @@
                     <p>Your feedback helps us improve and assists other travelers in making their decisions.</p>
                 </div>
 
-                @if (TempData["SuccessMessage"] != null)
+                @if (!ViewData.ModelState.IsValid)
                 {
-                    <div class="alert alert-success">
-                        @TempData["SuccessMessage"]
+                    <div class="alert alert-danger">
+                         <ul>
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        </ul>
                     </div>
                 }
 
@@ -266,17 +272,34 @@
     </div>
 
     <!-- Success Modal -->
-    <div id="successModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="success-icon">
-                <i class="fas fa-check-circle"></i>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div id="successModal" class="modal" style="display:block;">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Thank You!</h2>
+                <p>@TempData["SuccessMessage"]</p>
+                <button class="modal-btn" id="closeModal">Close</button>
             </div>
-            <h2>Thank You!</h2>
-            <p>Your review has been submitted successfully. We appreciate your feedback!</p>
-            <button class="modal-btn" id="closeModal">Close</button>
         </div>
-    </div>
+    }
+    else
+    {
+        <div id="successModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Thank You!</h2>
+                <p>Your review has been submitted successfully. We appreciate your feedback!</p>
+                <button class="modal-btn" id="closeModal">Close</button>
+            </div>
+        </div>
+    }
 
     <!-- Footer -->
     <footer>

@@ -24,6 +24,7 @@ public partial class UserManagement1Context : DbContext
     public virtual DbSet<HouseKeeping> HouseKeepings { get; set; }
     public virtual DbSet<Room> Rooms { get; set; }
     public virtual DbSet<Booking> Bookings { get; set; } // Added Bookings DbSet
+    public virtual DbSet<Review> Reviews { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -147,6 +148,21 @@ public partial class UserManagement1Context : DbContext
 
             entity.Property(e => e.Status)
                 .HasDefaultValue("Confirmed");
+        });
+
+        // Configure the new Review entity
+        modelBuilder.Entity<Review>(entity =>
+        {
+            entity.ToTable("reviews"); // Table name in your database
+
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.ReviewTitle).HasMaxLength(200);
+            entity.Property(e => e.ReviewText).HasColumnType("text");
+            entity.Property(e => e.LikedCategories).HasMaxLength(200);
+            // Add more configuration as needed
         });
 
         OnModelCreatingPartial(modelBuilder);
