@@ -36,11 +36,46 @@ $(document).ready(function () {
         });
     });
 
-    // Modal logic for success message
-    if ($('#successModal').is(':visible')) {
-        $('#successModal').show();
-    }
+    // Handle review form submission with fetch (AJAX)
+    $('#reviewForm').on('submit', function (e) {
+        e.preventDefault();
 
+        var likedCategories = [];
+        $('input[name="LikedCategories"]:checked').each(function () {
+            likedCategories.push($(this).val());
+        });
+
+        var data = {
+            Name: $('#Name').val(),
+            Email: $('#Email').val(),
+            StayDate: $('#StayDate').val(),
+            Rating: parseInt($('#Rating').val()),
+            ReviewTitle: $('#ReviewTitle').val(),
+            ReviewText: $('#ReviewText').val(),
+            LikedCategories: likedCategories.join(',')
+        };
+
+        fetch('/Home/SubmitReview', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(async response => {
+            if (response.ok) {
+                location.reload(); // <-- Add this line
+            } else {
+                const errorData = await response.json();
+                alert('Error submitting review. Please check your input.');
+            }
+        })
+        .catch(() => {
+            alert('An error occurred while submitting your review.');
+        });
+    });
+
+    // Modal logic for success message
     $('.close-modal, #closeModal').on('click', function () {
         $('#successModal').hide();
     });

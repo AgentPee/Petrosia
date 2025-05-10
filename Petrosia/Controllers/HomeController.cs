@@ -323,21 +323,16 @@ public IActionResult TestDatabaseConnection()
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult SubmitReview(Review review)
+        public IActionResult SubmitReview([FromBody] Review review)
         {
             if (ModelState.IsValid)
             {
                 review.SubmissionDate = DateTime.Now;
                 _context.Reviews.Add(review);
                 _context.SaveChanges();
-                TempData["SuccessMessage"] = "Thank you for your review!";
-                return RedirectToAction("Far");
+                return Ok(new { message = "Thank you for your review!" });
             }
-
-            // If invalid, re-fetch reviews and return to view
-            ViewBag.Reviews = _context.Reviews.OrderByDescending(r => r.SubmissionDate).ToList();
-            return View("Far", review);
+            return BadRequest(ModelState);
         }
 
         

@@ -1,5 +1,7 @@
-﻿﻿@using Petrosia.Models
+﻿﻿
 
+@model Petrosia.Models.Review
+@using Petrosia.Models
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +50,7 @@
                 @if (!ViewData.ModelState.IsValid)
                 {
                     <div class="alert alert-danger">
-                         <ul>
+                        <ul>
                             @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
                             {
                                 <li>@error.ErrorMessage</li>
@@ -62,69 +64,61 @@
 
                     <div class="form-group">
                         <label for="Name">Your Name</label>
-                        <input type="text" id="Name" name="Name" required>
+                        <input type="text" id="Name" name="Name" value="@Model?.Name" required>
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="Email">Email Address</label>
-                        <input type="email" id="Email" name="Email" required>
+                        <input type="email" id="Email" name="Email" value="@Model?.Email" required>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="StayDate">Date of Stay</label>
-                        <input type="date" id="StayDate" name="StayDate" required>
+                        <input type="date" id="StayDate" name="StayDate" value="@(Model?.StayDate.ToString("yyyy-MM-dd"))" required>
                         <span asp-validation-for="StayDate" class="text-danger"></span>
                     </div>
 
                     <div class="form-group rating-group">
                         <label>Rate Your Experience</label>
                         <div class="star-rating">
-                            <i class="far fa-star" data-rating="1"></i>
-                            <i class="far fa-star" data-rating="2"></i>
-                            <i class="far fa-star" data-rating="3"></i>
-                            <i class="far fa-star" data-rating="4"></i>
-                            <i class="far fa-star" data-rating="5"></i>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                var starClass = (Model != null && Model.Rating >= i) ? "fas fa-star" : "far fa-star";
+                                <i class="@starClass" data-rating="@i"></i>
+                            }
                         </div>
-                        <input type="hidden" name="Rating" id="Rating" value="0">
-                        <span class="rating-text">Select your rating</span>
+                        <input type="hidden" name="Rating" id="Rating" value="@(Model?.Rating ?? 0)">
+                        <span class="rating-text">@(Model?.Rating > 0 ? $"You rated {Model.Rating} star{(Model.Rating > 1 ? "s" : "")}" : "Select your rating")</span>
                         <span asp-validation-for="Rating" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="ReviewTitle">Review Title</label>
-                        <input type="text" id="ReviewTitle" name="ReviewTitle" placeholder="Sum up your experience in a headline" required>
+                        <input type="text" id="ReviewTitle" name="ReviewTitle" value="@Model?.ReviewTitle" placeholder="Sum up your experience in a headline" required>
                         <span asp-validation-for="ReviewTitle" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="ReviewText">Your Review</label>
-                        <textarea id="ReviewText" name="ReviewText" rows="5" placeholder="Tell us about your stay at Petrosia Hotel..." required></textarea>
+                        <textarea id="ReviewText" name="ReviewText" rows="5" placeholder="Tell us about your stay at Petrosia Hotel..." required>@Model?.ReviewText</textarea>
                         <span asp-validation-for="ReviewText" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label>What did you like most?</label>
                         <div class="checkbox-group">
-                            <label class="checkbox">
-                                <input type="checkbox" name="LikedCategories" value="Room Comfort"> Room Comfort
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="LikedCategories" value="Staff & Service"> Staff & Service
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="LikedCategories" value="Cleanliness"> Cleanliness
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="LikedCategories" value="Location"> Location
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="LikedCategories" value="Value for Money"> Value for Money
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="LikedCategories" value="Amenities"> Amenities
-                            </label>
+                            @{
+                                var liked = (Model?.LikedCategories ?? "").Split(',', System.StringSplitOptions.RemoveEmptyEntries);
+                                string[] categories = new[] { "Room Comfort", "Staff & Service", "Cleanliness", "Location", "Value for Money", "Amenities" };
+                                foreach (var cat in categories)
+                                {
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="LikedCategories" value="@cat" @(liked.Contains(cat) ? "checked" : "")> @cat
+                                    </label>
+                                }
+                            }
                         </div>
                     </div>
 
@@ -282,20 +276,6 @@
                 </div>
                 <h2>Thank You!</h2>
                 <p>@TempData["SuccessMessage"]</p>
-                <button class="modal-btn" id="closeModal">Close</button>
-            </div>
-        </div>
-    }
-    else
-    {
-        <div id="successModal" class="modal" style="display:none;">
-            <div class="modal-content">
-                <span class="close-modal">&times;</span>
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h2>Thank You!</h2>
-                <p>Your review has been submitted successfully. We appreciate your feedback!</p>
                 <button class="modal-btn" id="closeModal">Close</button>
             </div>
         </div>
