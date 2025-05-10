@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petrosia Hotel</title>
-    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
     <link rel="shortcut icon" type="x-icon" href="images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
@@ -26,15 +26,16 @@
             <div class="container">
                 <div class="contact-info">
                     <span><i class="fa-solid fa-phone"></i> +(63) 09670935136</span>
-                    <a href="@Url.Action("Far", "Home")" class="contact-btn"></a>
-                    <span><i class="fa-solid fa-envelope"></i> info@petrosiahotel.com</span>
-                </div>
+                    <a href="@Url.Action("Far", "Home")" class="contact-btn">
+                        <i class="fa-solid fa-envelope"></i> info@petrosiahotel.com
+                    </a>
+
             </div>
         </div>
         <nav>
             <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png"></a>
             <div class="nav-links" id="navLinks">
-                <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+               
                 <ul>
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -56,7 +57,7 @@
                     }
                 </ul>
             </div>
-            <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+          
         </nav>
     </section>
     <!-------End of Banner------->
