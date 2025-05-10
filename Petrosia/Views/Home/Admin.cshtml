@@ -1,6 +1,4 @@
-﻿<!-------admin.cshtml------->
-@using Petrosia.Models
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +6,7 @@
     <title>Petrosia Hotel - Admin</title>
     <link rel="stylesheet" href="~/css/admin-styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav>
@@ -19,7 +18,7 @@
                 <li><a href="@Url.Action("Bookings", "Home")">Bookings</a></li>
                 <li><a href="@Url.Action("raa", "Home")">Reports and analystics</a></li>
                 <li><a href="@Url.Action("ManageRooms", "Home")">Room Inventory</a></li>
-                
+
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li><a href="@Url.Action("Logout", "Auth")">Logout</a></li>
@@ -46,7 +45,6 @@
             <tbody>
                 @foreach (var admin in Model)
                 {
-
                     <tr>
                         <td>@admin.AdminId</td>
                         <td>@admin.FirstName</td>
@@ -68,7 +66,6 @@
                 }
             </tbody>
         </table>
-
     </section>
     <footer>
         © 2025 Petrosia Hotel - Privacy Policy
@@ -82,6 +79,5 @@
             document.getElementById("navLinks").style.right = "-200px";
         }
     </script>
-
 </body>
 </html>

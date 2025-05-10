@@ -41,7 +41,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+th, td, input, select, button {
+    font-family: 'Poppins', sans-serif;
+}
 body {
     font-family: var(--font-family);
     background-color: #f5f7fa;
@@ -126,6 +128,7 @@ nav .fa-solid {
     margin: var(--spacing-xl) auto;
     padding: 0;
     position: relative;
+
 }
 
 /* Admin Header */
